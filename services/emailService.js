@@ -103,7 +103,7 @@ exports.sendNotificationEmail = async ({
 
         to,
 
-        subject: `MediCore: ${title}`,
+        subject: `[RENDER-TEST] MediCore: ${title}`,
 
         text: `${title}
 
