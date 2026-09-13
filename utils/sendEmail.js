@@ -1,8 +1,11 @@
-const transporter = require("../config/mail");
+const resend = require("../config/mail");
 
-const maskEmail = email => {
+const maskEmail = (email) => {
     const [local, domain] = String(email || "").split("@");
-    return local && domain ? `${local.slice(0, 1)}***@${domain}` : "<invalid-email>";
+
+    return local && domain
+        ? `${local.slice(0, 1)}***@${domain}`
+        : "<invalid-email>";
 };
 
 /**
@@ -19,39 +22,69 @@ const sendEmail = async (options) => {
 
     try {
 
-        const mailOptions = {
+        if (!process.env.RESEND_API_KEY) {
+            throw new Error("RESEND_API_KEY is not configured");
+        }
 
-            from: process.env.EMAIL_FROM || process.env.MAIL_FROM,
+        if (!options.to) {
+            throw new Error("Recipient email is required");
+        }
 
-            to: options.to,
+        if (!process.env.EMAIL_FROM) {
+            throw new Error("EMAIL_FROM is not configured");
+        }
+
+        console.log("[Email] Resend API called", {
+            recipient: maskEmail(options.to),
+            subject: options.subject
+        });
+
+        const { data, error } = await resend.emails.send({
+
+            from: process.env.EMAIL_FROM,
+
+            to: [options.to],
 
             subject: options.subject,
 
             text: options.text || "",
 
-            html: options.html
+            html: options.html || ""
 
-        };
+        });
 
-        console.log("[Email] Nodemailer sendMail called", { recipient: maskEmail(options.to) });
-        const info = await transporter.sendMail(mailOptions);
-        console.log("[Email] EMAIL SENT", { recipient: maskEmail(options.to), messageId: info.messageId });
+        if (error) {
+
+            console.error("[Email] RESEND FAILED", {
+                recipient: maskEmail(options.to),
+                message: error.message || "Resend API error"
+            });
+
+            throw new Error(
+                error.message || "Resend email sending failed"
+            );
+        }
+
+        console.log("[Email] EMAIL SENT", {
+            recipient: maskEmail(options.to),
+            messageId: data?.id || null
+        });
 
         console.log("====================================");
         console.log("✅ Email Sent Successfully");
-        console.log("Message ID:", info.messageId);
+        console.log("Message ID:", data?.id || "N/A");
         console.log("====================================");
 
-        return info;
+        return data;
 
     } catch (error) {
 
         console.error("[Email] EMAIL FAILED", {
+
             recipient: maskEmail(options.to),
-            code: error.code || null,
-            message: error.message || "Unknown email error",
-            responseCode: error.responseCode || null,
-            command: error.command || null
+
+            message: error.message || "Unknown email error"
+
         });
 
         console.log("====================================");
@@ -60,9 +93,7 @@ const sendEmail = async (options) => {
         console.log("====================================");
 
         throw error;
-
     }
-
 };
 
 module.exports = sendEmail;
