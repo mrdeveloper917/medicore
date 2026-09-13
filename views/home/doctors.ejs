@@ -1,0 +1,440 @@
+<%- include("../layouts/header", { title: "Our Doctors | MediCore" }) %>
+
+<link rel="stylesheet" href="/css/home-doctors.css">
+
+
+<main class="public-doctors-page">
+
+    <!-- =========================================================
+         HERO SECTION
+    ========================================================== -->
+
+    <section class="public-doctors-hero">
+
+        <div class="public-doctors-container">
+
+            <div class="public-doctors-hero-content">
+
+                <span class="public-doctors-badge">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    OUR MEDICAL SPECIALISTS
+                </span>
+
+                <h1>
+                    Meet our
+                    <span>trusted doctors.</span>
+                </h1>
+
+                <p>
+                    Discover experienced healthcare professionals
+                    across different medical specialties and find
+                    the right doctor for your healthcare needs.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         DOCTORS SECTION
+    ========================================================== -->
+
+    <section class="public-doctors-section">
+
+        <div class="public-doctors-container">
+
+
+            <!-- =====================================================
+                 SECTION HEADER
+            ====================================================== -->
+
+            <div class="public-doctors-section-header">
+
+                <div>
+
+                    <span class="public-section-label">
+                        OUR SPECIALISTS
+                    </span>
+
+                    <h2>
+                        Experienced healthcare professionals
+                    </h2>
+
+                    <p>
+                        Explore our verified doctors and learn
+                        about their professional expertise.
+                    </p>
+
+                </div>
+
+
+                <% if (doctors && doctors.length > 0) { %>
+
+                    <div class="public-doctors-count">
+
+                        <strong>
+                            <%= doctors.length %>
+                        </strong>
+
+                        <span>
+                            Doctors
+                        </span>
+
+                    </div>
+
+                <% } %>
+
+            </div>
+
+
+            <!-- =====================================================
+                 DOCTORS GRID
+            ====================================================== -->
+
+            <% if (doctors && doctors.length > 0) { %>
+
+                <div class="public-doctors-grid">
+
+                    <% doctors.forEach(function(doctor) { %>
+
+                        <article class="public-doctor-card">
+
+
+                            <!-- =====================================
+                                 IMAGE
+                            ====================================== -->
+
+                            <div class="public-doctor-image-wrapper">
+
+                                <% if (doctor.profileImage) { %>
+
+                                    <img
+                                        src="<%= doctor.profileImage.startsWith('/')
+                                            ? doctor.profileImage
+                                            : '/uploads/doctors/profile/' + doctor.profileImage %>"
+                                        alt="Dr. <%= doctor.name || 'Doctor' %>"
+                                        class="public-doctor-image"
+                                        loading="lazy"
+                                        onerror="
+                                            this.style.display='none';
+                                            this.nextElementSibling.style.display='flex';
+                                        "
+                                    >
+
+                                    <div
+                                        class="public-doctor-placeholder"
+                                        style="display:none;"
+                                    >
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                    </div>
+
+                                <% } else { %>
+
+                                    <div class="public-doctor-placeholder">
+
+                                        <i class="fa-solid fa-user-doctor"></i>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- VERIFIED BADGE -->
+
+                                <% if (doctor.isVerified === true) { %>
+
+                                    <span
+                                        class="public-doctor-verified"
+                                        title="Verified Doctor"
+                                    >
+
+                                        <i class="fa-solid fa-circle-check"></i>
+
+                                        Verified
+
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+
+                            <!-- =====================================
+                                 DOCTOR INFORMATION
+                            ====================================== -->
+
+                            <div class="public-doctor-information">
+
+
+                                <!-- SPECIALIZATION -->
+
+                                <span class="public-doctor-specialization">
+
+                                    <i class="fa-solid fa-stethoscope"></i>
+
+                                    <%= doctor.specialization ||
+                                        "Healthcare Professional" %>
+
+                                </span>
+
+
+                                <!-- NAME -->
+
+                                <h3>
+
+                                    Dr.
+                                    <%= doctor.name || "Doctor" %>
+
+                                </h3>
+
+
+                                <!-- QUALIFICATION -->
+
+                                <% if (doctor.qualification) { %>
+
+                                    <p class="public-doctor-qualification">
+
+                                        <i class="fa-solid fa-graduation-cap"></i>
+
+                                        <%= doctor.qualification %>
+
+                                    </p>
+
+                                <% } %>
+
+
+                                <!-- EXPERIENCE -->
+
+                                <% if (doctor.experience !== undefined &&
+                                       doctor.experience !== null) { %>
+
+                                    <p class="public-doctor-experience">
+
+                                        <i class="fa-solid fa-briefcase"></i>
+
+                                        <%= doctor.experience %>
+                                        <%= Number(doctor.experience) === 1
+                                            ? "Year"
+                                            : "Years" %>
+                                        Experience
+
+                                    </p>
+
+                                <% } %>
+
+
+                                <!-- HOSPITAL / CLINIC -->
+
+                                <% if (doctor.hospital || doctor.clinic) { %>
+
+                                    <div class="public-doctor-practice">
+
+                                        <% if (doctor.hospital) { %>
+
+                                            <span>
+
+                                                <i class="fa-solid fa-hospital"></i>
+
+                                                <%= doctor.hospital %>
+
+                                            </span>
+
+                                        <% } %>
+
+
+                                        <% if (doctor.clinic) { %>
+
+                                            <span>
+
+                                                <i class="fa-solid fa-location-dot"></i>
+
+                                                <%= doctor.clinic %>
+
+                                            </span>
+
+                                        <% } %>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- SHORT BIO -->
+
+                                <p class="public-doctor-bio">
+
+                                    <% if (doctor.bio) { %>
+
+                                        <%= doctor.bio.length > 145
+                                            ? doctor.bio.substring(0, 145) + "..."
+                                            : doctor.bio %>
+
+                                    <% } else { %>
+
+                                        Experienced healthcare professional
+                                        committed to providing quality,
+                                        patient-centered care.
+
+                                    <% } %>
+
+                                </p>
+
+
+                                <!-- =====================================
+                                     FOOTER
+                                ====================================== -->
+
+                                <div class="public-doctor-footer">
+
+
+                                    <!-- STATUS -->
+
+                                    <div class="public-doctor-status">
+
+                                        <% if (doctor.isVerified === true) { %>
+
+                                            <span class="status-dot verified"></span>
+
+                                            <span>
+                                                Verified Doctor
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <span class="status-dot"></span>
+
+                                            <span>
+                                                Professional
+                                            </span>
+
+                                        <% } %>
+
+                                    </div>
+
+
+                                    <!-- PROFILE -->
+
+                                    <a
+                                        href="/doctors/<%= doctor._id %>"
+                                        class="public-view-profile"
+                                    >
+
+                                        View Profile
+
+                                        <i class="fa-solid fa-arrow-right"></i>
+
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    <% }); %>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+                <div class="public-doctors-empty">
+
+                    <div class="public-empty-icon">
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+                    <h3>
+                        No Doctors Available
+                    </h3>
+
+                    <p>
+                        Our healthcare professionals will appear
+                        here once their profiles are available.
+                    </p>
+
+                    <a
+                        href="/"
+                        class="public-empty-btn"
+                    >
+                        Back to Home
+                    </a>
+
+                </div>
+
+            <% } %>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         CTA
+    ========================================================== -->
+
+    <section class="public-doctors-cta">
+
+        <div class="public-doctors-container">
+
+            <div class="public-doctors-cta-content">
+
+                <div>
+
+                    <span class="public-section-label">
+                        NEED MEDICAL HELP?
+                    </span>
+
+                    <h2>
+                        Find the right doctor for your needs.
+                    </h2>
+
+                    <p>
+                        Explore our specialists and choose a
+                        healthcare professional that matches
+                        your requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="public-doctors-cta-actions">
+
+                    <a
+                        href="/doctors"
+                        class="public-cta-primary"
+                    >
+                        Explore Doctors
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                    <a
+                        href="/contact"
+                        class="public-cta-secondary"
+                    >
+                        Contact Us
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<%- include("../layouts/footer") %>

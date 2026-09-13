@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#0f766e"
+>
+
+<meta
+    name="description"
+    content="MediCore - Smart and secure doctor appointment management system"
+>
+
+<title>
+    <%= title || "MediCore - Doctor Appointment System" %>
+</title>
+
+
+<!-- =====================================================
+     FONT AWESOME
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+>
+
+
+<!-- =====================================================
+     GOOGLE FONT
+====================================================== -->
+
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+
+<!-- =====================================================
+     GLOBAL CSS
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="/css/style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/navbar.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/footer.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/home.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/auth.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/responsive.css"
+>
+
+
+<!-- =====================================================
+     AUTH PAGES CSS
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="/css/login.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/register.css"
+>
+
+<link
+    rel="stylesheet"
+    href="/css/forgot-password.css"
+>
+
+
+<!-- =====================================================
+     GLOBAL MEDICORE VARIABLES
+====================================================== -->
+
+<style>
+
+    :root {
+
+        --medicore-primary: #0f766e;
+        --medicore-primary-dark: #115e59;
+        --medicore-primary-light: #14b8a6;
+
+        --medicore-primary-soft: #ecfdf5;
+
+        --medicore-blue: #2563eb;
+        --medicore-blue-soft: #eff6ff;
+
+        --medicore-text: #0f172a;
+        --medicore-text-secondary: #475569;
+        --medicore-muted: #94a3b8;
+
+        --medicore-border: #e2e8f0;
+        --medicore-bg: #f8fafc;
+
+        --medicore-white: #ffffff;
+
+        --medicore-radius-sm: 8px;
+        --medicore-radius-md: 12px;
+        --medicore-radius-lg: 18px;
+        --medicore-radius-xl: 24px;
+
+        --medicore-shadow-sm:
+            0 4px 15px rgba(15, 23, 42, .04);
+
+        --medicore-shadow-md:
+            0 10px 30px rgba(15, 23, 42, .07);
+
+        --medicore-transition:
+            all .25s ease;
+    }
+
+
+    /* =================================================
+       GLOBAL RESET
+    ================================================= */
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+    body {
+
+        margin: 0;
+
+        font-family:
+            "Poppins",
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+
+        color: var(--medicore-text);
+
+        background:
+            var(--medicore-bg);
+
+        -webkit-font-smoothing: antialiased;
+
+        text-rendering: optimizeLegibility;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+
+        box-sizing: border-box;
+    }
+
+
+    img {
+
+        max-width: 100%;
+
+        height: auto;
+    }
+
+
+    button,
+    input,
+    textarea,
+    select {
+
+        font-family: inherit;
+    }
+
+
+    button,
+    a {
+
+        -webkit-tap-highlight-color:
+            transparent;
+    }
+
+
+    a {
+
+        transition:
+            var(--medicore-transition);
+    }
+
+
+    /* =================================================
+       SELECTION
+    ================================================= */
+
+    ::selection {
+
+        background:
+            rgba(20, 184, 166, .22);
+
+        color:
+            var(--medicore-primary-dark);
+    }
+
+
+    /* =================================================
+       SCROLLBAR
+    ================================================= */
+
+    ::-webkit-scrollbar {
+
+        width: 8px;
+        height: 8px;
+    }
+
+
+    ::-webkit-scrollbar-track {
+
+        background:
+            #f1f5f9;
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+
+        background:
+            #99cfc8;
+
+        border-radius:
+            20px;
+    }
+
+
+    ::-webkit-scrollbar-thumb:hover {
+
+        background:
+            var(--medicore-primary);
+    }
+
+
+    /* =================================================
+       GLOBAL FOCUS ACCESSIBILITY
+    ================================================= */
+
+    :focus-visible {
+
+        outline:
+            3px solid rgba(20, 184, 166, .25);
+
+        outline-offset:
+            2px;
+    }
+
+
+    /* =================================================
+       PAGE LOADING
+    ================================================= */
+
+    body {
+
+        opacity: 1;
+
+        animation:
+            medicorePageIn .25s ease;
+    }
+
+
+    @keyframes medicorePageIn {
+
+        from {
+
+            opacity: 0;
+        }
+
+        to {
+
+            opacity: 1;
+        }
+    }
+
+
+    /* =================================================
+       MOBILE GLOBAL IMPROVEMENTS
+    ================================================= */
+
+    @media (max-width: 768px) {
+
+        body {
+
+            font-size: 14px;
+        }
+    }
+
+
+    @media (max-width: 480px) {
+
+        ::-webkit-scrollbar {
+
+            width: 5px;
+        }
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     MAIN NAVIGATION
+====================================================== -->
+
+<%- include("navbar") %>
+
+
+<!-- =====================================================
+     PAGE CONTENT STARTS AFTER THIS LINE
+====================================================== -->
+

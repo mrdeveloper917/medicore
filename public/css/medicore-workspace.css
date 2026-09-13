@@ -1,0 +1,114 @@
+/* Shared application skin — aligned with the public MediCore home experience. */
+:root {
+  --mc-primary: #087f8c;
+  --mc-primary-dark: #075d67;
+  --mc-primary-light: #eaf8f8;
+  --mc-blue: #1769e8;
+  --mc-green: #19a67b;
+  --mc-dark: #09253d;
+  --mc-text: #17324a;
+  --mc-muted: #64778b;
+  --mc-soft: #f7fafc;
+  --mc-border: #e5edf2;
+  --mc-shadow-sm: 0 8px 25px rgba(9,37,61,.06);
+  --mc-shadow: 0 20px 55px rgba(9,37,61,.10);
+}
+
+body { background: var(--mc-soft); color: var(--mc-text); }
+.dashboard { min-height: 100vh; background: radial-gradient(circle at 100% 0, rgba(23,105,232,.055), transparent 32%), var(--mc-soft); }
+
+/* Navigation */
+.doctor-navbar, .patient-navbar {
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid var(--mc-border);
+  box-shadow: 0 4px 20px rgba(9,37,61,.05);
+  backdrop-filter: blur(14px);
+}
+.navbar-container, .patient-navbar-container { max-width: 1440px; width: 100%; margin: auto; padding: 13px 30px; }
+.logo-link, .patient-logo-link { color: var(--mc-dark); font-size: 21px; letter-spacing: -.04em; }
+.logo-link i, .patient-logo-link i { color: var(--mc-primary); font-size: 24px; }
+.navbar-links { gap: 3px; justify-content: flex-end; }
+.navbar-links a { color: var(--mc-muted); padding: 9px 11px; border-radius: 9px; font-size: 12px; font-weight: 600; }
+.navbar-links a i { color: var(--mc-primary); font-size: 13px; }
+.navbar-links a:hover, .navbar-links a:focus-visible { color: var(--mc-primary); background: var(--mc-primary-light); transform: none; }
+.navbar-divider { background: var(--mc-border); }
+.logout-link { color: #c24b4b !important; }
+.logout-link i { color: #c24b4b !important; }
+.menu-toggle { color: var(--mc-primary); }
+
+/* Workspace heading and page surface */
+.topbar {
+  position: static; min-height: 92px; padding: 21px clamp(18px, 3vw, 42px);
+  color: var(--mc-text); background: transparent; border: 0; box-shadow: none;
+}
+.topbar h2 { color: var(--mc-dark); font-size: 21px; font-weight: 700; letter-spacing: -.035em; }
+.topbar p { margin-top: 3px; color: var(--mc-muted); font-size: 11px; }
+.topbar-right, .top-icons { gap: 15px; }
+.search-box { border: 1px solid var(--mc-border); border-radius: 11px; padding: 9px 13px; box-shadow: none; }
+.search-box i { color: var(--mc-primary); }
+.search-box input { color: var(--mc-text); font-size: 11px; }
+.profile img, .top-icons img { border: 2px solid var(--mc-primary-light); }
+.page-content, .content, .availability-container, .earnings-page {
+  width: min(100% - 48px, 1360px); max-width: 1360px; margin: 0 auto 46px; padding: 0;
+}
+
+/* Shared cards, panels and data views */
+.dashboard-card, .profile-card, .earning-card, .earning-section, .schedule-card,
+.availability-info, .appointment-card, .details-card, .medical-card, .report-card,
+.prescription-card, .patient-card, .form-card, .content-card, .table-container {
+  border: 1px solid var(--mc-border) !important; border-radius: 18px !important;
+  background: #fff !important; box-shadow: var(--mc-shadow-sm) !important;
+}
+.dashboard-card, .profile-card, .earning-section, .schedule-card, .form-card, .content-card { overflow: hidden; }
+.card-header, .section-heading {
+  border-bottom: 1px solid var(--mc-border); background: linear-gradient(90deg, #fff, #fbfefe);
+}
+.card-header h2, .section-heading h2, .profile-card h2 { color: var(--mc-dark); }
+.card-header i, .section-heading i { color: var(--mc-primary); }
+.stat-card, .profile-stat-card, .summary-card, .analytics-item {
+  border: 1px solid var(--mc-border) !important; border-radius: 16px !important;
+  background: #fff !important; box-shadow: var(--mc-shadow-sm);
+}
+.stat-card:hover, .profile-stat-card:hover, .earning-card:hover, .quick-actions a:hover {
+  transform: translateY(-4px); border-color: rgba(8,127,140,.28) !important; box-shadow: var(--mc-shadow) !important;
+}
+
+/* Consistent controls and actions */
+button, .btn, .primary-btn, .add-btn, .edit-profile-btn, .view-btn, .save-btn, .submit-btn {
+  border-radius: 10px !important; background: var(--mc-primary) !important; color: #fff !important;
+  border-color: var(--mc-primary) !important; box-shadow: 0 8px 18px rgba(8,127,140,.16);
+}
+button:hover, .btn:hover, .primary-btn:hover, .add-btn:hover, .edit-profile-btn:hover, .view-btn:hover, .save-btn:hover, .submit-btn:hover {
+  background: var(--mc-primary-dark) !important; transform: translateY(-1px);
+}
+.btn-secondary, .cancel-btn, .back-btn { color: var(--mc-primary) !important; background: #fff !important; border: 1px solid var(--mc-border) !important; box-shadow: none; }
+input, select, textarea { border: 1px solid var(--mc-border) !important; border-radius: 10px !important; color: var(--mc-text) !important; background: #fff !important; }
+input:focus, select:focus, textarea:focus { outline: 3px solid rgba(8,127,140,.13) !important; border-color: var(--mc-primary) !important; }
+label { color: var(--mc-muted); font-weight: 600; }
+table thead, .table-header { background: var(--mc-primary-light) !important; color: var(--mc-dark); }
+table th { color: var(--mc-primary-dark) !important; }
+table tr { border-color: var(--mc-border) !important; }
+table tbody tr:hover { background: #fbfefe; }
+
+/* Home-style page headings for screens that already provide one. */
+.page-label, .page-eyebrow, .section-label { color: var(--mc-primary) !important; font-weight: 800; letter-spacing: .14em; }
+.earnings-header h1, .availability-header h1 { color: var(--mc-dark); letter-spacing: -.045em; }
+.earnings-header p, .availability-header p { color: var(--mc-muted); }
+.earning-card h2, .profile-stat-card h2, .summary-card h3, .analytics-item h2 { color: var(--mc-dark); }
+.earning-badge, .membership-badge, .verified { background: var(--mc-primary-light) !important; color: var(--mc-primary-dark) !important; }
+.availability-status, .earnings-header-icon, .day-icon { color: var(--mc-primary) !important; background: var(--mc-primary-light) !important; }
+.toggle-slider { background: #cad8dc; }
+input:checked + .toggle-slider { background: var(--mc-primary) !important; }
+
+@media (max-width: 900px) {
+  .navbar-container, .patient-navbar-container { padding: 12px 18px; }
+  .page-content, .content, .availability-container, .earnings-page { width: min(100% - 32px, 1360px); }
+}
+@media (max-width: 768px) {
+  .navbar-menu { background: #fff; border-bottom: 1px solid var(--mc-border); }
+  .navbar-links a { color: var(--mc-text); border-radius: 0; }
+  .navbar-links a:hover { background: var(--mc-primary-light); }
+  .topbar { min-height: auto; padding: 20px 16px; align-items: flex-start; }
+  .topbar-right .search-box { display: none; }
+  .page-content, .content, .availability-container, .earnings-page { width: min(100% - 24px, 1360px); margin-bottom: 28px; }
+}

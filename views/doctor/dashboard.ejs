@@ -1,0 +1,2829 @@
+<%- include("../layouts/doctorHeader", { title: "Doctor Dashboard", user }) %>
+
+<style>
+
+/* =========================================================
+   MEDICORE DOCTOR DASHBOARD
+   Premium • Responsive • Modern
+   ========================================================= */
+
+.page-content {
+    padding: 28px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   WELCOME BANNER
+   ========================================================= */
+
+.doctor-banner {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 260px;
+    padding: 38px 44px;
+    margin-bottom: 26px;
+
+    border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,.18), transparent 30%),
+        linear-gradient(135deg, #0f766e, #0d9488 55%, #14b8a6);
+
+    color: #fff;
+
+    box-shadow:
+        0 18px 45px rgba(15,118,110,.20);
+}
+
+.doctor-banner::before {
+    content: "";
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: 180px;
+    top: -150px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.07);
+}
+
+.doctor-banner::after {
+    content: "";
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: 50px;
+    bottom: -110px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.07);
+}
+
+.banner-left {
+    position: relative;
+    z-index: 2;
+
+    max-width: 680px;
+}
+
+.banner-left h1 {
+    margin: 0 0 12px;
+
+    font-size: 34px;
+    line-height: 1.25;
+    font-weight: 800;
+
+    letter-spacing: -.6px;
+}
+
+.banner-left p {
+    max-width: 590px;
+
+    margin: 0 0 24px;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    color: rgba(255,255,255,.88);
+}
+
+.banner-right {
+    position: relative;
+    z-index: 2;
+
+    width: 280px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.banner-right img {
+    width: 100%;
+    max-width: 270px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 18px 25px rgba(0,0,0,.15));
+
+    transform: translateY(12px);
+}
+
+.primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 12px 18px;
+
+    border-radius: 11px;
+
+    background: #fff;
+    color: #0f766e;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: .2s ease;
+}
+
+.primary-btn::after {
+    content: "→";
+    font-size: 16px;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.15);
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 26px;
+}
+
+.stat-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 21px;
+
+    background: #fff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 6px 22px rgba(15,23,42,.045);
+
+    overflow: hidden;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.stat-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -30px;
+    bottom: -40px;
+
+    width: 100px;
+    height: 100px;
+
+    border-radius: 50%;
+
+    background: #f8fafc;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 14px 30px rgba(15,23,42,.08);
+}
+
+.stat-card .icon {
+    position: relative;
+    z-index: 1;
+
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 18px;
+}
+
+.stat-card .icon.blue {
+    background: #eaf2ff;
+    color: #2563eb;
+}
+
+.stat-card .icon.green {
+    background: #e8faf6;
+    color: #0f766e;
+}
+
+.stat-card .icon.orange {
+    background: #fff5e6;
+    color: #d97706;
+}
+
+.stat-card .icon.purple {
+    background: #f3edff;
+    color: #7c3aed;
+}
+
+.stat-card h2 {
+    position: relative;
+    z-index: 2;
+
+    margin: 0 0 4px;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    color: #172033;
+}
+
+.stat-card p {
+    position: relative;
+    z-index: 2;
+
+    margin: 0;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.quick-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 13px;
+
+    margin-bottom: 28px;
+}
+
+.quick-actions a {
+    min-height: 88px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 13px;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+    color: #344054;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 17px rgba(15,23,42,.035);
+
+    transition: .2s ease;
+}
+
+.quick-actions a i {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eefbf9;
+    color: #0f766e;
+
+    font-size: 14px;
+}
+
+.quick-actions a:hover {
+    border-color: #b7ebe4;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 24px rgba(15,118,110,.09);
+
+    color: #0f766e;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(320px, .85fr);
+
+    gap: 22px;
+
+    margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   DASHBOARD CARD
+   ========================================================= */
+
+.dashboard-card {
+    min-width: 0;
+
+    background: #fff;
+
+    border: 1px solid #e8edf3;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 7px 25px rgba(15,23,42,.045);
+
+    transition:
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.dashboard-card:hover {
+    box-shadow:
+        0 12px 30px rgba(15,23,42,.065);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.card-header {
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.card-header h2 {
+    margin: 0;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    color: #172033;
+}
+
+.card-header a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #0f766e;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.card-header a::after {
+    content: "→";
+}
+
+.card-header a:hover {
+    color: #0b625c;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.appointment-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 12px;
+}
+
+.appointment-table th {
+    padding: 13px 18px;
+
+    background: #f8fafc;
+
+    color: #667085;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-align: left;
+
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.appointment-table td {
+    padding: 15px 18px;
+
+    border-bottom: 1px solid #f0f2f5;
+
+    color: #475467;
+
+    vertical-align: middle;
+}
+
+.appointment-table tbody tr {
+    transition: background .18s ease;
+}
+
+.appointment-table tbody tr:hover {
+    background: #f8fbfc;
+}
+
+.appointment-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   PATIENT INFO
+   ========================================================= */
+
+.patient-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.patient-info img {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 11px;
+
+    background: #f2f4f7;
+
+    border: 1px solid #e6ebf0;
+}
+
+.patient-info strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 12px;
+
+    color: #172033;
+}
+
+.patient-info small {
+    display: block;
+
+    font-size: 9px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.badge.pending {
+    background: #fff5dc;
+    color: #b7791f;
+}
+
+.badge.approved {
+    background: #e6f8f3;
+    color: #087f5b;
+}
+
+.badge.completed {
+    background: #eaf2ff;
+    color: #2563eb;
+}
+
+.badge.cancelled {
+    background: #fff0f0;
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   TABLE ACTIONS
+   ========================================================= */
+
+.table-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.table-actions form {
+    margin: 0;
+}
+
+.view-btn,
+.approve-btn {
+    border: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 30px;
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.view-btn {
+    background: #f0fdfa;
+    color: #0f766e;
+}
+
+.view-btn:hover {
+    background: #dff7f2;
+}
+
+.approve-btn {
+    background: #eaf8ef;
+    color: #15803d;
+}
+
+.approve-btn:hover {
+    background: #d8f3df;
+}
+
+
+/* =========================================================
+   UPCOMING APPOINTMENTS
+   ========================================================= */
+
+.upcoming-list {
+    padding: 8px 18px;
+}
+
+.upcoming-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 4px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.upcoming-item:last-child {
+    border-bottom: none;
+}
+
+.upcoming-item img {
+    width: 43px;
+    height: 43px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    border: 1px solid #e8edf3;
+}
+
+.upcoming-item h4 {
+    margin: 0 0 3px;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    color: #172033;
+}
+
+.upcoming-item p {
+    margin: 0 0 3px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+.upcoming-item small {
+    color: #0f766e;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PATIENT LIST
+   ========================================================= */
+
+.patient-list {
+    padding: 8px 20px;
+}
+
+.patient-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 2px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.patient-item:last-child {
+    border-bottom: none;
+}
+
+.patient-item > img {
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    border: 1px solid #e8edf3;
+}
+
+.patient-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.patient-details h4 {
+    margin: 0 0 3px;
+
+    font-size: 12px;
+    font-weight: 750;
+
+    color: #172033;
+}
+
+.patient-details p {
+    margin: 0 0 2px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+.patient-details small {
+    font-size: 9px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    padding: 20px;
+}
+
+.summary-card {
+    padding: 18px;
+
+    text-align: center;
+
+    border: 1px solid #edf1f5;
+
+    border-radius: 15px;
+
+    background: #fafcfd;
+
+    transition: .2s ease;
+}
+
+.summary-card:hover {
+    background: #f5fbfa;
+
+    transform: translateY(-2px);
+}
+
+.summary-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    color: #0f766e;
+}
+
+.summary-card p {
+    margin: 0;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notification-list {
+    padding: 7px 20px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 14px 2px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #e7faf7;
+
+    color: #0f766e;
+
+    font-size: 13px;
+}
+
+.notification-content {
+    min-width: 0;
+}
+
+.notification-content h4 {
+    margin: 0 0 4px;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    color: #172033;
+}
+
+.notification-content p {
+    margin: 0 0 4px;
+
+    font-size: 10px;
+    line-height: 1.5;
+
+    color: #667085;
+}
+
+.notification-content small {
+    font-size: 9px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   REVENUE
+   ========================================================= */
+
+.revenue-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 13px;
+
+    padding: 20px;
+}
+
+.revenue-box {
+    padding: 17px;
+
+    border-radius: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid #edf1f5;
+}
+
+.revenue-box span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    color: #667085;
+}
+
+.revenue-box h2 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    color: #172033;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+   ========================================================= */
+
+.performance-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 13px;
+
+    padding: 20px;
+}
+
+.performance-box {
+    padding: 17px;
+
+    text-align: center;
+
+    border-radius: 14px;
+
+    background: #fafcfd;
+
+    border: 1px solid #edf1f5;
+}
+
+.performance-box h3 {
+    margin: 0 0 6px;
+
+    font-size: 19px;
+    font-weight: 800;
+
+    color: #0f766e;
+}
+
+.performance-box p {
+    margin: 0;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   WEEKLY STATS
+   ========================================================= */
+
+.stats-list {
+    padding: 9px 20px;
+}
+
+.stats-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 2px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.stats-row:last-child {
+    border-bottom: none;
+}
+
+.stats-row span {
+    font-size: 11px;
+
+    color: #667085;
+}
+
+.stats-row strong {
+    min-width: 30px;
+
+    text-align: center;
+
+    padding: 4px 7px;
+
+    border-radius: 7px;
+
+    background: #eefbf9;
+
+    color: #0f766e;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   CHARTS
+   ========================================================= */
+
+.chart-container {
+    position: relative;
+
+    min-height: 280px;
+
+    padding: 20px;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+
+    max-height: 280px;
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.calendar-navigation button {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e4e9ef;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: #475467;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.calendar-navigation button:hover {
+    background: #eefbf9;
+
+    color: #0f766e;
+
+    border-color: #b9e9e2;
+}
+
+#calendarTitle {
+    min-width: 110px;
+
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    color: #344054;
+}
+
+.calendar {
+    padding: 18px 20px 22px;
+}
+
+.weekdays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 5px;
+
+    margin-bottom: 7px;
+}
+
+.weekdays span {
+    padding: 7px 0;
+
+    text-align: center;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    color: #98a2b3;
+}
+
+#calendarDays {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 5px;
+}
+
+#calendarDays > * {
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+
+    color: #475467;
+}
+
+#calendarDays > *:hover {
+    background: #eefbf9;
+
+    color: #0f766e;
+}
+
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.timeline {
+    position: relative;
+
+    padding: 17px 22px 17px 35px;
+}
+
+.timeline::before {
+    content: "";
+
+    position: absolute;
+
+    left: 44px;
+    top: 25px;
+    bottom: 25px;
+
+    width: 1px;
+
+    background: #dcebe8;
+}
+
+.timeline-item {
+    position: relative;
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 11px 0;
+}
+
+.timeline-dot {
+    position: relative;
+    z-index: 2;
+
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    margin-left: 0;
+
+    border-radius: 50%;
+
+    background: #e1f7f3;
+
+    border: 5px solid #fff;
+
+    box-shadow:
+        0 0 0 1px #8bd8ce;
+}
+
+.timeline-content strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 11px;
+
+    color: #0f766e;
+}
+
+.timeline-content p {
+    margin: 0 0 3px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    color: #172033;
+}
+
+.timeline-content small {
+    font-size: 9px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   GOAL
+   ========================================================= */
+
+.goal-box {
+    padding: 25px;
+}
+
+.goal-box h1 {
+    margin: 0 0 14px;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    color: #0f766e;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 9px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #e8f1f0;
+}
+
+.progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(90deg, #0f766e, #14b8a6);
+
+    transition: width .5s ease;
+}
+
+.goal-box p {
+    margin: 10px 0 0;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+
+.activity-list {
+    padding: 8px 20px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 2px;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item > i {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #eaf8f4;
+
+    color: #0f766e;
+
+    font-size: 12px;
+}
+
+.activity-item h4 {
+    margin: 0 0 3px;
+
+    font-size: 11px;
+
+    color: #172033;
+}
+
+.activity-item small {
+    font-size: 9px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    padding: 45px 20px;
+
+    text-align: center;
+}
+
+.empty-state i {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 12px;
+
+    border-radius: 15px;
+
+    background: #f0fdfa;
+
+    color: #0f766e;
+
+    font-size: 21px;
+}
+
+.empty-state h3 {
+    margin: 0 0 6px;
+
+    font-size: 14px;
+
+    color: #172033;
+}
+
+.empty-state p {
+    margin: 0;
+
+    font-size: 10px;
+
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1200
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .quick-actions {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .doctor-banner {
+        padding: 32px;
+    }
+
+    .banner-right {
+        width: 230px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 900
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .page-content {
+        padding: 20px;
+    }
+
+    .doctor-banner {
+        min-height: 230px;
+    }
+
+    .banner-left h1 {
+        font-size: 28px;
+    }
+
+    .banner-right {
+        width: 190px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .performance-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 650
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .page-content {
+        padding: 14px;
+    }
+
+    .doctor-banner {
+        min-height: auto;
+
+        padding: 25px 22px;
+
+        border-radius: 18px;
+    }
+
+    .banner-right {
+        display: none;
+    }
+
+    .banner-left h1 {
+        font-size: 24px;
+    }
+
+    .banner-left p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .summary-grid,
+    .performance-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .dashboard-card {
+        border-radius: 16px;
+    }
+
+    .card-header {
+        padding: 16px;
+    }
+
+    .appointment-table {
+        min-width: 700px;
+    }
+
+    .dashboard-card:has(.appointment-table) {
+        overflow-x: auto;
+    }
+
+    .revenue-summary {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 450
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .page-content {
+        padding: 10px;
+    }
+
+    .doctor-banner {
+        padding: 22px 18px;
+    }
+
+    .banner-left h1 {
+        font-size: 21px;
+    }
+
+    .primary-btn {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .quick-actions {
+        gap: 9px;
+    }
+
+    .quick-actions a {
+        min-height: 78px;
+
+        font-size: 10px;
+    }
+
+    .summary-grid,
+    .performance-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+        padding: 17px;
+    }
+
+    .stat-card h2 {
+        font-size: 21px;
+    }
+
+}
+
+
+/* =========================================================
+   SMOOTH SCROLL
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+    background: #bdeee8;
+    color: #064e49;
+}
+
+</style>
+
+
+<!-- =========================================================
+     WELCOME BANNER
+     ========================================================= -->
+
+<section class="page-content">
+
+    <section class="doctor-banner">
+
+        <div class="banner-left">
+
+            <h1>
+                Welcome Back,
+                Dr. <%= user.firstName %> 👋
+            </h1>
+
+            <p>
+                Manage appointments, patients,
+                prescriptions and your availability
+                from one professional dashboard.
+            </p>
+
+            <a
+                href="/doctor/appointments"
+                class="primary-btn"
+            >
+                View Today's Appointments
+            </a>
+
+        </div>
+
+
+        <div class="banner-right">
+
+            <img
+                src="/images/dashboard/doctor.png"
+                alt="Doctor Dashboard"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STATISTICS
+         ===================================================== -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="icon blue">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <div>
+                <h2>
+                    <%= stats.todayAppointments || 0 %>
+                </h2>
+
+                <p>
+                    Today's Appointments
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon green">
+                <i class="fa-solid fa-user-group"></i>
+            </div>
+
+            <div>
+                <h2>
+                    <%= stats.totalPatients || 0 %>
+                </h2>
+
+                <p>
+                    Total Patients
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon orange">
+                <i class="fa-solid fa-file-prescription"></i>
+            </div>
+
+            <div>
+                <h2>
+                    <%= stats.pendingPrescriptions || 0 %>
+                </h2>
+
+                <p>
+                    Pending Prescriptions
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="icon purple">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <div>
+                <h2>
+                    ₹ <%= stats.monthlyRevenue || 0 %>
+                </h2>
+
+                <p>
+                    Monthly Revenue
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUICK ACTIONS
+         ===================================================== -->
+
+    <section class="quick-actions">
+
+        <a href="/doctor/appointments">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Appointments</span>
+        </a>
+
+        <a href="/doctor/patients">
+            <i class="fa-solid fa-hospital-user"></i>
+            <span>Patients</span>
+        </a>
+
+        <a href="/doctor/prescriptions">
+            <i class="fa-solid fa-file-prescription"></i>
+            <span>Prescriptions</span>
+        </a>
+
+        <a href="/doctor/availability">
+            <i class="fa-solid fa-clock"></i>
+            <span>Availability</span>
+        </a>
+
+        <a href="/doctor/reports">
+            <i class="fa-solid fa-file-medical"></i>
+            <span>Reports</span>
+        </a>
+
+        <a href="/doctor/earnings">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Earnings</span>
+        </a>
+
+    </section>
+
+
+    <!-- =====================================================
+         TODAY + UPCOMING
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Today's Appointments -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Today's Appointments
+                </h2>
+
+                <a href="/doctor/appointments">
+                    View All
+                </a>
+
+            </div>
+
+
+            <% if(todayAppointments && todayAppointments.length){ %>
+
+                <table class="appointment-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Patient</th>
+                            <th>Time</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% todayAppointments.forEach(item=>{ %>
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="patient-info">
+
+                                        <img
+                                            src="<%= item.patient.profileImage || '/images/default-user.png' %>"
+                                            alt="Patient"
+                                        >
+
+                                        <div>
+
+                                            <strong>
+                                                <%= item.patient.firstName %>
+                                                <%= item.patient.lastName %>
+                                            </strong>
+
+                                            <small>
+                                                ID :
+                                                <%= item.patient._id.toString().slice(-6).toUpperCase() %>
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <%= item.appointmentTime %>
+                                </td>
+
+
+                                <td>
+                                    <%= item.department %>
+                                </td>
+
+
+                                <td>
+
+                                    <% if(item.status==="Pending"){ %>
+
+                                        <span class="badge pending">
+                                            Pending
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <% if(item.status==="Approved"){ %>
+
+                                        <span class="badge approved">
+                                            Approved
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <% if(item.status==="Completed"){ %>
+
+                                        <span class="badge completed">
+                                            Completed
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <% if(item.status==="Cancelled"){ %>
+
+                                        <span class="badge cancelled">
+                                            Cancelled
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-actions">
+
+                                        <a
+                                            href="/doctor/appointment/<%= item._id %>"
+                                            class="view-btn"
+                                        >
+                                            View
+                                        </a>
+
+
+                                        <% if(item.status==="Pending"){ %>
+
+                                            <form
+                                                action="/doctor/appointment/<%= item._id %>/approve"
+                                                method="POST"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="approve-btn"
+                                                >
+                                                    Approve
+                                                </button>
+
+                                            </form>
+
+                                        <% } %>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-calendar-xmark"></i>
+
+                    <h3>
+                        No appointments today
+                    </h3>
+
+                    <p>
+                        Your schedule is clear for today.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+
+        <!-- Upcoming -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Upcoming Appointments
+                </h2>
+
+            </div>
+
+
+            <% if(upcomingAppointments && upcomingAppointments.length){ %>
+
+                <div class="upcoming-list">
+
+                    <% upcomingAppointments.forEach(item=>{ %>
+
+                        <div class="upcoming-item">
+
+                            <img
+                                src="<%= item.patient.profileImage || '/images/default-user.png' %>"
+                                alt="Patient"
+                            >
+
+                            <div>
+
+                                <h4>
+                                    <%= item.patient.firstName %>
+                                    <%= item.patient.lastName %>
+                                </h4>
+
+                                <p>
+                                    <%= item.appointmentDate.toDateString() %>
+                                </p>
+
+                                <small>
+                                    <%= item.appointmentTime %>
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-calendar"></i>
+
+                    <p>
+                        No upcoming appointments.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         PATIENTS + PRESCRIPTIONS
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Recent Patients -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Patients
+                </h2>
+
+                <a href="/doctor/patients">
+                    View All
+                </a>
+
+            </div>
+
+
+            <% if(recentPatients && recentPatients.length){ %>
+
+                <div class="patient-list">
+
+                    <% recentPatients.forEach(patient=>{ %>
+
+                        <div class="patient-item">
+
+                            <img
+                                src="<%= patient.profileImage || '/images/default-user.png' %>"
+                                alt="Patient"
+                            >
+
+                            <div class="patient-details">
+
+                                <h4>
+                                    <%= patient.firstName %>
+                                    <%= patient.lastName %>
+                                </h4>
+
+                                <p>
+                                    <%= patient.gender %> •
+                                    <%= patient.age || "N/A" %> Years
+                                </p>
+
+                                <small>
+                                    <%= patient.phone %>
+                                </small>
+
+                            </div>
+
+
+                            <a
+                                href="/doctor/patient/<%= patient._id %>"
+                                class="view-btn"
+                            >
+                                View
+                            </a>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-user-slash"></i>
+
+                    <h3>
+                        No Recent Patients
+                    </h3>
+
+                    <p>
+                        Recent patient visits will appear here.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+
+        <!-- Recent Prescriptions -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Prescriptions
+                </h2>
+
+                <a href="/doctor/prescriptions">
+                    View All
+                </a>
+
+            </div>
+
+
+            <% if(recentPrescriptions && recentPrescriptions.length){ %>
+
+                <table class="appointment-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Patient</th>
+                            <th>Medicine</th>
+                            <th>Date</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% recentPrescriptions.forEach(item=>{ %>
+
+                            <tr>
+
+                                <td>
+                                    <%= item.patient.firstName %>
+                                    <%= item.patient.lastName %>
+                                </td>
+
+                                <td>
+                                    <%= item.medicine %>
+                                </td>
+
+                                <td>
+                                    <%= new Date(item.createdAt).toLocaleDateString() %>
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-file-circle-xmark"></i>
+
+                    <h3>
+                        No Prescriptions
+                    </h3>
+
+                    <p>
+                        Prescriptions created by you will appear here.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONSULTATION SUMMARY
+         ===================================================== -->
+
+    <section class="dashboard-card">
+
+        <div class="card-header">
+
+            <h2>
+                Consultation Summary
+            </h2>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <h3>
+                    <%= consultation.completed || 0 %>
+                </h3>
+
+                <p>
+                    Completed Consultations
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>
+                    <%= consultation.pending || 0 %>
+                </h3>
+
+                <p>
+                    Pending Consultations
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>
+                    <%= consultation.cancelled || 0 %>
+                </h3>
+
+                <p>
+                    Cancelled Appointments
+                </p>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <h3>
+                    <%= consultation.total || 0 %>
+                </h3>
+
+                <p>
+                    Total Consultations
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         NOTIFICATIONS + REVENUE
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Notifications -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Notifications
+                </h2>
+
+                <a href="/doctor/notifications">
+                    View All
+                </a>
+
+            </div>
+
+
+            <% if(notifications && notifications.length){ %>
+
+                <div class="notification-list">
+
+                    <% notifications.forEach(notification=>{ %>
+
+                        <div class="notification-item">
+
+                            <div class="notification-icon">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                            </div>
+
+
+                            <div class="notification-content">
+
+                                <h4>
+                                    <%= notification.title %>
+                                </h4>
+
+                                <p>
+                                    <%= notification.message %>
+                                </p>
+
+                                <small>
+                                    <%= new Date(notification.createdAt).toLocaleString() %>
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-bell-slash"></i>
+
+                    <h3>
+                        No Notifications
+                    </h3>
+
+                    <p>
+                        Everything is up to date.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+
+        <!-- Revenue -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Revenue Summary
+                </h2>
+
+            </div>
+
+
+            <div class="revenue-summary">
+
+                <div class="revenue-box">
+
+                    <span>
+                        Today
+                    </span>
+
+                    <h2>
+                        ₹ <%= revenue.today || 0 %>
+                    </h2>
+
+                </div>
+
+
+                <div class="revenue-box">
+
+                    <span>
+                        This Week
+                    </span>
+
+                    <h2>
+                        ₹ <%= revenue.week || 0 %>
+                    </h2>
+
+                </div>
+
+
+                <div class="revenue-box">
+
+                    <span>
+                        This Month
+                    </span>
+
+                    <h2>
+                        ₹ <%= revenue.month || 0 %>
+                    </h2>
+
+                </div>
+
+
+                <div class="revenue-box">
+
+                    <span>
+                        Total Revenue
+                    </span>
+
+                    <h2>
+                        ₹ <%= revenue.total || 0 %>
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         PERFORMANCE + WEEKLY
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Performance -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Doctor Performance
+                </h2>
+
+            </div>
+
+
+            <div class="performance-grid">
+
+                <div class="performance-box">
+
+                    <h3>
+                        ⭐ <%= performance.rating || "0.0" %>
+                    </h3>
+
+                    <p>
+                        Average Rating
+                    </p>
+
+                </div>
+
+
+                <div class="performance-box">
+
+                    <h3>
+                        <%= performance.successRate || 0 %>%
+                    </h3>
+
+                    <p>
+                        Success Rate
+                    </p>
+
+                </div>
+
+
+                <div class="performance-box">
+
+                    <h3>
+                        <%= performance.experience || 0 %>
+                    </h3>
+
+                    <p>
+                        Years Experience
+                    </p>
+
+                </div>
+
+
+                <div class="performance-box">
+
+                    <h3>
+                        <%= performance.reviews || 0 %>
+                    </h3>
+
+                    <p>
+                        Patient Reviews
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Weekly -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Weekly Statistics
+                </h2>
+
+            </div>
+
+
+            <div class="stats-list">
+
+                <div class="stats-row">
+                    <span>Monday</span>
+                    <strong><%= weekly.monday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Tuesday</span>
+                    <strong><%= weekly.tuesday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Wednesday</span>
+                    <strong><%= weekly.wednesday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Thursday</span>
+                    <strong><%= weekly.thursday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Friday</span>
+                    <strong><%= weekly.friday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Saturday</span>
+                    <strong><%= weekly.saturday || 0 %></strong>
+                </div>
+
+                <div class="stats-row">
+                    <span>Sunday</span>
+                    <strong><%= weekly.sunday || 0 %></strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         ANALYTICS
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+                <h2>
+                    Appointment Analytics
+                </h2>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="appointmentChart"></canvas>
+            </div>
+
+        </section>
+
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+                <h2>
+                    Revenue Analytics
+                </h2>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         CALENDAR + TODAY'S SCHEDULE
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Calendar -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Calendar
+                </h2>
+
+                <div class="calendar-navigation">
+
+                    <button id="prevMonth" type="button">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <span id="calendarTitle">
+                        Month Year
+                    </span>
+
+                    <button id="nextMonth" type="button">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="calendar">
+
+                <div class="weekdays">
+
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+
+                </div>
+
+                <div id="calendarDays"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Today's Schedule -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Today's Schedule
+                </h2>
+
+            </div>
+
+
+            <% if(todayAppointments && todayAppointments.length){ %>
+
+                <div class="timeline">
+
+                    <% todayAppointments.forEach(item=>{ %>
+
+                        <div class="timeline-item">
+
+                            <div class="timeline-dot"></div>
+
+                            <div class="timeline-content">
+
+                                <strong>
+                                    <%= item.appointmentTime %>
+                                </strong>
+
+                                <p>
+                                    <%= item.patient.firstName %>
+                                    <%= item.patient.lastName %>
+                                </p>
+
+                                <small>
+                                    <%= item.department %>
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                    <h3>
+                        Free Schedule
+                    </h3>
+
+                    <p>
+                        No appointments today.
+                    </p>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         GOALS + ACTIVITY
+         ===================================================== -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Monthly Goal -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Monthly Goal
+                </h2>
+
+            </div>
+
+
+            <div class="goal-box">
+
+                <h1>
+                    <%= goals.completed || 0 %>%
+                </h1>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        style=`width:<%= goals.completed || 0 %>%`
+                    ></div>
+
+                </div>
+
+
+                <p>
+                    Monthly consultation target completed.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recent Activity -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Recent Activity
+                </h2>
+
+            </div>
+
+
+            <% if(activities && activities.length){ %>
+
+                <div class="activity-list">
+
+                    <% activities.forEach(activity=>{ %>
+
+                        <div class="activity-item">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            <div>
+
+                                <h4>
+                                    <%= activity.title %>
+                                </h4>
+
+                                <small>
+                                    <%= activity.time %>
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    <h3>
+                        No Recent Activity
+                    </h3>
+
+                </div>
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+</section>
+
+
+<%- include("../layouts/doctorFooter") %>

@@ -1,0 +1,479 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    .prescription-page {
+        padding: 25px;
+        background: #f5f7fb;
+        min-height: calc(100vh - 100px);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        color: #1f2937;
+        font-size: 28px;
+    }
+
+    .page-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    .create-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #6366f1;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .create-btn:hover {
+        background: #4f46e5;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 11px;
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        font-size: 19px;
+    }
+
+    .stat-card h2 {
+        margin: 0;
+        color: #111827;
+    }
+
+    .stat-card p {
+        margin: 5px 0 0;
+        color: #6b7280;
+    }
+
+    .prescription-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .prescription-card {
+        background: white;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .patient-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .patient-image,
+    .patient-placeholder {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+    }
+
+    .patient-image {
+        object-fit: cover;
+    }
+
+    .patient-placeholder {
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .patient-info h3 {
+        margin: 0;
+        font-size: 17px;
+        color: #111827;
+    }
+
+    .patient-info small {
+        color: #6b7280;
+    }
+
+    .medicine-box {
+        padding: 17px 0;
+    }
+
+    .medicine-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9ca3af;
+        font-weight: 600;
+    }
+
+    .medicine-name {
+        font-size: 19px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-top: 5px;
+    }
+
+    .dosage {
+        margin-top: 8px;
+        color: #6366f1;
+        font-weight: 600;
+    }
+
+    .notes {
+        background: #f9fafb;
+        border-radius: 9px;
+        padding: 12px;
+        color: #6b7280;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    .date {
+        color: #9ca3af;
+        font-size: 12px;
+    }
+
+    .view-btn {
+        color: #6366f1;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        background: white;
+        padding: 70px 20px;
+        text-align: center;
+        border-radius: 16px;
+        color: #9ca3af;
+        grid-column: 1 / -1;
+    }
+
+    .empty-state i {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .empty-state h3 {
+        color: #374151;
+        margin: 5px 0;
+    }
+
+    @media (max-width: 1000px) {
+        .prescription-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 650px) {
+        .prescription-page {
+            padding: 15px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .stats,
+        .prescription-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .create-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+
+<div class="prescription-page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h1>Prescriptions</h1>
+            <p>Manage prescriptions for your patients</p>
+        </div>
+
+        <a
+            href="/doctor/prescriptions/create"
+            class="create-btn"
+        >
+            <i class="fas fa-plus"></i>
+            Create Prescription
+        </a>
+
+    </div>
+
+
+    <!-- STATS -->
+    <%
+        const totalPrescriptions =
+            prescriptions ? prescriptions.length : 0;
+
+        const uniquePatients = prescriptions
+            ? new Set(
+                prescriptions
+                    .filter(p => p.patient)
+                    .map(p => p.patient._id.toString())
+            ).size
+            : 0;
+    %>
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fas fa-prescription-bottle-medical"></i>
+            </div>
+
+            <h2>
+                <%= totalPrescriptions %>
+            </h2>
+
+            <p>Total Prescriptions</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+
+            <h2>
+                <%= uniquePatients %>
+            </h2>
+
+            <p>Patients</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+
+            <h2>
+                <%= prescriptions && prescriptions.length > 0 ? "Active" : "—" %>
+            </h2>
+
+            <p>Prescription Status</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRESCRIPTIONS -->
+    <div class="prescription-grid">
+
+        <% if (prescriptions && prescriptions.length > 0) { %>
+
+            <% prescriptions.forEach(function(item) { %>
+
+                <%
+                    const patientName =
+                        item.patient
+                        ? (
+                            (item.patient.firstName || "") +
+                            " " +
+                            (item.patient.lastName || "")
+                          ).trim() || "Patient"
+                        : "Patient";
+
+                    const initial =
+                        patientName.charAt(0).toUpperCase();
+                %>
+
+                <div class="prescription-card">
+
+                    <!-- PATIENT -->
+                    <div class="patient-info">
+
+                        <% if (item.patient && item.patient.profileImage) { %>
+
+                            <img
+                                src="<%= item.patient.profileImage %>"
+                                alt="Patient"
+                                class="patient-image"
+                            >
+
+                        <% } else { %>
+
+                            <div class="patient-placeholder">
+                                <%= initial %>
+                            </div>
+
+                        <% } %>
+
+
+                        <div>
+
+                            <h3>
+                                <%= patientName %>
+                            </h3>
+
+                            <small>
+                                <%= item.patient?.email || "No email" %>
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MEDICINE -->
+                    <div class="medicine-box">
+
+                        <div class="medicine-label">
+                            Medicine
+                        </div>
+
+                        <div class="medicine-name">
+                            <%= item.medicine || "Not specified" %>
+                        </div>
+
+                        <div class="dosage">
+
+                            <i class="fas fa-clock"></i>
+
+                            <%= item.dosage || "Dosage not specified" %>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+                    <% if (item.notes) { %>
+
+                        <div class="notes">
+
+                            <strong>
+                                <i class="fas fa-note-sticky"></i>
+                                Notes
+                            </strong>
+
+                            <br>
+
+                            <%= item.notes %>
+
+                        </div>
+
+                    <% } %>
+
+
+                    <!-- FOOTER -->
+                    <div class="card-footer">
+
+                        <span class="date">
+
+                            <i class="fas fa-calendar"></i>
+
+                            <%= item.createdAt
+                                ? new Date(
+                                    item.createdAt
+                                ).toLocaleDateString("en-IN", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric"
+                                })
+                                : "Date unavailable"
+                            %>
+
+                        </span>
+
+
+                        <a
+                            href="/doctor/prescriptions/<%= item._id %>"
+                            class="view-btn"
+                        >
+                            View Details
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            <% }); %>
+
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <i class="fas fa-prescription-bottle-medical"></i>
+
+                <h3>No Prescriptions Found</h3>
+
+                <p>
+                    You have not created any prescriptions yet.
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

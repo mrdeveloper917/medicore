@@ -1,0 +1,697 @@
+<%- include("../layouts/doctorHeader", {
+    title: "Edit Profile",
+    user: user
+}) %>
+
+
+<section class="page-content">
+
+    <div class="profile-card">
+
+        <div class="card-header">
+
+            <h2>
+                <i class="fa-solid fa-user-doctor"></i>
+                Edit Doctor Profile
+            </h2>
+
+        </div>
+
+
+        <!-- ==========================================
+             ERROR MESSAGE
+        =========================================== -->
+
+        <% if (typeof error !== "undefined" && error) { %>
+
+            <div
+                style="
+                    margin-bottom:20px;
+                    padding:14px 18px;
+                    border-radius:10px;
+                    background:#fef2f2;
+                    border:1px solid #fecaca;
+                    color:#b91c1c;
+                "
+            >
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <%= error %>
+
+            </div>
+
+        <% } %>
+
+
+
+        <!-- ==========================================
+             SUCCESS MESSAGE
+        =========================================== -->
+
+        <% if (typeof success !== "undefined" && success) { %>
+
+            <div
+                style="
+                    margin-bottom:20px;
+                    padding:14px 18px;
+                    border-radius:10px;
+                    background:#ecfdf5;
+                    border:1px solid #a7f3d0;
+                    color:#047857;
+                "
+            >
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <%= success %>
+
+            </div>
+
+        <% } %>
+
+
+
+       <!-- ============================================================
+     DOCTOR EDIT PROFILE
+============================================================ -->
+
+<form
+    id="doctorProfileForm"
+    action="/doctor/profile/update"
+    method="POST"
+    enctype="multipart/form-data"
+>
+
+    <!-- ========================================================
+         ERROR MESSAGE
+    ========================================================= -->
+
+    <% if (typeof error !== "undefined" && error) { %>
+
+        <div
+            style="
+                background:#fff1f2;
+                border:1px solid #fecdd3;
+                color:#be123c;
+                padding:15px 18px;
+                border-radius:12px;
+                margin-bottom:20px;
+                font-weight:600;
+            "
+        >
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <%= error %>
+
+        </div>
+
+    <% } %>
+
+
+    <!-- ========================================================
+         SUCCESS MESSAGE
+    ========================================================= -->
+
+    <% if (typeof success !== "undefined" && success) { %>
+
+        <div
+            style="
+                background:#ecfdf5;
+                border:1px solid #a7f3d0;
+                color:#047857;
+                padding:15px 18px;
+                border-radius:12px;
+                margin-bottom:20px;
+                font-weight:600;
+            "
+        >
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <%= success %>
+
+        </div>
+
+    <% } %>
+
+
+    <!-- ========================================================
+         PERSONAL INFORMATION
+    ======================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- ====================================================
+             FIRST NAME
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="firstName">
+                First Name *
+            </label>
+
+            <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value="<%= user?.firstName || '' %>"
+                placeholder="Enter first name"
+                required
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             LAST NAME
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="lastName">
+                Last Name *
+            </label>
+
+            <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value="<%= user?.lastName || '' %>"
+                placeholder="Enter last name"
+                required
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             EMAIL
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="<%= user?.email || '' %>"
+                placeholder="Enter email"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             PHONE
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="phone">
+                Phone *
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value="<%= user?.phone || '' %>"
+                placeholder="Enter phone number"
+                required
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             SPECIALIZATION
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="specialization">
+                Specialization
+            </label>
+
+            <input
+                type="text"
+                id="specialization"
+                name="specialization"
+                value="<%= user?.specialization || '' %>"
+                placeholder="e.g. Cardiologist"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             REGISTRATION NUMBER
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="registrationNumber">
+                Registration Number
+            </label>
+
+            <input
+                type="text"
+                id="registrationNumber"
+                name="registrationNumber"
+                value="<%= user?.registrationNumber || '' %>"
+                placeholder="Enter registration number"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             HOSPITAL
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="hostipal">
+                Hospital
+            </label>
+
+            <input
+                type="text"
+                id="hostipal"
+                name="hostipal"
+                value="<%= user?.hostipal || user?.hospital || '' %>"
+                placeholder="Enter hospital name"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             CLINIC
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="clinic">
+                Clinic
+            </label>
+
+            <input
+                type="text"
+                id="clinic"
+                name="clinic"
+                value="<%= user?.clinic || '' %>"
+                placeholder="Enter clinic name"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             EXPERIENCE
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="experience">
+                Experience (Years)
+            </label>
+
+            <input
+                type="number"
+                id="experience"
+                name="experience"
+                min="0"
+                step="1"
+                value="<%= user?.experience ?? '' %>"
+                placeholder="Example: 8"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             CONSULTATION FEE
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="consultationFee">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                Consultation Fee (₹) *
+
+            </label>
+
+            <input
+                type="number"
+                id="consultationFee"
+                name="consultationFee"
+                min="1"
+                step="1"
+                value="<%= user?.consultationFee ?? '' %>"
+                placeholder="Enter consultation fee"
+                required
+            >
+
+            <small
+                style="
+                    display:block;
+                    margin-top:6px;
+                    color:#64748b;
+                "
+            >
+                This amount will be charged to patients
+                for consultation.
+            </small>
+
+        </div>
+
+
+        <!-- ====================================================
+             ONLINE CONSULTATION FEE
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="onlineConsultationFee">
+
+                <i class="fa-solid fa-video"></i>
+
+                Online Consultation Fee (₹)
+
+            </label>
+
+            <input
+                type="number"
+                id="onlineConsultationFee"
+                name="onlineConsultationFee"
+                min="0"
+                step="1"
+                value="<%= user?.onlineConsultationFee ?? '' %>"
+                placeholder="Enter online consultation fee"
+            >
+
+        </div>
+
+
+        <!-- ====================================================
+             FOLLOW-UP DAYS
+        ===================================================== -->
+
+        <div class="form-group">
+
+            <label for="followUpDays">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Follow-up Days
+
+            </label>
+
+            <input
+                type="number"
+                id="followUpDays"
+                name="followUpDays"
+                min="0"
+                step="1"
+                value="<%= user?.followUpDays ?? '' %>"
+                placeholder="Example: 7"
+            >
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ========================================================
+         PROFESSIONAL BIO
+    ======================================================== -->
+
+    <div class="form-group">
+
+        <label for="bio">
+            Professional Bio
+        </label>
+
+        <textarea
+            id="bio"
+            name="bio"
+            rows="6"
+            placeholder="Write something about your professional experience..."
+        ><%= user?.bio || '' %></textarea>
+
+    </div>
+
+
+    <!-- ========================================================
+         LANGUAGES
+    ======================================================== -->
+
+    <div class="form-group">
+
+        <label for="languages">
+            Languages
+        </label>
+
+        <input
+            type="text"
+            id="languages"
+            name="languages"
+            value="<%= Array.isArray(user?.languages) ? user.languages.join(', ') : (user?.languages || '') %>"
+            placeholder="Hindi, English, Punjabi"
+        >
+
+        <small
+            style="
+                display:block;
+                margin-top:6px;
+                color:#64748b;
+            "
+        >
+            Enter languages separated by commas.
+        </small>
+
+    </div>
+
+
+    <!-- ========================================================
+         PROFILE IMAGE
+    ======================================================== -->
+
+    <div class="form-group">
+
+        <label for="profileImage">
+            Profile Image
+        </label>
+
+        <input
+            type="file"
+            id="profileImage"
+            name="profileImage"
+            accept="image/png,image/jpeg,image/jpg,image/webp"
+        >
+
+        <% if (user?.profileImage) { %>
+
+            <small
+                style="
+                    display:block;
+                    margin-top:8px;
+                    color:#64748b;
+                "
+            >
+                Current profile image is already uploaded.
+            </small>
+
+        <% } %>
+
+    </div>
+
+
+    <!-- ========================================================
+         COVER IMAGE
+    ======================================================== -->
+
+    <div class="form-group">
+
+        <label for="coverImage">
+            Cover Image
+        </label>
+
+        <input
+            type="file"
+            id="coverImage"
+            name="coverImage"
+            accept="image/png,image/jpeg,image/jpg,image/webp"
+        >
+
+        <% if (user?.coverImage) { %>
+
+            <small
+                style="
+                    display:block;
+                    margin-top:8px;
+                    color:#64748b;
+                "
+            >
+                Current cover image is already uploaded.
+            </small>
+
+        <% } %>
+
+    </div>
+
+
+    <!-- ========================================================
+         BUTTONS
+    ======================================================== -->
+
+    <div
+        style="
+            display:flex;
+            gap:12px;
+            margin-top:25px;
+            align-items:center;
+        "
+    >
+
+        <!-- SAVE -->
+
+        <button
+            type="submit"
+            class="edit-profile-btn"
+            id="saveProfileBtn"
+        >
+
+            <i class="fa-solid fa-floppy-disk"></i>
+
+            Save Changes
+
+        </button>
+
+
+        <!-- CANCEL -->
+
+        <a
+            href="/doctor/profile"
+            class="add-btn"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Cancel
+
+        </a>
+
+    </div>
+
+
+</form>
+
+
+<!-- ============================================================
+     SUBMIT SCRIPT
+============================================================ -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const form =
+            document.getElementById(
+                "doctorProfileForm"
+            );
+
+        const button =
+            document.getElementById(
+                "saveProfileBtn"
+            );
+
+
+        if (!form) {
+            return;
+        }
+
+
+        form.addEventListener(
+            "submit",
+            function () {
+
+                // --------------------------------------------
+                // Remove accidental spaces
+                // --------------------------------------------
+
+                const firstName =
+                    document.getElementById(
+                        "firstName"
+                    );
+
+                const lastName =
+                    document.getElementById(
+                        "lastName"
+                    );
+
+                const phone =
+                    document.getElementById(
+                        "phone"
+                    );
+
+
+                if (firstName) {
+                    firstName.value =
+                        firstName.value.trim();
+                }
+
+
+                if (lastName) {
+                    lastName.value =
+                        lastName.value.trim();
+                }
+
+
+                if (phone) {
+                    phone.value =
+                        phone.value.trim();
+                }
+
+
+                // --------------------------------------------
+                // Prevent double submission
+                // --------------------------------------------
+
+                if (button) {
+
+                    button.disabled = true;
+
+                    button.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+    </div>
+
+</section>
+
+
+<%- include("../layouts/doctorFooter") %>

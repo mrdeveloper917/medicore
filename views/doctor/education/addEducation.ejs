@@ -1,0 +1,84 @@
+<%- include("../../layouts/doctorHeader") %>
+
+    <div class="page-content">
+
+        <div class="profile-card">
+
+            <% if ((errors || []).length > 0) { %>
+                <div class="alert alert-danger">
+
+                    <ul>
+
+                        <% errors.forEach(error=>{ %>
+
+                            <li>
+
+                                <%= error.msg %>
+
+                            </li>
+
+                            <% }) %>
+
+                    </ul>
+
+                </div>
+
+                <% } %>
+
+                    <h2>Add Education</h2>
+
+                    <form action="/doctor/education/add" method="POST">
+
+                        <div class="form-group">
+
+                            <label>Degree</label>
+
+                            <input name="degree" value="<%= old?.degree || '' %>">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>College</label>
+
+                            <input type="text" name="college" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>University</label>
+
+                            <input type="text" name="university" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Start Year</label>
+
+                            <input type="number" name="startYear" required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>End Year</label>
+
+                            <input type="number" name="endYear" required>
+
+                        </div>
+
+                        <button class="btn btn-primary">
+
+                            Save Education
+
+                        </button>
+
+                    </form>
+
+        </div>
+
+    </div>
+
+    <%- include("../../layouts/doctorFooter") %>

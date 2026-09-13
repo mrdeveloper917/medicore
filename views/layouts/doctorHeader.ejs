@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>
+        <%= typeof title !== "undefined"
+            ? title
+            : "Doctor Dashboard"
+        %>
+    </title>
+
+
+    <!-- =========================================
+         MAIN CSS
+         ========================================= -->
+
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/doctor.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/doctorDashboard.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/doctorProfile.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/doctorExperience.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/doctorAwards.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/education.css"
+    />
+
+    <link
+        rel="stylesheet"
+        href="/css/medicore-workspace.css"
+    />
+
+
+    <!-- =========================================
+         GOOGLE FONT
+         ========================================= -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    />
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+
+    <!-- =========================================
+         FONT AWESOME
+         ========================================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =========================================
+         DOCTOR SIDEBAR
+         ========================================= -->
+
+    <%- include("doctorSidebar") %>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+         ========================================= -->
+
+    <div class="main-content">
+
+
+        <!-- =====================================
+             TOPBAR
+             ===================================== -->
+
+        <header class="topbar">
+
+
+            <!-- =================================
+                 WELCOME SECTION
+                 ================================= -->
+
+            <div class="topbar-welcome">
+
+                <span class="doctor-portal-label">
+                    MEDICORE DOCTOR PORTAL
+                </span>
+
+
+                <h2>
+
+                    <% if (
+                        typeof user !== "undefined" &&
+                        user
+                    ) { %>
+
+                        Welcome,
+                        Dr. <%= user.firstName %>
+
+                    <% } else { %>
+
+                        Welcome, Doctor
+
+                    <% } %>
+
+                </h2>
+
+
+                <p id="currentDate"></p>
+
+            </div>
+
+
+            <!-- =================================
+                 RIGHT SIDE
+                 ================================= -->
+
+            <div class="topbar-right">
+
+
+                <!-- =================================
+                     SEARCH
+                     ================================= -->
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        placeholder="Search patients..."
+                        aria-label="Search patients"
+                    />
+
+                </div>
+
+
+                <!-- =================================
+                     NOTIFICATIONS
+                     ================================= -->
+
+                <a
+                    class="notification"
+                    href="/doctor/notifications"
+                    aria-label="Notifications"
+                    title="Notifications"
+                >
+
+                    <i class="fa-solid fa-bell"></i>
+
+
+                    <span
+                        class="badge"
+                        data-notification-badge
+                        hidden
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- =================================
+                     DOCTOR PROFILE
+                     ================================= -->
+
+                <div
+                    class="profile"
+                    title="Profile"
+                >
+
+                    <img
+                        src="<%= typeof user !== 'undefined' &&
+                            user &&
+                            user.profileImage
+                                ? user.profileImage
+                                : '/images/default-user.png'
+                        %>"
+                        alt="Doctor Profile"
+                    />
+
+                    <span class="profile-online"></span>
+
+                </div>
+
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================================
+             PREMIUM HEADER CSS
+             ========================================= -->
+
+        <style>
+
+            /* =========================================
+               MEDICORE DOCTOR HEADER
+               ========================================= */
+
+
+            * {
+                box-sizing: border-box;
+            }
+
+
+            /* =========================================
+               TOPBAR
+               ========================================= */
+
+            .topbar {
+
+                min-height: 80px;
+
+                padding: 14px 30px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: space-between;
+
+                gap: 25px;
+
+                background:
+                    rgba(255, 255, 255, 0.97);
+
+                border-bottom:
+                    1px solid #e7edf3;
+
+                box-shadow:
+                    0 4px 20px
+                    rgba(15, 23, 42, 0.045);
+
+                position: sticky;
+
+                top: 0;
+
+                z-index: 1000;
+
+            }
+
+
+            /* =========================================
+               WELCOME
+               ========================================= */
+
+            .topbar-welcome {
+
+                min-width: 0;
+
+            }
+
+
+            .doctor-portal-label {
+
+                display: block;
+
+                margin-bottom: 3px;
+
+                font-size: 9px;
+
+                font-weight: 800;
+
+                letter-spacing: 1.5px;
+
+                color: #0f9b8e;
+
+            }
+
+
+            .topbar-welcome h2 {
+
+                margin: 0;
+
+                font-size: 21px;
+
+                line-height: 1.25;
+
+                font-weight: 700;
+
+                color: #172033;
+
+            }
+
+
+            .topbar-welcome p {
+
+                min-height: 17px;
+
+                margin: 4px 0 0;
+
+                font-size: 12px;
+
+                color: #667085;
+
+            }
+
+
+            /* =========================================
+               RIGHT SIDE
+               ========================================= */
+
+            .topbar-right {
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 13px;
+
+            }
+
+
+            /* =========================================
+               SEARCH BOX
+               ========================================= */
+
+            .search-box {
+
+                width: 245px;
+
+                height: 42px;
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 10px;
+
+                padding: 0 13px;
+
+                background: #f7f9fb;
+
+                border: 1px solid #e7edf3;
+
+                border-radius: 11px;
+
+                transition:
+                    border-color 0.2s ease,
+                    background 0.2s ease,
+                    box-shadow 0.2s ease;
+
+            }
+
+
+            .search-box i {
+
+                flex-shrink: 0;
+
+                color: #98a2b3;
+
+                font-size: 14px;
+
+            }
+
+
+            .search-box input {
+
+                width: 100%;
+
+                border: none;
+
+                outline: none;
+
+                background: transparent;
+
+                font-family: "Poppins", sans-serif;
+
+                font-size: 12px;
+
+                color: #172033;
+
+            }
+
+
+            .search-box input::placeholder {
+
+                color: #98a2b3;
+
+            }
+
+
+            .search-box:focus-within {
+
+                background: #ffffff;
+
+                border-color: #14b8a6;
+
+                box-shadow:
+                    0 0 0 3px
+                    rgba(20, 184, 166, 0.09);
+
+            }
+
+
+            .search-box:focus-within i {
+
+                color: #0f766e;
+
+            }
+
+
+            /* =========================================
+               NOTIFICATION
+               ========================================= */
+
+            .notification {
+
+                position: relative;
+
+                width: 42px;
+
+                height: 42px;
+
+                flex-shrink: 0;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                border-radius: 12px;
+
+                background: #f5f8fa;
+
+                color: #475467;
+
+                text-decoration: none;
+
+                font-size: 16px;
+
+                transition:
+                    background 0.2s ease,
+                    color 0.2s ease,
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+
+            }
+
+
+            .notification:hover {
+
+                background: #e6fffb;
+
+                color: #0f766e;
+
+                transform:
+                    translateY(-2px);
+
+                box-shadow:
+                    0 7px 16px
+                    rgba(15, 118, 110, 0.12);
+
+            }
+
+
+            /* =========================================
+               NOTIFICATION BADGE
+               ========================================= */
+
+            .notification .badge {
+
+                position: absolute;
+
+                top: -3px;
+
+                right: -3px;
+
+                min-width: 18px;
+
+                height: 18px;
+
+                padding: 0 4px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                border-radius: 50%;
+
+                background: #ef4444;
+
+                color: #ffffff;
+
+                border:
+                    2px solid #ffffff;
+
+                font-size: 8px;
+
+                font-weight: 800;
+
+                line-height: 1;
+
+            }
+
+
+            /* =========================================
+               PROFILE
+               ========================================= */
+
+            .profile {
+
+                position: relative;
+
+                width: 43px;
+
+                height: 43px;
+
+                flex-shrink: 0;
+
+                cursor: pointer;
+
+            }
+
+
+            .profile img {
+
+                width: 43px;
+
+                height: 43px;
+
+                display: block;
+
+                object-fit: cover;
+
+                border-radius: 50%;
+
+                background: #f2f4f7;
+
+                border:
+                    2px solid #e6fffb;
+
+                transition:
+                    transform 0.2s ease,
+                    border-color 0.2s ease,
+                    box-shadow 0.2s ease;
+
+            }
+
+
+            .profile:hover img {
+
+                transform: scale(1.05);
+
+                border-color: #14b8a6;
+
+                box-shadow:
+                    0 6px 16px
+                    rgba(20, 184, 166, 0.18);
+
+            }
+
+
+            /* =========================================
+               ONLINE STATUS
+               ========================================= */
+
+            .profile-online {
+
+                position: absolute;
+
+                right: 0;
+
+                bottom: 0;
+
+                width: 11px;
+
+                height: 11px;
+
+                border-radius: 50%;
+
+                background: #22c55e;
+
+                border:
+                    2px solid #ffffff;
+
+            }
+
+
+            /* =========================================
+               TABLET
+               ========================================= */
+
+            @media (max-width: 1000px) {
+
+                .topbar {
+
+                    padding:
+                        13px 20px;
+
+                }
+
+
+                .search-box {
+
+                    width: 200px;
+
+                }
+
+            }
+
+
+            /* =========================================
+               MOBILE
+               ========================================= */
+
+            @media (max-width: 768px) {
+
+                .topbar {
+
+                    min-height: 68px;
+
+                    padding:
+                        11px 16px;
+
+                }
+
+
+                .doctor-portal-label {
+
+                    font-size: 8px;
+
+                }
+
+
+                .topbar-welcome h2 {
+
+                    font-size: 17px;
+
+                }
+
+
+                .topbar-welcome p {
+
+                    font-size: 10px;
+
+                }
+
+
+                .search-box {
+
+                    display: none;
+
+                }
+
+
+                .notification {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+
+                .profile {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+
+                .profile img {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+            }
+
+
+            /* =========================================
+               SMALL MOBILE
+               ========================================= */
+
+            @media (max-width: 480px) {
+
+                .topbar {
+
+                    padding:
+                        10px 13px;
+
+                    gap: 10px;
+
+                }
+
+
+                .doctor-portal-label {
+
+                    display: none;
+
+                }
+
+
+                .topbar-welcome h2 {
+
+                    font-size: 15px;
+
+                }
+
+
+                .topbar-welcome p {
+
+                    display: none;
+
+                }
+
+
+                .topbar-right {
+
+                    gap: 8px;
+
+                }
+
+
+                .notification {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                    font-size: 14px;
+
+                }
+
+
+                .profile {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                }
+
+
+                .profile img {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                }
+
+
+                .profile-online {
+
+                    width: 9px;
+
+                    height: 9px;
+
+                }
+
+            }
+
+        </style>
+
+
+        <!-- =========================================
+             HEADER JAVASCRIPT
+             ========================================= -->
+
+        <script>
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+
+
+                    /* =================================
+                       CURRENT DATE
+                       ================================= */
+
+                    const dateElement =
+                        document.getElementById(
+                            "currentDate"
+                        );
+
+
+                    if (dateElement) {
+
+                        const today =
+                            new Date();
+
+
+                        dateElement.textContent =
+                            today.toLocaleDateString(
+                                "en-IN",
+                                {
+                                    weekday: "long",
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric"
+                                }
+                            );
+
+                    }
+
+
+                    /* =================================
+                       NOTIFICATION BADGE
+                       ================================= */
+
+                    const badge =
+                        document.querySelector(
+                            "[data-notification-badge]"
+                        );
+
+
+                    if (badge) {
+
+                        window
+                            .updateDoctorNotificationBadge =
+                            function (count) {
+
+                                count =
+                                    Number(count) || 0;
+
+
+                                if (count > 0) {
+
+                                    badge.textContent =
+                                        count > 99
+                                            ? "99+"
+                                            : count;
+
+                                    badge.hidden =
+                                        false;
+
+                                } else {
+
+                                    badge.textContent =
+                                        "0";
+
+                                    badge.hidden =
+                                        true;
+
+                                }
+
+                            };
+
+                    }
+
+
+                    /* =================================
+                       PROFILE CLICK
+                       ================================= */
+
+                    const profile =
+                        document.querySelector(
+                            ".profile"
+                        );
+
+
+                    if (profile) {
+
+                        profile.addEventListener(
+                            "click",
+                            function () {
+
+                                window.location.href =
+                                    "/doctor/profile";
+
+                            }
+                        );
+
+                    }
+
+                }
+            );
+
+        </script>
+
+
+        <!-- ==========================================
+             PAGE CONTENT WILL CONTINUE HERE
+             ========================================== -->

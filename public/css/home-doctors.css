@@ -1,0 +1,911 @@
+/* ============================================================
+   MEDICORE - PUBLIC DOCTORS PAGE
+============================================================ */
+
+.public-doctors-page {
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+
+/* ============================================================
+   CONTAINER
+============================================================ */
+
+.public-doctors-container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.public-doctors-hero {
+    position: relative;
+
+    padding: 100px 0 110px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #effcfb 0%,
+            #f8fbff 50%,
+            #eef5ff 100%
+        );
+}
+
+.public-doctors-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    top: -220px;
+    right: -120px;
+
+    border-radius: 50%;
+
+    background: rgba(20, 184, 166, 0.08);
+}
+
+.public-doctors-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    bottom: -180px;
+    left: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.06);
+}
+
+
+.public-doctors-hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 760px;
+
+    text-align: center;
+
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   HERO BADGE
+============================================================ */
+
+.public-doctors-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 22px;
+
+    padding: 10px 16px;
+
+    border: 1px solid #ccebe7;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    color: #087f76;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.public-doctors-badge i {
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   HERO TITLE
+============================================================ */
+
+.public-doctors-hero h1 {
+    margin: 0 0 20px;
+
+    color: #092b47;
+
+    font-size: clamp(42px, 6vw, 68px);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    font-weight: 800;
+}
+
+.public-doctors-hero h1 span {
+    display: inline-block;
+
+    color: #0f9f91;
+}
+
+
+/* ============================================================
+   HERO DESCRIPTION
+============================================================ */
+
+.public-doctors-hero p {
+    max-width: 680px;
+
+    margin: 0 auto;
+
+    color: #64748b;
+
+    font-size: 17px;
+
+    line-height: 1.75;
+}
+
+
+/* ============================================================
+   MAIN SECTION
+============================================================ */
+
+.public-doctors-section {
+    padding: 90px 0 100px;
+}
+
+
+/* ============================================================
+   SECTION HEADER
+============================================================ */
+
+.public-doctors-section-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 45px;
+}
+
+.public-section-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #0f9488;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.public-doctors-section-header h2 {
+    margin: 0 0 10px;
+
+    color: #102f49;
+
+    font-size: 34px;
+
+    line-height: 1.2;
+
+    font-weight: 750;
+}
+
+.public-doctors-section-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* ============================================================
+   COUNT
+============================================================ */
+
+.public-doctors-count {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 18px;
+
+    border: 1px solid #dbe7ef;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    white-space: nowrap;
+}
+
+.public-doctors-count strong {
+    color: #0f9488;
+
+    font-size: 22px;
+}
+
+.public-doctors-count span {
+    color: #64748b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   GRID
+============================================================ */
+
+.public-doctors-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 28px;
+}
+
+
+/* ============================================================
+   CARD
+============================================================ */
+
+.public-doctor-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebf1;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 30px rgba(15, 23, 42, 0.05);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.public-doctor-card:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.11);
+}
+
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+.public-doctor-image-wrapper {
+    position: relative;
+
+    height: 280px;
+
+    overflow: hidden;
+
+    background: #eaf1f5;
+}
+
+.public-doctor-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.4s ease;
+}
+
+.public-doctor-card:hover .public-doctor-image {
+    transform: scale(1.04);
+}
+
+
+/* ============================================================
+   PLACEHOLDER
+============================================================ */
+
+.public-doctor-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9f5f4,
+            #edf3f8
+        );
+}
+
+.public-doctor-placeholder i {
+    color: #6b8797;
+
+    font-size: 75px;
+}
+
+
+/* ============================================================
+   VERIFIED
+============================================================ */
+
+.public-doctor-verified {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 8px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.95);
+
+    color: #087f76;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 6px 20px rgba(15, 23, 42, 0.12);
+}
+
+
+/* ============================================================
+   INFORMATION
+============================================================ */
+
+.public-doctor-information {
+    padding: 25px;
+}
+
+
+/* ============================================================
+   SPECIALIZATION
+============================================================ */
+
+.public-doctor-specialization {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+
+    color: #0f9488;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* ============================================================
+   NAME
+============================================================ */
+
+.public-doctor-information h3 {
+    margin: 0 0 13px;
+
+    color: #102f49;
+
+    font-size: 22px;
+
+    font-weight: 750;
+}
+
+
+/* ============================================================
+   QUALIFICATION / EXPERIENCE
+============================================================ */
+
+.public-doctor-qualification,
+.public-doctor-experience {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 7px 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.public-doctor-qualification i,
+.public-doctor-experience i {
+    width: 16px;
+
+    color: #0f9488;
+}
+
+
+/* ============================================================
+   PRACTICE
+============================================================ */
+
+.public-doctor-practice {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 14px;
+
+    padding-top: 14px;
+
+    border-top: 1px solid #edf2f5;
+}
+
+.public-doctor-practice span {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.public-doctor-practice i {
+    margin-top: 2px;
+
+    width: 14px;
+
+    color: #0f9488;
+}
+
+
+/* ============================================================
+   BIO
+============================================================ */
+
+.public-doctor-bio {
+    min-height: 68px;
+
+    margin: 18px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.public-doctor-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #edf2f5;
+}
+
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+.public-doctor-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    font-weight: 650;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #94a3b8;
+}
+
+.status-dot.verified {
+    background: #10b981;
+}
+
+
+/* ============================================================
+   PROFILE BUTTON
+============================================================ */
+
+.public-view-profile {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    background: #0f9488;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.public-view-profile:hover {
+    transform: translateX(3px);
+
+    background: #087f76;
+}
+
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+
+.public-doctors-empty {
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 65px 30px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e4ebf1;
+
+    border-radius: 20px;
+}
+
+.public-empty-icon {
+    width: 80px;
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #edf8f7;
+}
+
+.public-empty-icon i {
+    color: #0f9488;
+
+    font-size: 32px;
+}
+
+.public-doctors-empty h3 {
+    margin: 0 0 10px;
+
+    color: #102f49;
+
+    font-size: 22px;
+}
+
+.public-doctors-empty p {
+    margin: 0 0 25px;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.public-empty-btn {
+    display: inline-flex;
+
+    padding: 11px 18px;
+
+    border-radius: 9px;
+
+    background: #0f9488;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   CTA
+============================================================ */
+
+.public-doctors-cta {
+    padding: 70px 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #083f4a,
+            #0f766e
+        );
+}
+
+.public-doctors-cta-content {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+.public-doctors-cta .public-section-label {
+    color: #8ce5db;
+}
+
+.public-doctors-cta h2 {
+    max-width: 650px;
+
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 32px;
+
+    line-height: 1.25;
+}
+
+.public-doctors-cta p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #c9e5e2;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   CTA BUTTONS
+============================================================ */
+
+.public-doctors-cta-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+}
+
+.public-cta-primary,
+.public-cta-secondary {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 13px 18px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+.public-cta-primary {
+    background: #ffffff;
+
+    color: #087f76;
+}
+
+.public-cta-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    color: #ffffff;
+}
+
+.public-cta-primary:hover,
+.public-cta-secondary:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 1000px) {
+
+    .public-doctors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .public-doctors-cta-content {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 700px) {
+
+    .public-doctors-container {
+        width: calc(100% - 30px);
+    }
+
+    .public-doctors-hero {
+        padding: 70px 0 75px;
+    }
+
+    .public-doctors-hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .public-doctors-hero p {
+        font-size: 15px;
+    }
+
+    .public-doctors-section {
+        padding: 60px 0 70px;
+    }
+
+    .public-doctors-section-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        margin-bottom: 30px;
+    }
+
+    .public-doctors-section-header h2 {
+        font-size: 28px;
+    }
+
+    .public-doctors-grid {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+    .public-doctor-image-wrapper {
+        height: 270px;
+    }
+
+    .public-doctor-information {
+        padding: 21px;
+    }
+
+    .public-doctors-cta {
+        padding: 55px 0;
+    }
+
+    .public-doctors-cta h2 {
+        font-size: 27px;
+    }
+
+    .public-doctors-cta-actions {
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .public-cta-primary,
+    .public-cta-secondary {
+        justify-content: center;
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (max-width: 450px) {
+
+    .public-doctor-footer {
+        align-items: flex-start;
+    }
+
+    .public-doctor-status {
+        max-width: 120px;
+    }
+
+}

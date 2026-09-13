@@ -1,0 +1,1042 @@
+<%- include("../layouts/patientHeader") %>
+
+<div class="patient-appointments">
+
+    <!-- Header -->
+    <div class="page-header">
+
+        <div>
+            <a href="/patient/dashboard" class="back-link">
+                ← Back to Dashboard
+            </a>
+
+            <h1>My Appointments</h1>
+
+            <p>
+                Manage and track all your doctor appointments.
+            </p>
+        </div>
+
+        <a href="/patient/book" class="book-btn">
+            + Book Appointment
+        </a>
+
+    </div>
+
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+
+            <div>
+                <span>Total</span>
+                <strong id="totalCount">
+                    <%= appointments ? appointments.length : 0 %>
+                </strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card pending">
+            <div class="stat-icon">⏳</div>
+
+            <div>
+                <span>Pending</span>
+                <strong id="pendingCount">0</strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card approved">
+            <div class="stat-icon">✓</div>
+
+            <div>
+                <span>Approved</span>
+                <strong id="approvedCount">0</strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card completed">
+            <div class="stat-icon">✓</div>
+
+            <div>
+                <span>Completed</span>
+                <strong id="completedCount">0</strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card cancelled">
+            <div class="stat-icon">✕</div>
+
+            <div>
+                <span>Cancelled</span>
+                <strong id="cancelledCount">0</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Controls -->
+    <div class="controls">
+
+        <div class="search-box">
+
+            <span>🔍</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search doctor or department..."
+            >
+
+        </div>
+
+
+        <select id="statusFilter">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="Pending">
+                Pending
+            </option>
+
+            <option value="Approved">
+                Approved
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+            <option value="Cancelled">
+                Cancelled
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- Appointments -->
+    <div class="appointments-container">
+
+        <% if (appointments && appointments.length > 0) { %>
+
+            <div class="appointments-list" id="appointmentsList">
+
+                <% appointments.forEach(function(appointment) { %>
+
+                    <%
+                        const doctor = appointment.doctor || {};
+
+                        const doctorName =
+                            "Dr. " +
+                            (doctor.firstName || "") +
+                            " " +
+                            (doctor.lastName || "");
+
+                        const appointmentDate =
+                            appointment.appointmentDate
+                                ? new Date(
+                                    appointment.appointmentDate
+                                  ).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                  )
+                                : "N/A";
+
+                        let statusClass =
+                            String(
+                                appointment.status || "Pending"
+                            ).toLowerCase();
+
+                        let specialization =
+                            doctor.specialization ||
+                            "General Physician";
+                    %>
+
+
+                    <div
+                        class="appointment-card"
+                        data-status="<%= appointment.status %>"
+                        data-search="<%= doctorName %> <%= appointment.department || '' %> <%= specialization %>"
+                    >
+
+                        <!-- Doctor Section -->
+                        <div class="doctor-section">
+
+                            <div class="doctor-avatar">
+
+                                <% if (doctor.profileImage) { %>
+
+                                    <img
+                                        src="<%= doctor.profileImage %>"
+                                        alt="Doctor"
+                                    >
+
+                                <% } else { %>
+
+                                    <span>
+                                        <%= (doctor.firstName || "D")
+                                            .charAt(0)
+                                            .toUpperCase() %>
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+
+                            <div class="doctor-details">
+
+                                <h2>
+                                    <%= doctorName.trim() %>
+                                </h2>
+
+                                <p>
+                                    <%= specialization %>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Status -->
+                        <div class="status-area">
+
+                            <span
+                                class="status-badge <%= statusClass %>"
+                            >
+                                <%= appointment.status %>
+                            </span>
+
+                        </div>
+
+
+                        <!-- Appointment Information -->
+                        <div class="appointment-info">
+
+                            <div class="info-item">
+
+                                <span class="info-label">
+                                    Department
+                                </span>
+
+                                <strong>
+                                    <%= appointment.department || "N/A" %>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <span class="info-label">
+                                    Date
+                                </span>
+
+                                <strong>
+                                    <%= appointmentDate %>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <span class="info-label">
+                                    Time
+                                </span>
+
+                                <strong>
+                                    <%= appointment.appointmentTime || "N/A" %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Actions -->
+                        <div class="appointment-actions">
+
+                            <a
+                                href="/patient/appointment/<%= appointment._id %>"
+                                class="view-btn"
+                            >
+                                View Details
+                            </a>
+
+
+                            <% if (
+                                appointment.status === "Pending" ||
+                                appointment.status === "Approved"
+                            ) { %>
+
+                                <form
+                                    action="/patient/appointment/<%= appointment._id %>/cancel"
+                                    method="POST"
+                                    class="cancel-form"
+                                    onsubmit="return confirmCancel();"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="cancel-btn"
+                                    >
+                                        Cancel Appointment
+                                    </button>
+
+                                </form>
+
+                            <% } %>
+
+                        </div>
+
+                    </div>
+
+                <% }); %>
+
+            </div>
+
+
+            <!-- No Search Result -->
+            <div
+                class="empty-search"
+                id="emptySearch"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    🔍
+                </div>
+
+                <h3>
+                    No appointments found
+                </h3>
+
+                <p>
+                    Try changing your search or status filter.
+                </p>
+
+            </div>
+
+
+        <% } else { %>
+
+            <!-- No Appointments -->
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📅
+                </div>
+
+                <h2>
+                    No Appointments Yet
+                </h2>
+
+                <p>
+                    You haven't booked any appointments yet.
+                </p>
+
+                <a
+                    href="/patient/book"
+                    class="book-btn"
+                >
+                    Book Your First Appointment
+                </a>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ============================
+   Main
+============================ */
+
+.patient-appointments {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
+
+
+/* ============================
+   Header
+============================ */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.page-header h1 {
+    margin: 0 0 7px;
+    font-size: 30px;
+    color: #111827;
+}
+
+.page-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* ============================
+   Book Button
+============================ */
+
+.book-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.book-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* ============================
+   Stats
+============================ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.05);
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-card span {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.stat-card strong {
+    font-size: 22px;
+    color: #111827;
+}
+
+.stat-card.pending .stat-icon {
+    background: #fff7ed;
+}
+
+.stat-card.approved .stat-icon {
+    background: #ecfdf5;
+}
+
+.stat-card.completed .stat-icon {
+    background: #f0fdf4;
+}
+
+.stat-card.cancelled .stat-icon {
+    background: #fef2f2;
+}
+
+
+/* ============================
+   Controls
+============================ */
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box span {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search-box input,
+.controls select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+.search-box input {
+    padding-left: 42px;
+}
+
+.search-box input:focus,
+.controls select:focus {
+    border-color: #2563eb;
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.controls select {
+    width: 180px;
+}
+
+
+/* ============================
+   Appointment Card
+============================ */
+
+.appointment-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 17px;
+    padding: 23px;
+    margin-bottom: 16px;
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, 0.05);
+
+    display: grid;
+    grid-template-columns:
+        2fr 1fr;
+
+    gap: 20px;
+}
+
+
+/* ============================
+   Doctor
+============================ */
+
+.doctor-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.doctor-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    font-size: 21px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.doctor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.doctor-details h2 {
+    margin: 0 0 5px;
+    font-size: 17px;
+    color: #111827;
+}
+
+.doctor-details p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* ============================
+   Status
+============================ */
+
+.status-area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.status-badge {
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-badge.pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.approved {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.status-badge.completed {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-badge.cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
+/* ============================
+   Information
+============================ */
+
+.appointment-info {
+    grid-column: 1 / -1;
+
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    padding: 17px 0;
+
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-label {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.info-item strong {
+    color: #374151;
+    font-size: 14px;
+}
+
+
+/* ============================
+   Actions
+============================ */
+
+.appointment-actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.view-btn,
+.cancel-btn {
+    padding: 10px 15px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.view-btn {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.view-btn:hover {
+    background: #dbeafe;
+}
+
+.cancel-btn {
+    border: 1px solid #fecaca;
+    background: #ffffff;
+    color: #dc2626;
+}
+
+.cancel-btn:hover {
+    background: #fef2f2;
+}
+
+
+/* ============================
+   Empty State
+============================ */
+
+.empty-state,
+.empty-search {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 17px;
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.empty-state h2,
+.empty-search h3 {
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.empty-state p,
+.empty-search p {
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+
+
+/* ============================
+   Responsive
+============================ */
+
+@media (max-width: 950px) {
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .controls select {
+        width: 100%;
+    }
+
+    .appointment-card {
+        grid-template-columns: 1fr;
+    }
+
+    .status-area {
+        justify-content: flex-start;
+    }
+
+    .appointment-info {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .patient-appointments {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-card {
+        padding: 18px;
+    }
+
+    .doctor-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================
+   Status Counts
+============================ */
+
+const appointmentCards =
+    document.querySelectorAll(
+        ".appointment-card"
+    );
+
+let pending = 0;
+let approved = 0;
+let completed = 0;
+let cancelled = 0;
+
+
+appointmentCards.forEach(card => {
+
+    const status =
+        card.dataset.status;
+
+    if (status === "Pending") {
+        pending++;
+    }
+
+    if (status === "Approved") {
+        approved++;
+    }
+
+    if (status === "Completed") {
+        completed++;
+    }
+
+    if (status === "Cancelled") {
+        cancelled++;
+    }
+
+});
+
+
+const pendingCount =
+    document.getElementById(
+        "pendingCount"
+    );
+
+const approvedCount =
+    document.getElementById(
+        "approvedCount"
+    );
+
+const completedCount =
+    document.getElementById(
+        "completedCount"
+    );
+
+const cancelledCount =
+    document.getElementById(
+        "cancelledCount"
+    );
+
+
+if (pendingCount)
+    pendingCount.textContent = pending;
+
+if (approvedCount)
+    approvedCount.textContent = approved;
+
+if (completedCount)
+    completedCount.textContent = completed;
+
+if (cancelledCount)
+    cancelledCount.textContent = cancelled;
+
+
+/* ============================
+   Search + Filter
+============================ */
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+const statusFilter =
+    document.getElementById(
+        "statusFilter"
+    );
+
+const emptySearch =
+    document.getElementById(
+        "emptySearch"
+    );
+
+
+function filterAppointments() {
+
+    const search =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : "";
+
+    const status =
+        statusFilter
+            ? statusFilter.value
+            : "all";
+
+    let visibleCount = 0;
+
+
+    appointmentCards.forEach(card => {
+
+        const cardSearch =
+            (
+                card.dataset.search ||
+                ""
+            ).toLowerCase();
+
+        const cardStatus =
+            card.dataset.status;
+
+
+        const matchesSearch =
+            cardSearch.includes(search);
+
+        const matchesStatus =
+            status === "all" ||
+            cardStatus === status;
+
+
+        if (
+            matchesSearch &&
+            matchesStatus
+        ) {
+
+            card.style.display = "grid";
+
+            visibleCount++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    if (emptySearch) {
+
+        emptySearch.style.display =
+            visibleCount === 0
+                ? "block"
+                : "none";
+
+    }
+
+}
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        filterAppointments
+    );
+
+}
+
+
+if (statusFilter) {
+
+    statusFilter.addEventListener(
+        "change",
+        filterAppointments
+    );
+
+}
+
+
+/* ============================
+   Cancel Confirmation
+============================ */
+
+function confirmCancel() {
+
+    return confirm(
+        "Are you sure you want to cancel this appointment?"
+    );
+
+}
+
+</script>
+
+<%- include("../layouts/patientFooter") %>

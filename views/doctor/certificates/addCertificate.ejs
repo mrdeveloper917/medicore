@@ -1,0 +1,449 @@
+<%- include("../../layouts/doctorHeader", { title: "Upload Certificate", user }) %>
+
+<style>
+    .certificate-form-page {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 35px 30px;
+    }
+
+    .form-header {
+        margin-bottom: 28px;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #64748b;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .back-link:hover {
+        color: #2563eb;
+    }
+
+    .form-header h1 {
+        margin: 0;
+        font-size: 30px;
+        color: #172033;
+        font-weight: 800;
+    }
+
+    .form-header p {
+        margin-top: 8px;
+        color: #718096;
+        font-size: 14px;
+    }
+
+    .certificate-form-card {
+        background: #fff;
+        border: 1px solid #e6ebf2;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #344054;
+    }
+
+    .required {
+        color: #ef4444;
+    }
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        border: 1px solid #dce2ea;
+        border-radius: 10px;
+        outline: none;
+        font-size: 14px;
+        color: #172033;
+        background: #fff;
+        transition: .2s;
+    }
+
+    .form-group input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .10);
+    }
+
+    .file-box {
+        border: 2px dashed #cbd5e1;
+        border-radius: 15px;
+        padding: 28px;
+        text-align: center;
+        background: #f8fafc;
+        cursor: pointer;
+        transition: .25s;
+    }
+
+    .file-box:hover {
+        border-color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .file-box input {
+        display: none;
+    }
+
+    .file-icon {
+        font-size: 38px;
+        margin-bottom: 10px;
+    }
+
+    .file-box strong {
+        display: block;
+        color: #344054;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .file-box span {
+        color: #8a95a6;
+        font-size: 12px;
+    }
+
+    .file-name {
+        margin-top: 10px;
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 700;
+        word-break: break-all;
+    }
+
+    .security-note {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        padding: 14px 16px;
+        background: #f0fdf4;
+        border: 1px solid #dcfce7;
+        border-radius: 12px;
+        color: #166534;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .security-note strong {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .form-actions {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 8px;
+        padding-top: 22px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+    }
+
+    .cancel-btn {
+        color: #475569;
+        background: #f1f5f9;
+    }
+
+    .cancel-btn:hover {
+        background: #e2e8f0;
+    }
+
+    .submit-btn {
+        color: #fff;
+        background: #2563eb;
+        box-shadow: 0 7px 18px rgba(37, 99, 235, .20);
+    }
+
+    .submit-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 700px) {
+
+        .certificate-form-page {
+            padding: 20px 15px;
+        }
+
+        .certificate-form-card {
+            padding: 20px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .full-width,
+        .security-note,
+        .form-actions {
+            grid-column: auto;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .cancel-btn,
+        .submit-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+
+<div class="certificate-form-page">
+
+    <!-- Header -->
+
+    <div class="form-header">
+
+        <a
+            href="/doctor/certificates"
+            class="back-link">
+
+            ← Back to Certificates
+
+        </a>
+
+        <h1>
+            Upload Certificate
+        </h1>
+
+        <p>
+            Add your medical license, qualification
+            or professional certificate.
+        </p>
+
+    </div>
+
+
+    <!-- Form Card -->
+
+    <div class="certificate-form-card">
+
+        <form
+            action="/doctor/certificates"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <div class="form-grid">
+
+
+                <!-- Certificate Title -->
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Certificate Title
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="e.g. MBBS Degree Certificate"
+                        required
+                        maxlength="150"
+                    >
+
+                </div>
+
+
+                <!-- Issued By -->
+
+                <div class="form-group">
+
+                    <label>
+                        Issued By
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="issuedBy"
+                        placeholder="e.g. Medical Council of India"
+                        required
+                        maxlength="150"
+                    >
+
+                </div>
+
+
+                <!-- Issue Date -->
+
+                <div class="form-group">
+
+                    <label>
+                        Issue Date
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        name="issueDate"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- File -->
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Certificate Document
+                        <span class="required">*</span>
+                    </label>
+
+                    <label class="file-box">
+
+                        <input
+                            type="file"
+                            name="certificate"
+                            id="certificateFile"
+                            accept=".jpg,.jpeg,.png,.webp,.pdf"
+                            required
+                        >
+
+                        <div class="file-icon">
+                            📜
+                        </div>
+
+                        <strong>
+                            Click to upload certificate
+                        </strong>
+
+                        <span>
+                            JPG, JPEG, PNG, WEBP or PDF
+                        </span>
+
+                        <div
+                            class="file-name"
+                            id="fileName">
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <!-- Security -->
+
+                <div class="security-note">
+
+                    <div>
+                        🔒
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Secure Document Storage
+                        </strong>
+
+                        Your certificate is securely stored
+                        and is accessible only through your
+                        authenticated doctor account.
+
+                    </div>
+
+                </div>
+
+
+                <!-- Actions -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="/doctor/certificates"
+                        class="cancel-btn">
+
+                        Cancel
+
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="submit-btn">
+
+                        📤 Upload Certificate
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const certificateFile =
+        document.getElementById("certificateFile");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    certificateFile.addEventListener("change", function () {
+
+        if (this.files && this.files.length > 0) {
+
+            fileName.textContent =
+                "Selected: " + this.files[0].name;
+
+        } else {
+
+            fileName.textContent = "";
+
+        }
+
+    });
+
+</script>
+
+
+<%- include("../../layouts/doctorFooter") %>

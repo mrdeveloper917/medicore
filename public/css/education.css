@@ -1,0 +1,344 @@
+/* ==========================================
+   DOCTOR EDUCATION PAGE
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+    color:#2d3436;
+}
+
+/* ==========================
+PAGE
+========================== */
+
+.page-content{
+    padding:35px;
+}
+
+/* ==========================
+HEADER
+========================== */
+
+.page-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.page-header h2{
+
+    font-size:32px;
+    color:#1f2937;
+    font-weight:700;
+}
+
+.page-header p{
+
+    color:#6b7280;
+    margin-top:6px;
+}
+
+/* ==========================
+BUTTON
+========================== */
+
+.btn-primary{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    border:none;
+    padding:13px 24px;
+    border-radius:12px;
+    font-weight:600;
+    text-decoration:none;
+    transition:.3s;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(37,99,235,.35);
+}
+
+/* ==========================
+EMPTY CARD
+========================== */
+
+.empty-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:70px 30px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.empty-card i{
+
+    font-size:65px;
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+}
+
+.empty-card h3{
+
+    margin-bottom:12px;
+
+    color:#111827;
+}
+
+.empty-card p{
+
+    color:#6b7280;
+}
+
+/* ==========================
+EDUCATION CARD
+========================== */
+
+.education-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-bottom:22px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.education-card:hover{
+
+    transform:translateY(-5px);
+}
+
+.education-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.education-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:28px;
+}
+
+.education-info h3{
+
+    font-size:22px;
+
+    margin-bottom:6px;
+
+    color:#111827;
+}
+
+.education-info h5{
+
+    color:#2563eb;
+
+    font-size:16px;
+
+    margin-bottom:5px;
+}
+
+.education-info p{
+
+    color:#6b7280;
+
+    font-size:14px;
+}
+
+/* ==========================
+YEAR BADGE
+========================== */
+
+.year{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    background:#eef4ff;
+
+    color:#2563eb;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+/* ==========================
+ACTION BUTTONS
+========================== */
+
+.action-buttons{
+
+    display:flex;
+
+    gap:12px;
+}
+
+.btn-edit{
+
+    background:#10b981;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn-delete{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:10px 20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn-edit:hover{
+
+    background:#059669;
+}
+
+.btn-delete:hover{
+
+    background:#dc2626;
+}
+
+/* ==========================
+ALERT
+========================== */
+
+.alert{
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    margin-bottom:25px;
+
+    font-size:15px;
+}
+
+.alert-success{
+
+    background:#dcfce7;
+
+    color:#166534;
+}
+
+.alert-danger{
+
+    background:#fee2e2;
+
+    color:#991b1b;
+}
+
+/* ==========================
+RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.education-card{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.action-buttons{
+
+width:100%;
+
+}
+
+.action-buttons button{
+
+flex:1;
+
+}
+
+}

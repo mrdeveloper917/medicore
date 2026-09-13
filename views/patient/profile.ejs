@@ -1,0 +1,961 @@
+<%- include("../layouts/patientHeader", { title: "Patient Profile" , user: user }) %>
+
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #14b8a6;
+            --primary-soft: #ecfdf5;
+            --text: #0f172a;
+            --text-soft: #334155;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --shadow: 0 10px 35px rgba(15, 23, 42, 0.07);
+            --shadow-hover: 0 16px 42px rgba(15, 23, 42, 0.10);
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+        }
+
+        .content {
+            width: 100%;
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 30px 24px 50px;
+        }
+
+        /* =========================================
+       PROFILE HERO
+    ========================================= */
+
+        .profile-header {
+            position: relative;
+            overflow: hidden;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            margin-bottom: 28px;
+        }
+
+        .profile-cover {
+            height: 165px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 12% 25%,
+                    rgba(255, 255, 255, 0.18) 0 75px,
+                    transparent 76px),
+                radial-gradient(circle at 82% 15%,
+                    rgba(255, 255, 255, 0.12) 0 110px,
+                    transparent 111px),
+                linear-gradient(135deg,
+                    #115e59 0%,
+                    #0f766e 45%,
+                    #0d9488 75%,
+                    #14b8a6 100%);
+        }
+
+        .profile-cover::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            right: -80px;
+            top: -140px;
+        }
+
+        .profile-cover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.04),
+                    transparent 50%,
+                    rgba(255, 255, 255, 0.06));
+        }
+
+        .profile-info {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 0 34px 28px;
+            margin-top: -55px;
+        }
+
+        .profile-image {
+            width: 125px;
+            height: 125px;
+            min-width: 125px;
+            padding: 5px;
+            position: relative;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #f1f5f9;
+        }
+
+        .camera-btn {
+            position: absolute;
+            right: 2px;
+            bottom: 3px;
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(15, 118, 110, 0.28);
+            transition: all 0.25s ease;
+        }
+
+        .camera-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.08);
+        }
+
+        .profile-info h2 {
+            margin: 50px 0 5px;
+            color: var(--text);
+            font-size: 29px;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+        }
+
+        .profile-info p {
+            margin: 0 0 12px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            background: var(--primary-soft);
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .verified i {
+            font-size: 13px;
+        }
+
+        /* =========================================
+       PROFILE CARDS
+    ========================================= */
+
+        .profile-card {
+            position: relative;
+            margin-bottom: 20px;
+            padding: 27px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .profile-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 0 23px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .profile-card h3::before {
+            content: "";
+            width: 5px;
+            height: 24px;
+            flex-shrink: 0;
+            border-radius: 5px;
+            background: linear-gradient(180deg,
+                    var(--primary),
+                    var(--primary-light));
+        }
+
+        .profile-card h3 i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* =========================================
+       FORM GRID
+    ========================================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .grid>div {
+            min-width: 0;
+        }
+
+        .grid>div:has(textarea) {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-soft);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #dbe3ec;
+            border-radius: 12px;
+            outline: none;
+            background: #f8fafc;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input,
+        select {
+            min-height: 48px;
+            padding: 0 14px;
+        }
+
+        textarea {
+            min-height: 110px;
+            padding: 13px 14px;
+            resize: vertical;
+            line-height: 1.55;
+        }
+
+        input:hover,
+        select:hover,
+        textarea:hover {
+            border-color: #a7c9c5;
+            background: #fff;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.09);
+        }
+
+        input[readonly] {
+            cursor: not-allowed;
+            color: #64748b;
+            background: #f1f5f9;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        /* =========================================
+       ACTION BUTTONS
+    ========================================= */
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 5px;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            min-height: 49px;
+            padding: 0 23px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 750;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+
+        .save-btn {
+            border: none;
+            background: linear-gradient(135deg,
+                    var(--primary),
+                    #0d9488);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.2);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 27px rgba(15, 118, 110, 0.28);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        .cancel-btn {
+            border: 1px solid var(--border);
+            background: #fff;
+            color: #475569;
+        }
+
+        .cancel-btn:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+            color: var(--text);
+        }
+
+        /* =========================================
+       RESPONSIVE - TABLET
+    ========================================= */
+
+        @media (max-width: 900px) {
+            .content {
+                padding: 24px 18px 40px;
+            }
+
+            .profile-info {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .profile-card {
+                padding: 23px;
+            }
+        }
+
+        /* =========================================
+       RESPONSIVE - MOBILE
+    ========================================= */
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 18px 13px 35px;
+            }
+
+            .profile-header {
+                border-radius: 20px;
+                margin-bottom: 20px;
+            }
+
+            .profile-cover {
+                height: 130px;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                padding: 0 18px 24px;
+                margin-top: -53px;
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 110px;
+                height: 110px;
+                min-width: 110px;
+            }
+
+            .camera-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .profile-info h2 {
+                margin: 3px 0 5px;
+                font-size: 24px;
+            }
+
+            .profile-info p {
+                margin-bottom: 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .grid>div:has(textarea) {
+                grid-column: span 1;
+            }
+
+            .profile-card {
+                padding: 21px 17px;
+                border-radius: 17px;
+                margin-bottom: 16px;
+            }
+
+            .profile-card h3 {
+                margin-bottom: 19px;
+                font-size: 16px;
+            }
+
+            .action-buttons {
+                width: 100%;
+                flex-direction: column-reverse;
+                gap: 10px;
+            }
+
+            .save-btn,
+            .cancel-btn {
+                width: 100%;
+            }
+        }
+
+        /* =========================================
+       RESPONSIVE - SMALL MOBILE
+    ========================================= */
+
+        @media (max-width: 430px) {
+            .content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .profile-cover {
+                height: 115px;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+                min-width: 100px;
+            }
+
+            .profile-info {
+                margin-top: -48px;
+            }
+
+            .profile-info h2 {
+                font-size: 21px;
+            }
+
+            .profile-info p {
+                font-size: 13px;
+            }
+
+            .profile-card {
+                padding: 18px 14px;
+            }
+
+            input,
+            select {
+                min-height: 46px;
+            }
+
+            textarea {
+                min-height: 100px;
+            }
+        }
+    </style>
+
+    <div class="content">
+
+
+        <!-- =========================================
+     PROFILE HEADER
+========================================== -->
+
+        <section class="profile-header">
+
+            <div class="profile-cover"></div>
+
+            <div class="profile-info">
+
+                <div class="profile-image">
+
+                    <img src="<%= user.profileImage ? user.profileImage : '/images/default-user.png' %>"
+                        id="profilePreview" alt="Profile">
+
+                    <label for="profileImage" class="camera-btn" title="Change profile photo">
+
+                        <i class="fa-solid fa-camera"></i>
+
+                    </label>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        <%= user.firstName %>
+                            <%= user.lastName %>
+                    </h2>
+
+                    <p>
+                        Patient ID :
+                        PAT-<%= String(user._id).slice(-6).toUpperCase() %>
+                    </p>
+
+                    <span class="verified">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Verified Account
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+     PROFILE FORM
+========================================== -->
+
+        <form action="/patient/profile" method="POST" enctype="multipart/form-data" id="profileForm">
+
+
+            <!-- Profile Image -->
+
+            <input type="file" id="profileImage" name="profileImage" hidden accept="image/*">
+
+
+            <!-- =====================================
+         PERSONAL INFORMATION
+    ====================================== -->
+
+            <div class="profile-card">
+
+                <h3>
+                    <i class="fa-solid fa-user"></i>
+                    Personal Information
+                </h3>
+
+                <div class="grid">
+
+                    <div>
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>"
+                            autocomplete="given-name">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input type="text" id="lastName" name="lastName" value="<%= user.lastName %>"
+                            autocomplete="family-name">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input type="email" id="email" value="<%= user.email %>" readonly autocomplete="email">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input type="text" id="phone" name="phone" value="<%= user.phone %>" autocomplete="tel">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="gender">
+                            Gender
+                        </label>
+
+                        <select id="gender" name="gender">
+
+                            <option value="Male" <%=user.gender==="Male" ? "selected" : "" %>>
+                                Male
+                            </option>
+
+                            <option value="Female" <%=user.gender==="Female" ? "selected" : "" %>>
+                                Female
+                            </option>
+
+                            <option value="Other" <%=user.gender==="Other" ? "selected" : "" %>>
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="dob">
+                            Date of Birth
+                        </label>
+
+                        <input type="date" id="dob" name="dob"
+                            value="<%= user.dob ? user.dob.toISOString().split('T')[0] : '' %>">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+         MEDICAL INFORMATION
+    ====================================== -->
+
+            <div class="profile-card">
+
+                <h3>
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    Medical Information
+                </h3>
+
+                <div class="grid">
+
+                    <div>
+
+                        <label for="bloodGroup">
+                            Blood Group
+                        </label>
+
+                        <input type="text" id="bloodGroup" name="bloodGroup" value="<%= user.bloodGroup || '' %>"
+                            placeholder="e.g. O+">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="height">
+                            Height (cm)
+                        </label>
+
+                        <input type="number" id="height" name="height" value="<%= user.height || '' %>" min="0"
+                            placeholder="e.g. 175">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="weight">
+                            Weight (kg)
+                        </label>
+
+                        <input type="number" id="weight" name="weight" value="<%= user.weight || '' %>" min="0"
+                            placeholder="e.g. 70">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="allergies">
+                            Allergies
+                        </label>
+
+                        <input type="text" id="allergies" name="allergies" value="<%= user.allergies || '' %>"
+                            placeholder="e.g. Penicillin, Dust">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="medicalConditions">
+                            Medical Conditions
+                        </label>
+
+                        <textarea id="medicalConditions" name="medicalConditions"
+                            placeholder="Mention any existing medical conditions..."><%= user.medicalConditions || '' %></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+         ADDRESS
+    ====================================== -->
+
+            <div class="profile-card">
+
+                <h3>
+                    <i class="fa-solid fa-location-dot"></i>
+                    Address
+                </h3>
+
+                <div class="grid">
+
+                    <div>
+
+                        <label for="address">
+                            Address
+                        </label>
+
+                        <textarea id="address" name="address"
+                            placeholder="Enter your complete address..."><%= user.address || '' %></textarea>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="city">
+                            City
+                        </label>
+
+                        <input type="text" id="city" name="city" value="<%= user.city || '' %>"
+                            autocomplete="address-level2">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="state">
+                            State
+                        </label>
+
+                        <input type="text" id="state" name="state" value="<%= user.state || '' %>"
+                            autocomplete="address-level1">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="country">
+                            Country
+                        </label>
+
+                        <input type="text" id="country" name="country" value="<%= user.country || '' %>"
+                            autocomplete="country-name">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="pincode">
+                            Pincode
+                        </label>
+
+                        <input type="text" id="pincode" name="pincode" value="<%= user.pincode || '' %>"
+                            autocomplete="postal-code">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+         EMERGENCY CONTACT
+    ====================================== -->
+
+            <div class="profile-card">
+
+                <h3>
+                    <i class="fa-solid fa-truck-medical"></i>
+                    Emergency Contact
+                </h3>
+
+                <div class="grid">
+
+                    <div>
+
+                        <label for="emergencyContact">
+                            Contact Name
+                        </label>
+
+                        <input type="text" id="emergencyContact" name="emergencyContact"
+                            value="<%= user.emergencyContact || '' %>" placeholder="Emergency contact name">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="emergencyPhone">
+                            Contact Number
+                        </label>
+
+                        <input type="text" id="emergencyPhone" name="emergencyPhone"
+                            value="<%= user.emergencyPhone || '' %>" placeholder="Emergency contact number">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+         INSURANCE
+    ====================================== -->
+
+            <div class="profile-card">
+
+                <h3>
+                    <i class="fa-solid fa-shield-heart"></i>
+                    Insurance
+                </h3>
+
+                <div class="grid">
+
+                    <div>
+
+                        <label for="insuranceProvider">
+                            Provider
+                        </label>
+
+                        <input type="text" id="insuranceProvider" name="insuranceProvider"
+                            value="<%= user.insuranceProvider || '' %>" placeholder="Insurance provider">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="insuranceNumber">
+                            Policy Number
+                        </label>
+
+                        <input type="text" id="insuranceNumber" name="insuranceNumber"
+                            value="<%= user.insuranceNumber || '' %>" placeholder="Policy number">
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="insuranceExpiry">
+                            Expiry
+                        </label>
+
+                        <input type="date" id="insuranceExpiry" name="insuranceExpiry"
+                            value="<%= user.insuranceExpiry ? user.insuranceExpiry.toISOString().split('T')[0] : '' %>">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+         ACTION BUTTONS
+    ====================================== -->
+
+            <div class="action-buttons">
+
+                <a href="/patient/dashboard" class="cancel-btn">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit" class="save-btn">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+    </div>
+
+    <script src="/js/patientProfile.js"></script>
+
+    <%- include("../layouts/patientFooter") %>

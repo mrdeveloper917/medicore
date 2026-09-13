@@ -1,0 +1,335 @@
+<%- include("../layouts/header", { title: "Login" }) %>
+
+
+<section class="auth-section">
+
+
+<!-- Decorative Background -->
+<div class="bg-shape shape-one"></div>
+<div class="bg-shape shape-two"></div>
+
+<div class="auth-container">
+
+    <!-- ================= LEFT PANEL ================= -->
+
+    <div class="auth-left">
+
+        <div class="left-glow glow-one"></div>
+        <div class="left-glow glow-two"></div>
+
+        <div class="left-content">
+
+            <div class="brand-badge">
+                <span class="brand-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </span>
+                <span>MediCore</span>
+            </div>
+
+            <div class="hero-text">
+
+                <span class="mini-title">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Your health, our priority
+                </span>
+
+                <h1>
+                    Welcome
+                    <span>Back.</span>
+                </h1>
+
+                <p>
+                    Access your healthcare journey in one secure place.
+                    Manage appointments, medical records, prescriptions
+                    and reports effortlessly.
+                </p>
+
+            </div>
+
+            <!-- Illustration -->
+
+            <div class="login-image">
+
+                <div class="image-glow"></div>
+
+                <div class="floating-card card-top">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <div>
+                        <strong>Appointments</strong>
+                        <span>Stay on schedule</span>
+                    </div>
+                </div>
+
+                <img
+                    src="/images/auth/login.png"
+                    alt="MediCore Healthcare">
+
+                <div class="floating-card card-bottom">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <div>
+                        <strong>100% Secure</strong>
+                        <span>Your data is protected</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Trust -->
+
+            <div class="security-info">
+
+                <div class="security-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div>
+                    <strong>Secure Healthcare Platform</strong>
+                    <span>
+                        Your personal information stays private and protected.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RIGHT PANEL ================= -->
+
+    <div class="auth-right">
+
+        <div class="form-box">
+
+            <!-- Mobile Logo -->
+
+            <div class="mobile-brand">
+                <span>
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </span>
+                MediCore
+            </div>
+
+
+            <!-- Header -->
+
+            <div class="form-header">
+
+                <span class="welcome-label">
+                    <i class="fa-solid fa-hand-wave"></i>
+                    Welcome back
+                </span>
+
+                <h2>
+                    Sign in to
+                    <span>MediCore</span>
+                </h2>
+
+                <p>
+                    Enter your credentials to access your dashboard.
+                </p>
+
+            </div>
+
+
+            <!-- Error -->
+
+            <% if (message) { %>
+
+                <div class="alert alert-error">
+
+                    <div class="alert-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+
+                    <div class="alert-content">
+                        <strong>Login Failed</strong>
+                        <span><%= message %></span>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- Success -->
+
+            <% if (success) { %>
+
+                <div class="alert alert-success">
+
+                    <div class="alert-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                    <div class="alert-content">
+                        <strong>Success</strong>
+                        <span><%= success %></span>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- Login Form -->
+
+            <form
+                action="/login"
+                method="POST"
+                id="loginForm">
+
+                <!-- Email -->
+
+                <div class="input-group">
+
+                    <label for="loginEmail">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+                            <i class="fa-regular fa-envelope"></i>
+                        </div>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="input-group">
+
+                    <div class="label-row">
+
+                        <label for="loginPassword">
+                            Password
+                        </label>
+
+                    </div>
+
+                    <div class="input-wrapper">
+
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+
+                        <input
+                            type="password"
+                            name="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="loginToggle"
+                            aria-label="Show password">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Options -->
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+
+                        <input
+                            type="checkbox"
+                            name="remember">
+
+                        <span class="custom-checkbox">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+
+                        <span>Remember me</span>
+
+                    </label>
+
+                    <a href="/forgot-password">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <!-- Button -->
+
+                <button
+                    class="login-btn"
+                    type="submit"
+                    id="loginBtn">
+
+                    <span>Sign In Securely</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- Register -->
+
+            <div class="bottom-link">
+
+                <span>New to MediCore?</span>
+
+                <a href="/register">
+                    Create an account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <!-- Secure Login -->
+
+            <div class="login-trust">
+
+                <div class="trust-item">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Secure Login</span>
+                </div>
+
+                <span class="trust-dot"></span>
+
+                <div class="trust-item">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <span>Privacy Protected</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+<script src="/js/auth.js"></script>
+
+<%- include("../layouts/footer") %>

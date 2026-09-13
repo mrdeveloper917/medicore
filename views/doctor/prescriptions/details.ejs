@@ -1,0 +1,369 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    .details-page {
+        padding: 25px;
+        background: #f5f7fb;
+        min-height: calc(100vh - 100px);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 15px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        color: #1f2937;
+    }
+
+    .back-btn {
+        padding: 11px 17px;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        color: #374151;
+        text-decoration: none;
+    }
+
+    .prescription-sheet {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .sheet-title {
+        text-align: center;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .sheet-title i {
+        font-size: 40px;
+        color: #6366f1;
+    }
+
+    .sheet-title h2 {
+        margin: 10px 0 5px;
+        color: #111827;
+    }
+
+    .sheet-title p {
+        margin: 0;
+        color: #6b7280;
+    }
+
+    .patient-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 25px 0;
+        padding: 18px;
+        background: #f9fafb;
+        border-radius: 12px;
+    }
+
+    .patient-image,
+    .patient-placeholder {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+    }
+
+    .patient-image {
+        object-fit: cover;
+    }
+
+    .patient-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef2ff;
+        color: #6366f1;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .patient-section h3 {
+        margin: 0 0 5px;
+        color: #111827;
+    }
+
+    .patient-section p {
+        margin: 3px 0;
+        color: #6b7280;
+    }
+
+    .medicine-section {
+        margin-top: 25px;
+    }
+
+    .section-label {
+        color: #6b7280;
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 7px;
+    }
+
+    .medicine-name {
+        font-size: 26px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .dosage-box {
+        margin-top: 20px;
+        padding: 17px;
+        border-left: 4px solid #6366f1;
+        background: #eef2ff;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .dosage-box strong {
+        color: #4338ca;
+    }
+
+    .notes-box {
+        margin-top: 25px;
+        padding: 18px;
+        background: #f9fafb;
+        border-radius: 12px;
+    }
+
+    .notes-box p {
+        margin: 8px 0 0;
+        color: #6b7280;
+        line-height: 1.7;
+        white-space: pre-wrap;
+    }
+
+    .created-date {
+        margin-top: 25px;
+        color: #9ca3af;
+        font-size: 13px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .delete-btn {
+        border: none;
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 11px 17px;
+        border-radius: 9px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+        .details-page {
+            padding: 15px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .prescription-sheet {
+            padding: 20px;
+        }
+
+        .patient-section {
+            align-items: flex-start;
+        }
+    }
+</style>
+
+
+<div class="details-page">
+
+    <div class="page-header">
+
+        <h1>Prescription Details</h1>
+
+        <a
+            href="/doctor/prescriptions"
+            class="back-btn"
+        >
+            <i class="fas fa-arrow-left"></i>
+            Back to Prescriptions
+        </a>
+
+    </div>
+
+
+    <%
+        const patientName =
+            prescription.patient
+            ? (
+                (prescription.patient.firstName || "") +
+                " " +
+                (prescription.patient.lastName || "")
+              ).trim() || "Patient"
+            : "Patient";
+    %>
+
+
+    <div class="prescription-sheet">
+
+        <!-- TITLE -->
+        <div class="sheet-title">
+
+            <i class="fas fa-prescription-bottle-medical"></i>
+
+            <h2>Medical Prescription</h2>
+
+            <p>MediCore</p>
+
+        </div>
+
+
+        <!-- PATIENT -->
+        <div class="patient-section">
+
+            <% if (
+                prescription.patient &&
+                prescription.patient.profileImage
+            ) { %>
+
+                <img
+                    src="<%= prescription.patient.profileImage %>"
+                    class="patient-image"
+                    alt="Patient"
+                >
+
+            <% } else { %>
+
+                <div class="patient-placeholder">
+                    <%= patientName.charAt(0).toUpperCase() %>
+                </div>
+
+            <% } %>
+
+
+            <div>
+
+                <h3>
+                    <%= patientName %>
+                </h3>
+
+                <p>
+                    <i class="fas fa-envelope"></i>
+                    <%= prescription.patient?.email || "Email not available" %>
+                </p>
+
+                <p>
+                    <i class="fas fa-phone"></i>
+                    <%= prescription.patient?.phone || "Phone not available" %>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEDICINE -->
+        <div class="medicine-section">
+
+            <div class="section-label">
+                Medicine
+            </div>
+
+            <div class="medicine-name">
+                <%= prescription.medicine || "Not specified" %>
+            </div>
+
+        </div>
+
+
+        <!-- DOSAGE -->
+        <div class="dosage-box">
+
+            <strong>
+                <i class="fas fa-clock"></i>
+                Dosage
+            </strong>
+
+            <div>
+                <%= prescription.dosage || "Not specified" %>
+            </div>
+
+        </div>
+
+
+        <!-- NOTES -->
+        <div class="notes-box">
+
+            <div class="section-label">
+                <i class="fas fa-note-sticky"></i>
+                Doctor's Notes
+            </div>
+
+            <p>
+                <%= prescription.notes || "No additional notes." %>
+            </p>
+
+        </div>
+
+
+        <!-- DATE -->
+        <div class="created-date">
+
+            <i class="fas fa-calendar"></i>
+
+            Created:
+
+            <%= prescription.createdAt
+                ? new Date(
+                    prescription.createdAt
+                ).toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                })
+                : "Date unavailable"
+            %>
+
+        </div>
+
+
+        <!-- ACTION -->
+        <div class="actions">
+
+            <form
+                action="/doctor/prescriptions/<%= prescription._id %>/delete"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this prescription?');"
+            >
+
+                <button
+                    type="submit"
+                    class="delete-btn"
+                >
+                    <i class="fas fa-trash"></i>
+                    Delete Prescription
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

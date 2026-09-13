@@ -1,0 +1,355 @@
+/* ===========================================
+   PATIENT PROFILE
+=========================================== */
+
+.profile-header{
+
+    position:relative;
+
+    margin-bottom:40px;
+
+}
+
+.profile-cover{
+
+    width:100%;
+
+    height:220px;
+
+    background:linear-gradient(135deg,#2563eb,#0ea5e9);
+
+    border-radius:20px;
+
+}
+
+.profile-info{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:30px;
+
+    padding:0 40px;
+
+    margin-top:-70px;
+
+}
+
+.profile-image{
+
+    position:relative;
+
+}
+
+.profile-image img{
+
+    width:150px;
+
+    height:150px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:6px solid #fff;
+
+    background:#fff;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+
+}
+
+.camera-btn{
+
+    position:absolute;
+
+    bottom:10px;
+
+    right:10px;
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.camera-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.profile-info h2{
+
+    font-size:32px;
+
+    margin-bottom:8px;
+
+}
+
+.profile-info p{
+
+    color:#666;
+
+    margin-bottom:10px;
+
+}
+
+.verified{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+    padding:8px 16px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+/* ===============================
+   PROFILE CARD
+=============================== */
+
+.profile-card{
+
+    background:#fff;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.profile-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.profile-card h3{
+
+    margin-bottom:25px;
+
+    color:#2563eb;
+
+    font-size:24px;
+
+}
+
+/* ===============================
+   GRID
+=============================== */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+}
+
+/* ===============================
+   INPUT
+=============================== */
+
+.grid label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#374151;
+
+}
+
+.grid input,
+
+.grid textarea,
+
+.grid select{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    outline:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.grid textarea{
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+.grid input:focus,
+
+.grid textarea:focus,
+
+.grid select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+/* ===============================
+   BUTTONS
+=============================== */
+
+.action-buttons{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:35px;
+
+}
+
+.save-btn{
+
+    padding:14px 35px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-3px);
+
+}
+
+.cancel-btn{
+
+    padding:14px 35px;
+
+    border-radius:10px;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.cancel-btn:hover{
+
+    background:#dc2626;
+
+}
+
+/* ===============================
+   READONLY
+=============================== */
+
+input[readonly]{
+
+    background:#f3f4f6;
+
+    cursor:not-allowed;
+
+}
+
+/* ===============================
+   SCROLLBAR
+=============================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+/*============================
+SAVE BUTTON LOADING
+=============================*/
+
+.save-btn:disabled{
+
+opacity:.7;
+
+cursor:not-allowed;
+
+}

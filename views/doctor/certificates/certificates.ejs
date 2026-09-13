@@ -1,0 +1,1405 @@
+<%- include("../../layouts/doctorHeader", { 
+    title: "My Certificates", 
+    user 
+}) %>
+
+
+<style>
+
+/* =====================================================
+   CERTIFICATE PAGE
+===================================================== */
+
+.certificate-page {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.certificate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.page-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.page-label::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+}
+
+.certificate-header h1 {
+    margin: 0;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    color: #172033;
+}
+
+.certificate-header p {
+    margin: 8px 0 0;
+
+    color: #718096;
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   UPLOAD BUTTON
+===================================================== */
+
+.upload-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+    color: #fff !important;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.22);
+
+    transition: all 0.25s ease;
+
+    white-space: nowrap;
+}
+
+.upload-btn span {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+
+    background: #1d4ed8;
+
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.30);
+}
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.certificate-stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 35px;
+}
+
+.certificate-stat-card {
+    background: #fff;
+
+    border: 1px solid #e9edf5;
+    border-radius: 16px;
+
+    padding: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+
+    transition: all 0.25s ease;
+}
+
+.certificate-stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.stat-icon {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    background: #eff6ff;
+}
+
+.stat-info span {
+    display: block;
+
+    color: #7b8798;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+}
+
+.stat-info strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   SECTION HEADING
+===================================================== */
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    color: #172033;
+
+    font-weight: 750;
+}
+
+.section-heading span {
+    color: #8792a5;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   CERTIFICATE GRID
+===================================================== */
+
+.certificate-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+/* =====================================================
+   CERTIFICATE CARD
+===================================================== */
+
+.certificate-card {
+    background: #fff;
+
+    border: 1px solid #e7ebf2;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, 0.05);
+
+    transition: all 0.3s ease;
+}
+
+.certificate-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.10);
+
+    border-color: #dbe5f5;
+}
+
+
+/* =====================================================
+   PREVIEW AREA
+===================================================== */
+
+.certificate-preview {
+    height: 300px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #f4f7fb;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
+
+.certificate-preview img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    background: #fff;
+
+    transition: transform 0.4s ease;
+}
+
+.certificate-card:hover
+.certificate-preview img {
+    transform: scale(1.02);
+}
+
+
+/* =====================================================
+   PDF PREVIEW
+===================================================== */
+
+.pdf-preview {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: #fff;
+}
+
+.pdf-preview iframe {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+
+    display: block;
+
+    background: #fff;
+
+    /*
+       PDF preview is only for viewing.
+       Buttons are handled separately.
+    */
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   PDF BADGE
+===================================================== */
+
+.pdf-badge {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    z-index: 5;
+
+    padding: 7px 11px;
+
+    border-radius: 8px;
+
+    background: #dc2626;
+
+    color: #fff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =====================================================
+   DOCUMENT FALLBACK
+===================================================== */
+
+.document-fallback {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2f7
+        );
+}
+
+.document-fallback-icon {
+    width: 78px;
+    height: 78px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    border-radius: 20px;
+
+    background: #fff;
+
+    font-size: 38px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+.document-fallback strong {
+    color: #344054;
+
+    font-size: 16px;
+
+    margin-bottom: 6px;
+}
+
+.document-fallback span {
+    color: #8994a6;
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   PREVIEW OVERLAY
+===================================================== */
+
+.preview-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    background:
+        rgba(15, 23, 42, 0.55);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+
+    transition: opacity 0.25s ease;
+
+    pointer-events: none;
+}
+
+.certificate-card:hover
+.preview-overlay {
+    opacity: 1;
+}
+
+
+/* =====================================================
+   OVERLAY VIEW BUTTON
+===================================================== */
+
+.preview-overlay .preview-view-btn {
+    padding: 11px 18px;
+
+    background: #fff;
+
+    color: #172033 !important;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    transition: all 0.2s ease;
+
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+.preview-overlay .preview-view-btn:hover {
+    background: #2563eb;
+
+    color: #fff !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.certificate-details {
+    padding: 20px;
+}
+
+.certificate-title-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 15px;
+}
+
+.certificate-title-row h3 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+.status-badge {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #ecfdf3;
+
+    color: #15803d;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   ISSUER
+===================================================== */
+
+.certificate-issuer {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 14px;
+
+    border-radius: 11px;
+
+    background: #f8fafc;
+
+    margin: 0 0 12px;
+}
+
+.certificate-issuer span {
+    font-size: 11px;
+
+    color: #8a95a6;
+
+    letter-spacing: .3px;
+}
+
+.certificate-issuer strong {
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.certificate-date {
+    margin: 0 0 18px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.certificate-date strong {
+    color: #6b7280;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.certificate-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #edf0f4;
+}
+
+.certificate-actions form {
+    grid-column: 1 / -1;
+
+    margin: 0;
+}
+
+
+/* =====================================================
+   ACTION BUTTON COMMON
+===================================================== */
+
+.action-btn {
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 6px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    box-sizing: border-box;
+
+    transition: all 0.2s ease;
+
+    cursor: pointer;
+
+    border: none;
+}
+
+
+/* =====================================================
+   VIEW
+===================================================== */
+
+.view-btn {
+    background: #eff6ff;
+
+    color: #2563eb !important;
+
+    border: 1px solid #dbeafe;
+}
+
+.view-btn:hover {
+    background: #2563eb;
+
+    color: #fff !important;
+}
+
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+.download-btn {
+    background: #f0fdf4;
+
+    color: #15803d !important;
+
+    border: 1px solid #dcfce7;
+}
+
+.download-btn:hover {
+    background: #16a34a;
+
+    color: #fff !important;
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+.delete-btn {
+    background: #fff5f5;
+
+    color: #dc2626;
+
+    border: 1px solid #fee2e2;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+
+    color: #fff;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+    background: #fff;
+
+    border: 1px solid #e8edf4;
+
+    border-radius: 20px;
+
+    padding: 65px 30px;
+
+    text-align: center;
+
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, 0.04);
+}
+
+.empty-icon {
+    width: 82px;
+    height: 82px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background: #eff6ff;
+
+    font-size: 40px;
+}
+
+.empty-state h2 {
+    margin: 0 0 9px;
+
+    color: #172033;
+
+    font-size: 22px;
+}
+
+.empty-state p {
+    max-width: 500px;
+
+    margin: 0 auto 25px;
+
+    color: #7b8798;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.empty-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: #fff !important;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.empty-btn:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .certificate-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .certificate-page {
+        padding: 20px;
+    }
+
+    .certificate-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .certificate-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-btn {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .certificate-page {
+        padding: 15px;
+    }
+
+    .certificate-header h1 {
+        font-size: 26px;
+    }
+
+    .certificate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certificate-preview {
+        height: 300px;
+    }
+
+    .certificate-details {
+        padding: 17px;
+    }
+
+    .certificate-title-row {
+        flex-direction: column;
+    }
+
+    .status-badge {
+        align-self: flex-start;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     MAIN PAGE
+===================================================== -->
+
+<div class="certificate-page">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================== -->
+
+    <div class="certificate-header">
+
+        <div>
+
+            <span class="page-label">
+                DOCTOR PROFILE
+            </span>
+
+            <h1>
+                My Certificates
+            </h1>
+
+            <p>
+                Manage your professional certificates
+                and medical credentials.
+            </p>
+
+        </div>
+
+
+        <a
+            href="/doctor/certificates/add"
+            class="upload-btn">
+
+            <span>+</span>
+
+            Upload Certificate
+
+        </a>
+
+    </div>
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="certificate-stats">
+
+
+        <div class="certificate-stat-card">
+
+            <div class="stat-icon">
+                📜
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    Total Certificates
+                </span>
+
+                <strong>
+                    <%= certificates ? certificates.length : 0 %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="certificate-stat-card">
+
+            <div class="stat-icon">
+                ✓
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    Uploaded Documents
+                </span>
+
+                <strong>
+                    <%= certificates ? certificates.length : 0 %>
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="certificate-stat-card">
+
+            <div class="stat-icon">
+                🔒
+            </div>
+
+            <div class="stat-info">
+
+                <span>
+                    Document Security
+                </span>
+
+                <strong>
+                    100%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         SECTION HEADING
+    ================================================== -->
+
+    <div class="section-heading">
+
+        <h2>
+            Professional Credentials
+        </h2>
+
+        <span>
+            <%= certificates ? certificates.length : 0 %>
+            document(s)
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         EMPTY STATE
+    ================================================== -->
+
+    <% if (!certificates || certificates.length === 0) { %>
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📜
+            </div>
+
+            <h2>
+                No Certificates Yet
+            </h2>
+
+            <p>
+                Your medical licenses, degrees,
+                qualifications and professional
+                certificates will appear here.
+                Upload your first certificate
+                to get started.
+            </p>
+
+            <a
+                href="/doctor/certificates/add"
+                class="empty-btn">
+
+                + Upload Your First Certificate
+
+            </a>
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <!-- =================================================
+             CERTIFICATE GRID
+        ================================================== -->
+
+        <div class="certificate-grid">
+
+
+            <% certificates.forEach(function(certificate) { %>
+
+
+                <%
+                    /*
+                     * Certificate URL
+                     */
+                    const certificateUrl =
+                        certificate.image || "";
+
+
+                    /*
+                     * Detect PDF
+                     */
+                    const isPDF =
+                        /\.pdf(?:\?.*)?$/i.test(
+                            certificateUrl
+                        );
+
+
+                    /*
+                     * Detect Image
+                     */
+                    const isImage =
+                        /\.(jpg|jpeg|png|webp|gif)(?:\?.*)?$/i.test(
+                            certificateUrl
+                        );
+                %>
+
+
+                <!-- =================================================
+                     CERTIFICATE CARD
+                ================================================== -->
+
+                <div class="certificate-card">
+
+
+                    <!-- =================================================
+                         PREVIEW
+                    ================================================== -->
+
+                    <div class="certificate-preview">
+
+
+                        <!-- ============================
+                             PDF
+                        ============================= -->
+
+                        <% if (isPDF) { %>
+
+
+                            <div class="pdf-preview">
+
+                                <iframe
+                                    src="<%= certificateUrl %>#page=1&view=FitH"
+                                    title="<%= certificate.title || 'Certificate PDF' %>"
+                                    loading="eager">
+                                </iframe>
+
+
+                                <div class="pdf-badge">
+                                    📄 PDF
+                                </div>
+
+                            </div>
+
+
+                        <!-- ============================
+                             IMAGE
+                        ============================= -->
+
+                        <% } else if (isImage) { %>
+
+
+                            <img
+                                src="<%= certificateUrl %>"
+                                alt="<%= certificate.title || 'Certificate' %>"
+                                loading="lazy"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            >
+
+
+                            <div
+                                class="document-fallback"
+                                style="display:none;">
+
+                                <div class="document-fallback-icon">
+                                    📄
+                                </div>
+
+                                <strong>
+                                    Unable to Preview
+                                </strong>
+
+                                <span>
+                                    File could not be loaded
+                                </span>
+
+                            </div>
+
+
+                        <!-- ============================
+                             UNKNOWN / MISSING
+                        ============================= -->
+
+                        <% } else { %>
+
+
+                            <div class="document-fallback">
+
+                                <div class="document-fallback-icon">
+                                    📄
+                                </div>
+
+                                <strong>
+                                    Certificate Document
+                                </strong>
+
+                                <span>
+                                    Preview unavailable
+                                </span>
+
+                            </div>
+
+
+                        <% } %>
+
+
+                        <!-- =================================================
+                             PREVIEW OVERLAY
+                        ================================================== -->
+
+                        <% if (certificateUrl) { %>
+
+
+                            <div class="preview-overlay">
+
+                                <a
+                                    href="<%= certificateUrl %>"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="preview-view-btn"
+                                    onclick="event.stopPropagation();">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                    View Certificate
+
+                                </a>
+
+                            </div>
+
+
+                        <% } %>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DETAILS
+                    ================================================== -->
+
+                    <div class="certificate-details">
+
+
+                        <!-- TITLE -->
+
+                        <div class="certificate-title-row">
+
+                            <h3>
+                                <%= certificate.title ||
+                                    "Professional Certificate" %>
+                            </h3>
+
+
+                            <span class="status-badge">
+                                Uploaded
+                            </span>
+
+                        </div>
+
+
+                        <!-- ISSUED BY -->
+
+                        <% if (certificate.issuedBy) { %>
+
+
+                            <p class="certificate-issuer">
+
+                                <span>
+                                    ISSUED BY
+                                </span>
+
+                                <strong>
+                                    <%= certificate.issuedBy %>
+                                </strong>
+
+                            </p>
+
+
+                        <% } %>
+
+
+                        <!-- ISSUE DATE -->
+
+                        <% if (certificate.issueDate) { %>
+
+
+                            <p class="certificate-date">
+
+                                📅 Issued on
+
+                                <strong>
+
+                                    <%= new Date(
+                                        certificate.issueDate
+                                    ).toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric"
+                                        }
+                                    ) %>
+
+                                </strong>
+
+                            </p>
+
+
+                        <% } %>
+
+
+                        <!-- =================================================
+                             ACTION BUTTONS
+                        ================================================== -->
+
+                        <div class="certificate-actions">
+
+
+                            <% if (certificateUrl) { %>
+
+
+                                <!-- ============================
+                                     VIEW
+                                ============================= -->
+
+                                <a
+                                    href="<%= certificateUrl %>"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="action-btn view-btn"
+                                    onclick="event.stopPropagation();">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                    View
+
+                                </a>
+
+
+                                <!-- ============================
+                                     DOWNLOAD
+                                ============================= -->
+
+                                <a
+                                    href="<%= certificateUrl %>"
+                                    download
+                                    class="action-btn download-btn"
+                                    onclick="event.stopPropagation();">
+
+                                    <i class="fa-solid fa-download"></i>
+
+                                    Download
+
+                                </a>
+
+
+                            <% } %>
+
+
+                            <!-- ============================
+                                 DELETE
+                            ============================= -->
+
+                            <form
+                                action="/doctor/certificates/delete/<%= certificate._id %>"
+                                method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this certificate?');">
+
+                                <button
+                                    type="submit"
+                                    class="action-btn delete-btn">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                    Delete Certificate
+
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            <% }); %>
+
+
+        </div>
+
+
+    <% } %>
+
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<%- include("../../layouts/doctorFooter") %>

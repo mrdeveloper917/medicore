@@ -1,0 +1,2565 @@
+<%- include("../../layouts/doctorHeader", {
+    title: "Appointment Details",
+    user
+}) %>
+
+<style>
+
+/* =========================================================
+   MEDICORE — APPOINTMENT DETAILS / PREMIUM UI
+========================================================= */
+
+.appointment-details-page{
+    max-width:1280px;
+    margin:0 auto;
+    padding:30px;
+    color:#273143;
+}
+
+.details-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:24px;
+}
+
+.details-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.details-title-icon{
+    width:52px;
+    height:52px;
+    border-radius:15px;
+
+    display:grid;
+    place-items:center;
+
+    background:linear-gradient(145deg,#eef6ff,#e3f0ff);
+    color:#1976d2;
+
+    font-size:21px;
+
+    box-shadow:
+        inset 0 0 0 1px #dcecff;
+}
+
+.details-title h2{
+    margin:0 0 4px;
+
+    color:#182234;
+
+    font-size:25px;
+    font-weight:750;
+
+    letter-spacing:-.3px;
+}
+
+.details-title p{
+    margin:0;
+
+    color:#8a94a5;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn{
+    height:42px;
+    padding:0 16px;
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+
+    background:#fff;
+    color:#596579;
+
+    text-decoration:none;
+
+    font-size:12px;
+    font-weight:650;
+
+    box-shadow:
+        0 3px 12px rgba(20,34,56,.035);
+
+    transition:.2s ease;
+}
+
+.back-btn:hover{
+    color:#1976d2;
+    border-color:#cfe1f7;
+    background:#f8fbff;
+
+    transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   STATUS HERO
+========================================================= */
+
+.appointment-hero{
+    position:relative;
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:24px;
+    margin-bottom:22px;
+
+    border:1px solid #e4ebf3;
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fbff 100%
+        );
+
+    box-shadow:
+        0 8px 28px rgba(20,34,56,.055);
+}
+
+.appointment-hero::after{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    right:-70px;
+    top:-95px;
+
+    border-radius:50%;
+
+    background:#edf6ff;
+
+    pointer-events:none;
+}
+
+.hero-left{
+    position:relative;
+    z-index:1;
+
+    display:flex;
+    align-items:center;
+
+    gap:15px;
+}
+
+.hero-calendar{
+    width:56px;
+    height:56px;
+
+    flex-shrink:0;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:15px;
+
+    background:#edf6ff;
+    color:#1976d2;
+
+    font-size:22px;
+
+    box-shadow:
+        inset 0 0 0 1px #dbeaff;
+}
+
+.hero-left h3{
+    margin:0 0 5px;
+
+    color:#202a3b;
+    font-size:17px;
+}
+
+.hero-left p{
+    margin:0;
+
+    color:#8993a4;
+    font-size:11px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge{
+    position:relative;
+    z-index:1;
+
+    display:inline-flex;
+    align-items:center;
+
+    gap:7px;
+
+    padding:9px 14px;
+
+    border-radius:999px;
+
+    font-size:11px;
+    font-weight:750;
+
+    white-space:nowrap;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+}
+
+.status-pending{
+    color:#a96e00;
+    background:#fff6df;
+}
+
+.status-pending .status-dot{
+    background:#e6a400;
+}
+
+.status-approved{
+    color:#13834a;
+    background:#eaf8f0;
+}
+
+.status-approved .status-dot{
+    background:#1c9b55;
+}
+
+.status-completed{
+    color:#147777;
+    background:#eaf7f7;
+}
+
+.status-completed .status-dot{
+    background:#168b8b;
+}
+
+.status-cancelled{
+    color:#d83232;
+    background:#fff0f0;
+}
+
+.status-cancelled .status-dot{
+    background:#e53935;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.details-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.35fr)
+        minmax(300px,.65fr);
+
+    gap:22px;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.details-card{
+    background:#fff;
+
+    border:1px solid #e5ebf2;
+
+    border-radius:17px;
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 7px 24px rgba(20,34,56,.045);
+}
+
+.details-card-header{
+    min-height:66px;
+
+    padding:15px 20px;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    border-bottom:1px solid #edf1f5;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff,
+            #fcfdff
+        );
+}
+
+.details-card-header-icon{
+    width:34px;
+    height:34px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:10px;
+
+    background:#eef6ff;
+    color:#1976d2;
+
+    font-size:13px;
+}
+
+.details-card-header h3{
+    margin:0;
+
+    color:#273143;
+
+    font-size:14px;
+    font-weight:720;
+}
+
+.details-card-body{
+    padding:21px;
+}
+
+
+/* =========================================================
+   PATIENT PROFILE
+========================================================= */
+
+.patient-profile{
+    display:flex;
+    align-items:center;
+
+    gap:17px;
+}
+
+.patient-large-avatar{
+    width:82px;
+    height:82px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:3px solid #edf5ff;
+
+    padding:2px;
+
+    background:#fff;
+
+    box-shadow:
+        0 4px 15px rgba(25,118,210,.08);
+}
+
+.patient-profile h2{
+    margin:0 0 5px;
+
+    color:#1d2738;
+
+    font-size:20px;
+    font-weight:750;
+}
+
+.patient-profile p{
+    margin:0;
+
+    color:#8a94a5;
+
+    font-size:11px;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:21px;
+}
+
+.contact-item{
+    min-width:0;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:13px;
+
+    border:1px solid #edf0f4;
+
+    border-radius:11px;
+
+    background:#fafbfd;
+}
+
+.contact-icon{
+    width:34px;
+    height:34px;
+
+    flex-shrink:0;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:9px;
+
+    background:#fff;
+
+    color:#1976d2;
+
+    box-shadow:
+        0 2px 8px rgba(20,34,56,.04);
+}
+
+.contact-item span{
+    display:block;
+
+    margin-bottom:3px;
+
+    color:#969eac;
+
+    font-size:9px;
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+}
+
+.contact-item strong{
+    display:block;
+
+    color:#3c4658;
+
+    font-size:11px;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   APPOINTMENT INFO
+========================================================= */
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:13px;
+}
+
+.info-item{
+    padding:15px;
+
+    border:1px solid #edf0f4;
+
+    border-radius:11px;
+
+    background:#fbfcfd;
+
+    transition:.2s ease;
+}
+
+.info-item:hover{
+    border-color:#dce8f5;
+
+    background:#f9fbfe;
+}
+
+.info-item.full{
+    grid-column:1/-1;
+}
+
+.info-item-label{
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+
+    margin-bottom:7px;
+
+    color:#929baa;
+
+    font-size:9px;
+    font-weight:650;
+
+    text-transform:uppercase;
+
+    letter-spacing:.35px;
+}
+
+.info-item-label i{
+    color:#1976d2;
+}
+
+.info-item-value{
+    color:#303a4c;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+
+/* =========================================================
+   MEDICAL RECORD
+========================================================= */
+
+.record-preview{
+    margin-top:0;
+
+    padding:15px;
+
+    border:1px solid #e8edf3;
+
+    border-radius:12px;
+
+    background:#fbfcfd;
+}
+
+.record-preview-title{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:12px;
+
+    color:#303a4c;
+
+    font-size:12px;
+    font-weight:750;
+}
+
+.record-preview-title i{
+    color:#7c3aed;
+}
+
+.record-grid{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+}
+
+.record-field{
+    padding:11px;
+
+    background:#fff;
+
+    border:1px solid #edf0f4;
+
+    border-radius:9px;
+}
+
+.record-field.full{
+    grid-column:1/-1;
+}
+
+.record-field span{
+    display:block;
+
+    margin-bottom:4px;
+
+    color:#929baa;
+
+    font-size:9px;
+    font-weight:650;
+
+    text-transform:uppercase;
+
+    letter-spacing:.3px;
+}
+
+.record-field strong{
+    display:block;
+
+    color:#303a4c;
+
+    font-size:11px;
+
+    line-height:1.5;
+
+    white-space:pre-line;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-box{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+}
+
+.summary-item{
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    padding:10px 4px;
+
+    border-bottom:1px solid #f0f2f5;
+}
+
+.summary-item:last-child{
+    border-bottom:0;
+}
+
+.summary-icon{
+    width:37px;
+    height:37px;
+
+    flex-shrink:0;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:10px;
+
+    background:#eef6ff;
+
+    color:#1976d2;
+
+    font-size:13px;
+}
+
+.summary-item span{
+    display:block;
+
+    margin-bottom:3px;
+
+    color:#929baa;
+
+    font-size:9px;
+    font-weight:650;
+
+    text-transform:uppercase;
+
+    letter-spacing:.35px;
+}
+
+.summary-item strong{
+    display:block;
+
+    color:#303a4c;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline{
+    position:relative;
+
+    padding-left:27px;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    left:7px;
+
+    top:7px;
+    bottom:7px;
+
+    width:2px;
+
+    background:#e8edf3;
+}
+
+.timeline-item{
+    position:relative;
+
+    padding-bottom:21px;
+}
+
+.timeline-item:last-child{
+    padding-bottom:0;
+}
+
+.timeline-dot{
+    position:absolute;
+
+    left:-27px;
+    top:2px;
+
+    width:17px;
+    height:17px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:3px solid #cfd8e4;
+
+    box-sizing:border-box;
+}
+
+.timeline-item.active .timeline-dot{
+    background:#1976d2;
+
+    border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 4px #edf6ff;
+}
+
+.timeline-item h4{
+    margin:0 0 4px;
+
+    color:#303a4c;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.timeline-item p{
+    margin:0;
+
+    color:#929baa;
+
+    font-size:10px;
+
+    line-height:1.55;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.action-btn{
+    min-height:43px;
+
+    width:100%;
+
+    padding:0 15px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    border:1px solid transparent;
+
+    border-radius:10px;
+
+    font-family:inherit;
+
+    font-size:11px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:.2s ease;
+
+    box-sizing:border-box;
+}
+
+.action-btn:hover{
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 5px 13px rgba(20,34,56,.08);
+}
+
+.approve-action{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1a9554,
+            #168447
+        );
+}
+
+.approve-action:hover{
+    background:#11743f;
+}
+
+.cancel-action{
+    color:#d83232;
+
+    background:#fff1f1;
+
+    border-color:#ffdcdc;
+}
+
+.cancel-action:hover{
+    color:#fff;
+
+    background:#d83232;
+}
+
+.medical-record-action{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8050e9,
+            #7132d7
+        );
+}
+
+.medical-record-action:hover{
+    background:#6d28d9;
+}
+
+.view-record-action{
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2583dd,
+            #1976d2
+        );
+}
+
+.view-record-action:hover{
+    background:#145fa9;
+}
+
+
+/* =========================================================
+   INFORMATION NOTES
+========================================================= */
+
+.info-note{
+    margin-top:15px;
+
+    padding:12px;
+
+    display:flex;
+
+    gap:8px;
+
+    border-radius:10px;
+
+    background:#f6f9fc;
+
+    color:#8992a3;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+.info-note i{
+    color:#1976d2;
+
+    margin-top:2px;
+}
+
+.medical-note{
+    color:#6d28d9;
+
+    background:#f5f3ff;
+
+    border:1px solid #e9d5ff;
+}
+
+.medical-note i{
+    color:#7c3aed;
+}
+
+.completed-note{
+    color:#167878;
+
+    background:#eaf7f7;
+}
+
+.completed-note i{
+    color:#168b8b;
+}
+
+.cancelled-note{
+    color:#d83232;
+
+    background:#fff0f0;
+}
+
+.cancelled-note i{
+    color:#e53935;
+}
+
+
+/* =========================================================
+   CANCEL MODAL
+========================================================= */
+
+.cancel-modal{
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(15,23,42,.48);
+
+    backdrop-filter:blur(5px);
+}
+
+.cancel-modal.show{
+    display:flex;
+}
+
+.modal-card{
+    width:100%;
+
+    max-width:420px;
+
+    padding:26px;
+
+    border:1px solid rgba(255,255,255,.7);
+
+    border-radius:18px;
+
+    background:#fff;
+
+    box-shadow:
+        0 28px 80px rgba(0,0,0,.22);
+
+    animation:modalIn .2s ease;
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(12px)
+            scale(.98);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.modal-icon{
+    width:50px;
+    height:50px;
+
+    display:grid;
+    place-items:center;
+
+    margin-bottom:15px;
+
+    border-radius:14px;
+
+    background:#fff0f0;
+
+    color:#e53935;
+
+    font-size:18px;
+}
+
+.modal-card h3{
+    margin:0 0 7px;
+
+    color:#20293a;
+
+    font-size:18px;
+}
+
+.modal-card p{
+    margin:0;
+
+    color:#7d8798;
+
+    font-size:12px;
+
+    line-height:1.65;
+}
+
+.modal-actions{
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:9px;
+
+    margin-top:22px;
+}
+
+.modal-btn{
+    height:40px;
+
+    padding:0 16px;
+
+    border:0;
+
+    border-radius:9px;
+
+    font-family:inherit;
+
+    font-size:11px;
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.modal-close{
+    color:#596477;
+
+    background:#f1f3f6;
+}
+
+.modal-confirm{
+    color:#fff;
+
+    background:#e53935;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.back-btn:focus-visible,
+.action-btn:focus-visible,
+.modal-btn:focus-visible{
+    outline:3px solid rgba(25,118,210,.18);
+
+    outline-offset:2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:950px){
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:650px){
+
+    .appointment-details-page{
+        padding:18px 13px;
+    }
+
+    .details-topbar{
+        align-items:flex-start;
+
+        gap:12px;
+    }
+
+    .details-title{
+        gap:10px;
+    }
+
+    .details-title-icon{
+        width:43px;
+        height:43px;
+
+        font-size:18px;
+    }
+
+    .details-title h2{
+        font-size:20px;
+    }
+
+    .details-title p{
+        font-size:10px;
+    }
+
+    .back-btn{
+        width:40px;
+
+        padding:0;
+
+        justify-content:center;
+
+        font-size:0;
+    }
+
+    .back-btn i{
+        font-size:13px;
+    }
+
+    .appointment-hero{
+        align-items:flex-start;
+
+        flex-direction:column;
+
+        padding:18px;
+    }
+
+    .hero-left{
+        width:100%;
+    }
+
+    .status-badge{
+        align-self:flex-start;
+
+        padding:8px 12px;
+    }
+
+    .info-grid,
+    .contact-grid,
+    .record-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info-item.full,
+    .record-field.full{
+        grid-column:auto;
+    }
+
+    .patient-large-avatar{
+        width:66px;
+        height:66px;
+    }
+
+    .patient-profile h2{
+        font-size:17px;
+    }
+
+    .details-card-body{
+        padding:17px;
+    }
+
+    .details-card-header{
+        padding:14px 17px;
+    }
+
+    .modal-card{
+        padding:22px;
+    }
+
+    .modal-actions{
+        flex-direction:column-reverse;
+    }
+
+    .modal-btn{
+        width:100%;
+    }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+
+        transition-duration:.01ms !important;
+
+        scroll-behavior:auto !important;
+    }
+
+}
+
+</style>
+
+
+<div class="page-content appointment-details-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="details-topbar">
+
+        <div class="details-title">
+
+            <div class="details-title-icon">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Appointment Details
+                </h2>
+
+                <p>
+                    View and manage appointment information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="/doctor/appointments"
+            class="back-btn"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Appointments
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         STATUS HERO
+    ====================================================== -->
+
+    <div class="appointment-hero">
+
+        <div class="hero-left">
+
+            <div class="hero-calendar">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+            </div>
+
+            <div>
+
+                <h3>
+                    Patient Appointment
+                </h3>
+
+                <p>
+
+                    Appointment ID:
+
+                    <%= appointment._id %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <% if (appointment.status === "Pending") { %>
+
+            <span class="status-badge status-pending">
+
+                <span class="status-dot"></span>
+
+                Pending
+
+            </span>
+
+        <% } else if (appointment.status === "Approved") { %>
+
+            <span class="status-badge status-approved">
+
+                <span class="status-dot"></span>
+
+                Approved
+
+            </span>
+
+        <% } else if (appointment.status === "Completed") { %>
+
+            <span class="status-badge status-completed">
+
+                <span class="status-dot"></span>
+
+                Completed
+
+            </span>
+
+        <% } else { %>
+
+            <span class="status-badge status-cancelled">
+
+                <span class="status-dot"></span>
+
+                Cancelled
+
+            </span>
+
+        <% } %>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MAIN GRID
+    ====================================================== -->
+
+    <div class="details-grid">
+
+
+        <!-- =================================================
+             LEFT COLUMN
+        ================================================== -->
+
+        <div>
+
+
+            <!-- PATIENT INFORMATION -->
+
+            <div class="details-card">
+
+                <div class="details-card-header">
+
+                    <div class="details-card-header-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <h3>
+                        Patient Information
+                    </h3>
+
+                </div>
+
+
+                <div class="details-card-body">
+
+                    <%
+                        const patient =
+                            appointment.patient || {};
+
+                        const patientName =
+                            `${patient.firstName || ""}
+                            ${patient.lastName || ""}`
+                            .trim() ||
+                            "Unknown Patient";
+
+                        const patientImage =
+                            patient.profileImage ||
+                            "/images/default-user.png";
+                    %>
+
+
+                    <div class="patient-profile">
+
+                        <img
+                            src="<%= patientImage %>"
+                            class="patient-large-avatar"
+                            alt="Patient"
+                            onerror="this.src='/images/default-user.png'"
+                        >
+
+                        <div>
+
+                            <h2>
+                                <%= patientName %>
+                            </h2>
+
+                            <p>
+                                Patient registered with MediCore
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CONTACT -->
+
+                    <div class="contact-grid">
+
+
+                        <!-- EMAIL -->
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+
+                                <i class="fa-regular fa-envelope"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Email
+                                </span>
+
+                                <strong>
+                                    <%= patient.email || "Not available" %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="contact-item">
+
+                            <div class="contact-icon">
+
+                                <i class="fa-solid fa-phone"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Phone
+                                </span>
+
+                                <strong>
+                                    <%= patient.phone || "Not available" %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- APPOINTMENT INFORMATION -->
+
+            <div class="details-card">
+
+                <div class="details-card-header">
+
+                    <div class="details-card-header-icon">
+
+                        <i class="fa-solid fa-clipboard-list"></i>
+
+                    </div>
+
+                    <h3>
+                        Appointment Information
+                    </h3>
+
+                </div>
+
+
+                <div class="details-card-body">
+
+                    <div class="info-grid">
+
+
+                        <!-- DATE -->
+
+                        <div class="info-item">
+
+                            <div class="info-item-label">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                                Appointment Date
+
+                            </div>
+
+                            <div class="info-item-value">
+
+                                <%= new Date(
+                                    appointment.appointmentDate
+                                ).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        weekday:"long",
+                                        day:"2-digit",
+                                        month:"long",
+                                        year:"numeric"
+                                    }
+                                ) %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="info-item">
+
+                            <div class="info-item-label">
+
+                                <i class="fa-regular fa-clock"></i>
+
+                                Appointment Time
+
+                            </div>
+
+                            <div class="info-item-value">
+
+                                <%= appointment.appointmentTime %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <div class="info-item">
+
+                            <div class="info-item-label">
+
+                                <i class="fa-solid fa-stethoscope"></i>
+
+                                Department
+
+                            </div>
+
+                            <div class="info-item-value">
+
+                                <%= appointment.department %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="info-item">
+
+                            <div class="info-item-label">
+
+                                <i class="fa-solid fa-circle-info"></i>
+
+                                Current Status
+
+                            </div>
+
+                            <div class="info-item-value">
+
+                                <%= appointment.status %>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+             <!-- =====================================================
+                 MEDICAL RECORD PREVIEW
+            ====================================================== -->
+
+            <% if (medicalRecord) { %>
+
+                <div class="details-card">
+
+                    <div class="details-card-header">
+
+                        <div class="details-card-header-icon">
+
+                            <i class="fa-solid fa-file-medical"></i>
+
+                        </div>
+
+                        <h3>
+                            Medical Record
+                        </h3>
+
+                    </div>
+
+
+                    <div class="details-card-body">
+
+                        <div class="record-preview">
+
+                            <div class="record-preview-title">
+
+                                <i class="fa-solid fa-notes-medical"></i>
+
+                                Patient Medical Record
+
+                            </div>
+
+
+                            <div class="record-grid">
+
+
+                                <!-- VISIT DATE -->
+
+                                <% if (medicalRecord.visitDate) { %>
+
+                                    <div class="record-field">
+
+                                        <span>
+                                            Visit Date
+                                        </span>
+
+                                        <strong>
+
+                                            <%= new Date(
+                                                medicalRecord.visitDate
+                                            ).toLocaleDateString(
+                                                "en-IN",
+                                                {
+                                                    day:"2-digit",
+                                                    month:"long",
+                                                    year:"numeric"
+                                                }
+                                            ) %>
+
+                                        </strong>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- DIAGNOSIS -->
+
+                                <div class="record-field">
+
+                                    <span>
+                                        Diagnosis
+                                    </span>
+
+                                    <strong>
+                                        <%= medicalRecord.diagnosis ||
+                                            "Not provided" %>
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- SYMPTOMS -->
+
+                                <% if (medicalRecord.symptoms) { %>
+
+                                    <div class="record-field full">
+
+                                        <span>
+                                            Symptoms
+                                        </span>
+
+                                        <strong>
+                                            <%= medicalRecord.symptoms %>
+                                        </strong>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- TREATMENT -->
+
+                                <% if (medicalRecord.treatment) { %>
+
+                                    <div class="record-field full">
+
+                                        <span>
+                                            Treatment
+                                        </span>
+
+                                        <strong>
+                                            <%= medicalRecord.treatment %>
+                                        </strong>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- MEDICINES -->
+
+                                <% if (medicalRecord.medicines) { %>
+
+                                    <div class="record-field full">
+
+                                        <span>
+                                            Medicines
+                                        </span>
+
+                                        <strong>
+                                            <%= medicalRecord.medicines %>
+                                        </strong>
+
+                                    </div>
+
+                                <% } %>
+
+
+                                <!-- DOCTOR NOTES -->
+
+                                <% if (medicalRecord.notes) { %>
+
+                                    <div class="record-field full">
+
+                                        <span>
+                                            Doctor Notes
+                                        </span>
+
+                                        <strong>
+                                            <%= medicalRecord.notes %>
+                                        </strong>
+
+                                    </div>
+
+                                <% } %>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- VIEW FULL MEDICAL RECORD -->
+
+                        <% if (appointment.status === "Completed") { %>
+
+                            <a
+                                href="/doctor/appointments/<%= appointment._id %>/medical-record/view"
+                                class="action-btn view-record-action"
+                                style="margin-top:12px;"
+                            >
+
+                                <i class="fa-solid fa-file-medical"></i>
+
+                                View Full Medical Record
+
+                            </a>
+
+                        <% } %>
+
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+
+            <!-- =====================================================
+                 APPOINTMENT TIMELINE
+            ====================================================== -->
+
+            <div class="details-card">
+
+                <div class="details-card-header">
+
+                    <div class="details-card-header-icon">
+
+                        <i class="fa-solid fa-timeline"></i>
+
+                    </div>
+
+                    <h3>
+                        Appointment Progress
+                    </h3>
+
+                </div>
+
+
+                <div class="details-card-body">
+
+                    <div class="timeline">
+
+
+                        <!-- BOOKED -->
+
+                        <div class="timeline-item active">
+
+                            <div class="timeline-dot"></div>
+
+                            <h4>
+                                Appointment Booked
+                            </h4>
+
+                            <p>
+                                Patient created this appointment.
+                            </p>
+
+                        </div>
+
+
+                        <!-- APPROVED -->
+
+                        <div
+                            class="timeline-item
+                            <%= ["Approved", "Completed"].includes(
+                                appointment.status
+                            )
+                                ? "active"
+                                : "" %>"
+                        >
+
+                            <div class="timeline-dot"></div>
+
+                            <h4>
+                                Appointment Approved
+                            </h4>
+
+                            <p>
+                                Doctor approved the appointment.
+                            </p>
+
+                        </div>
+
+
+                        <!-- MEDICAL RECORD -->
+
+                        <div
+                            class="timeline-item
+                            <%= medicalRecord ? "active" : "" %>"
+                        >
+
+                            <div class="timeline-dot"></div>
+
+                            <h4>
+                                Medical Record Added
+                            </h4>
+
+                            <p>
+                                Doctor added patient's medical record.
+                            </p>
+
+                        </div>
+
+
+                        <!-- COMPLETED -->
+
+                        <div
+                            class="timeline-item
+                            <%= appointment.status === "Completed"
+                                ? "active"
+                                : "" %>"
+                        >
+
+                            <div class="timeline-dot"></div>
+
+                            <h4>
+                                Consultation Completed
+                            </h4>
+
+                            <p>
+                                Appointment has been completed.
+                            </p>
+
+                        </div>
+
+
+                        <!-- CANCELLED -->
+
+                        <% if (appointment.status === "Cancelled") { %>
+
+                            <div class="timeline-item active">
+
+                                <div
+                                    class="timeline-dot"
+                                    style="border-color:#e53935;"
+                                ></div>
+
+                                <h4>
+                                    Appointment Cancelled
+                                </h4>
+
+                                <p>
+                                    This appointment has been cancelled.
+                                </p>
+
+                            </div>
+
+                        <% } %>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             RIGHT COLUMN
+        ====================================================== -->
+
+        <div>
+
+
+            <!-- =================================================
+                 QUICK SUMMARY
+            ================================================== -->
+
+            <div class="details-card">
+
+                <div class="details-card-header">
+
+                    <div class="details-card-header-icon">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                    </div>
+
+                    <h3>
+                        Quick Summary
+                    </h3>
+
+                </div>
+
+
+                <div class="details-card-body">
+
+                    <div class="summary-box">
+
+
+                        <!-- DATE -->
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Date
+                                </span>
+
+                                <strong>
+
+                                    <%= new Date(
+                                        appointment.appointmentDate
+                                    ).toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day:"2-digit",
+                                            month:"short",
+                                            year:"numeric"
+                                        }
+                                    ) %>
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+
+                                <i class="fa-regular fa-clock"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Time
+                                </span>
+
+                                <strong>
+                                    <%= appointment.appointmentTime %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+
+                                <i class="fa-solid fa-stethoscope"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Department
+                                </span>
+
+                                <strong>
+                                    <%= appointment.department %>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CREATED -->
+
+                        <div class="summary-item">
+
+                            <div class="summary-icon">
+
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Created
+                                </span>
+
+                                <strong>
+
+                                    <%= new Date(
+                                        appointment.createdAt
+                                    ).toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day:"2-digit",
+                                            month:"short",
+                                            year:"numeric"
+                                        }
+                                    ) %>
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 APPOINTMENT ACTIONS
+            ================================================== -->
+
+            <div class="details-card">
+
+                <div class="details-card-header">
+
+                    <div class="details-card-header-icon">
+
+                        <i class="fa-solid fa-sliders"></i>
+
+                    </div>
+
+                    <h3>
+                        Appointment Actions
+                    </h3>
+
+                </div>
+
+
+                <div class="details-card-body">
+
+                    <div class="action-buttons">
+
+
+                        <!-- =================================================
+                             PENDING
+                        ================================================== -->
+
+                        <% if (appointment.status === "Pending") { %>
+
+
+                            <!-- APPROVE -->
+
+                            <form
+                                action="/doctor/appointments/<%= appointment._id %>/approve"
+                                method="POST"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="action-btn approve-action"
+                                >
+
+                                    <i class="fa-solid fa-check"></i>
+
+                                    Approve Appointment
+
+                                </button>
+
+                            </form>
+
+
+                            <!-- CANCEL -->
+
+                            <button
+                                type="button"
+                                class="action-btn cancel-action"
+                                onclick="openCancelModal()"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                                Cancel Appointment
+
+                            </button>
+
+
+                            <div class="info-note">
+
+                                <i class="fa-solid fa-circle-info"></i>
+
+                                <span>
+
+                                    Approve the appointment to proceed
+                                    with the patient's consultation.
+
+                                </span>
+
+                            </div>
+
+
+                        <!-- =================================================
+                             APPROVED
+                        ================================================== -->
+
+                        <% } else if (
+                            appointment.status === "Approved"
+                        ) { %>
+
+
+                            <!-- ADD MEDICAL RECORD -->
+
+                            <a
+                                href="/doctor/appointments/<%= appointment._id %>/medical-record"
+                                class="action-btn medical-record-action"
+                            >
+
+                                <i class="fa-solid fa-notes-medical"></i>
+
+                                Add Medical Record
+
+                            </a>
+
+
+                            <!-- CANCEL -->
+
+                            <button
+                                type="button"
+                                class="action-btn cancel-action"
+                                onclick="openCancelModal()"
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                                Cancel Appointment
+
+                            </button>
+
+
+                            <div class="info-note medical-note">
+
+                                <i class="fa-solid fa-file-medical"></i>
+
+                                <span>
+
+                                    Add the patient's diagnosis,
+                                    symptoms, treatment and medicines.
+
+                                    Saving the medical record will
+                                    automatically mark this appointment
+                                    as <strong>Completed</strong>.
+
+                                </span>
+
+                            </div>
+
+
+                        <!-- =================================================
+                             COMPLETED
+                        ================================================== -->
+
+                        <% } else if (
+                            appointment.status === "Completed"
+                        ) { %>
+
+
+                            <div class="info-note completed-note">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                <span>
+
+                                    This appointment has been completed
+                                    and the medical record has been saved.
+
+                                </span>
+
+                            </div>
+
+
+                            <% if (medicalRecord) { %>
+
+                                <a
+                                    href="/doctor/appointments/<%= appointment._id %>/medical-record/view"
+                                    class="action-btn view-record-action"
+                                >
+
+                                    <i class="fa-solid fa-file-medical"></i>
+
+                                    View Medical Record
+
+                                </a>
+
+                            <% } else { %>
+
+                                <div class="info-note">
+
+                                    <i class="fa-solid fa-circle-info"></i>
+
+                                    <span>
+
+                                        No medical record was found for
+                                        this appointment.
+
+                                    </span>
+
+                                </div>
+
+                            <% } %>
+
+
+                        <!-- =================================================
+                             CANCELLED
+                        ================================================== -->
+
+                        <% } else { %>
+
+
+                            <div class="info-note cancelled-note">
+
+                                <i class="fa-solid fa-circle-xmark"></i>
+
+                                <span>
+
+                                    This appointment has been cancelled.
+                                    No further actions are available.
+
+                                </span>
+
+                            </div>
+
+
+                        <% } %>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     CANCEL CONFIRMATION MODAL
+============================================================== -->
+
+<div
+    id="cancelModal"
+    class="cancel-modal"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cancelModalTitle"
+    >
+
+
+        <div class="modal-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+
+        <h3 id="cancelModalTitle">
+            Cancel Appointment?
+        </h3>
+
+
+        <p>
+
+            Are you sure you want to cancel this appointment?
+
+            The appointment status will be changed to
+
+            <strong>Cancelled</strong>.
+
+        </p>
+
+
+        <div class="modal-actions">
+
+
+            <button
+                type="button"
+                class="modal-btn modal-close"
+                onclick="closeCancelModal()"
+            >
+
+                Keep Appointment
+
+            </button>
+
+
+            <form
+                id="cancelForm"
+                action="/doctor/appointments/<%= appointment._id %>/cancel"
+                method="POST"
+            >
+
+                <button
+                    type="submit"
+                    class="modal-btn modal-confirm"
+                >
+
+                    Yes, Cancel
+
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =============================================================
+   CANCEL MODAL
+============================================================= */
+
+function openCancelModal(){
+
+    const modal =
+        document.getElementById("cancelModal");
+
+
+    if(!modal){
+        return;
+    }
+
+
+    modal.classList.add("show");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    const confirmButton =
+        modal.querySelector(
+            ".modal-confirm"
+        );
+
+
+    if(confirmButton){
+
+        setTimeout(function(){
+
+            confirmButton.focus();
+
+        },60);
+
+    }
+
+}
+
+
+/* =============================================================
+   CLOSE CANCEL MODAL
+============================================================= */
+
+function closeCancelModal(){
+
+    const modal =
+        document.getElementById("cancelModal");
+
+
+    if(!modal){
+        return;
+    }
+
+
+    modal.classList.remove("show");
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =============================================================
+   CLOSE ON BACKGROUND CLICK
+============================================================= */
+
+const cancelModal =
+    document.getElementById(
+        "cancelModal"
+    );
+
+
+if(cancelModal){
+
+    cancelModal.addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+
+                closeCancelModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   ESC KEY
+============================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeCancelModal();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<%- include("../../layouts/doctorFooter") %>           

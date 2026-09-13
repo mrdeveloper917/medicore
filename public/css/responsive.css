@@ -1,0 +1,797 @@
+@media (max-width: 992px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .login-btn,
+  .register-btn {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 50px 0;
+  }
+
+  .logo a {
+    font-size: 24px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .nav-links {
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 991px) {
+  .hero-container {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+
+    line-height: 55px;
+  }
+
+  .search-box form {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 32px;
+
+    line-height: 45px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 991px) {
+  .about-container {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-content h2 {
+    font-size: 32px;
+
+    line-height: 42px;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
+}
+@media (max-width: 991px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .department-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .department-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 991px) {
+  .doctor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .banner-container {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 25px;
+  }
+
+  .emergency-container {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .doctor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-container h2 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 991px) {
+  .testimonial-grid,
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .partner-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .newsletter-box {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 25px;
+  }
+
+  .newsletter form {
+    flex-direction: column;
+
+    width: 100%;
+  }
+
+  .newsletter input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .testimonial-grid,
+  .blog-grid,
+  .partner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-banner {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .welcome-left {
+    width: 100%;
+
+    margin-bottom: 25px;
+  }
+
+  .welcome-right {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .table {
+    display: block;
+
+    overflow-x: auto;
+  }
+
+  .content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .welcome-left h1 {
+    font-size: 28px;
+  }
+
+  .stat-card h2 {
+    font-size: 26px;
+  }
+
+  .dashboard-card {
+    padding: 18px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .doctor-banner {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .banner-left {
+    width: 100%;
+
+    margin-bottom: 25px;
+  }
+
+  .banner-right {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+
+  .banner-left h1 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .doctor-banner {
+    padding: 25px;
+  }
+
+  .banner-left h1 {
+    font-size: 26px;
+  }
+
+  .primary-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointment-table {
+    display: block;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+  }
+
+  .card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .table-actions {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .patient-info {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .upcoming-item {
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .view-btn,
+  .approve-btn {
+    width: 100%;
+
+    text-align: center;
+  }
+}
+
+/* ==========================================
+   Fade Animation
+========================================== */
+
+.patient-item,
+.summary-card,
+.prescription-table {
+  animation: fadeDashboard 0.5s ease;
+}
+
+@keyframes fadeDashboard {
+  from {
+    opacity: 0;
+
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media (max-width: 1200px) {
+  .revenue-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .performance-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .notification-item {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .notification-icon {
+    margin-bottom: 10px;
+  }
+
+  .revenue-box {
+    padding: 22px;
+  }
+
+  .performance-box {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .revenue-box h2 {
+    font-size: 26px;
+  }
+
+  .performance-box h3 {
+    font-size: 28px;
+  }
+
+  .stats-row {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .chart-container {
+    height: 280px;
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-box h1 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 25px;
+  }
+
+  .timeline-dot {
+    left: -23px;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+
+  canvas {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .goal-box h1 {
+    font-size: 38px;
+  }
+
+  .calendar-placeholder i {
+    font-size: 50px;
+  }
+
+  .activity-item {
+    flex-direction: column;
+  }
+
+  .timeline-content {
+    padding: 15px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px) {
+  .doctor-profile-info {
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    gap: 25px;
+
+    margin-top: -90px;
+  }
+
+  .profile-left {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .profile-right {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+
+  .cover-image {
+    height: 200px;
+  }
+
+  .doctor-avatar {
+    width: 140px;
+
+    height: 140px;
+  }
+
+  .doctor-details h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .doctor-avatar {
+    width: 120px;
+
+    height: 120px;
+  }
+
+  .doctor-details h1 {
+    font-size: 24px;
+  }
+
+  .edit-profile-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px) {
+  .doctor-profile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-details {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-stat-card {
+    padding: 22px;
+  }
+
+  .profile-card {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .doctor-profile-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .completion-circle {
+    width: 140px;
+
+    height: 140px;
+  }
+
+  .completion-circle span {
+    width: 105px;
+
+    height: 105px;
+
+    font-size: 24px;
+  }
+
+  .profile-card .card-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+}
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 992px) {
+  .timeline {
+    padding-left: 25px;
+  }
+
+  .timeline-dot {
+    left: -22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-content {
+    padding: 18px;
+  }
+
+  .timeline-content h3 {
+    font-size: 18px;
+  }
+
+  .membership-list {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .achievement-list li {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .achievement-list i {
+    margin-bottom: 10px;
+  }
+
+  .membership-badge {
+    width: 100%;
+
+    text-align: center;
+  }
+}
+/* ==========================================
+   HOVER ANIMATION
+========================================== */
+
+.certificate-card,
+.analytics-item,
+.summary-card,
+.social-links a {
+  animation: profileCard 0.6s ease;
+}
+
+@keyframes profileCard {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+/* ==========================================
+   FINAL RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .doctor-profile-info {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 20px;
+  }
+
+  .profile-left {
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+  .profile-right {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+
+  .doctor-profile-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid,
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-details {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .doctor-avatar {
+    width: 110px;
+
+    height: 110px;
+  }
+
+  .doctor-details h1 {
+    font-size: 24px;
+  }
+
+  .edit-profile-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .profile-card {
+    padding: 18px;
+  }
+}

@@ -1,0 +1,590 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    .appointments-page {
+        padding: 25px;
+        background: #f5f7fb;
+        min-height: calc(100vh - 100px);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 15px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #1f2937;
+    }
+
+    .page-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 18px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        color: #374151;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+    .back-btn:hover {
+        background: #f3f4f6;
+    }
+
+    .patient-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .patient-image {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .patient-placeholder {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .patient-info h2 {
+        margin: 0 0 7px;
+        color: #111827;
+        font-size: 21px;
+    }
+
+    .patient-info p {
+        margin: 4px 0;
+        color: #6b7280;
+    }
+
+    .table-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+        overflow: hidden;
+    }
+
+    .table-header {
+        padding: 20px 22px;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .table-header h3 {
+        margin: 0;
+        color: #1f2937;
+    }
+
+    .appointment-count {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        padding: 15px 18px;
+        text-align: left;
+        background: #f9fafb;
+        color: #6b7280;
+        font-size: 13px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 17px 18px;
+        border-top: 1px solid #f1f5f9;
+        color: #374151;
+        white-space: nowrap;
+    }
+
+    tr:hover td {
+        background: #fafafa;
+    }
+
+    .date-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .date-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .date-text strong {
+        display: block;
+        color: #111827;
+    }
+
+    .date-text small {
+        color: #9ca3af;
+    }
+
+    .status {
+        display: inline-flex;
+        padding: 6px 11px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .status.pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status.approved {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .status.completed {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .status.cancelled {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .status.rejected {
+        background: #f3e8ff;
+        color: #7e22ce;
+    }
+
+    .empty-state {
+        padding: 60px 20px;
+        text-align: center;
+        color: #9ca3af;
+    }
+
+    .empty-state i {
+        font-size: 45px;
+        margin-bottom: 15px;
+    }
+
+    .empty-state h3 {
+        color: #374151;
+        margin: 5px 0;
+    }
+
+    .empty-state p {
+        margin: 5px 0;
+    }
+
+    .mobile-list {
+        display: none;
+    }
+
+    .appointment-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 17px;
+        margin-bottom: 12px;
+        box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    }
+
+    .mobile-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .mobile-date {
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .mobile-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .info-item {
+        color: #6b7280;
+        font-size: 13px;
+    }
+
+    .info-item strong {
+        display: block;
+        color: #374151;
+        margin-top: 3px;
+    }
+
+    @media (max-width: 750px) {
+        .appointments-page {
+            padding: 15px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .patient-card {
+            align-items: flex-start;
+        }
+
+        .table-card {
+            display: none;
+        }
+
+        .mobile-list {
+            display: block;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .patient-card {
+            flex-direction: column;
+        }
+
+        .mobile-info {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+
+<div class="appointments-page">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h1>Patient Appointments</h1>
+            <p>Complete appointment history of this patient</p>
+        </div>
+
+        <a href="/doctor/patients/<%= patient._id %>" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Patient Details
+        </a>
+
+    </div>
+
+
+    <!-- PATIENT INFO -->
+    <%
+        const patientName =
+            ((patient?.firstName || "") + " " + (patient?.lastName || "")).trim()
+            || "Patient";
+    %>
+
+    <div class="patient-card">
+
+        <% if (patient?.profileImage) { %>
+
+            <img
+                src="<%= patient.profileImage %>"
+                alt="Patient"
+                class="patient-image"
+            >
+
+        <% } else { %>
+
+            <div class="patient-placeholder">
+                <%= patientName.charAt(0).toUpperCase() %>
+            </div>
+
+        <% } %>
+
+
+        <div class="patient-info">
+
+            <h2><%= patientName %></h2>
+
+            <p>
+                <i class="fas fa-envelope"></i>
+                <%= patient?.email || "Email not available" %>
+            </p>
+
+            <p>
+                <i class="fas fa-phone"></i>
+                <%= patient?.phone || "Phone not available" %>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- DESKTOP TABLE -->
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h3>
+                <i class="fas fa-calendar-check"></i>
+                Appointment History
+            </h3>
+
+            <span class="appointment-count">
+                <%= appointments?.length || 0 %> Appointments
+            </span>
+
+        </div>
+
+
+        <% if (appointments && appointments.length > 0) { %>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% appointments.forEach(function(appointment) { %>
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="date-box">
+
+                                        <div class="date-icon">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+
+                                        <div class="date-text">
+
+                                            <strong>
+                                                <%= appointment.appointmentDate
+                                                    ? new Date(
+                                                        appointment.appointmentDate
+                                                    ).toLocaleDateString("en-IN", {
+                                                        day: "numeric",
+                                                        month: "short",
+                                                        year: "numeric"
+                                                    })
+                                                    : "N/A"
+                                                %>
+                                            </strong>
+
+                                            <small>
+                                                Appointment
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <i class="fas fa-clock"></i>
+
+                                    <%= appointment.appointmentTime || "N/A" %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <i class="fas fa-stethoscope"></i>
+
+                                    <%= appointment.department || "N/A" %>
+
+                                </td>
+
+
+                                <td>
+
+                                    <%
+                                        const status =
+                                            String(
+                                                appointment.status || "Unknown"
+                                            ).toLowerCase();
+                                    %>
+
+                                    <span class="status <%= status %>">
+                                        <%= appointment.status || "Unknown" %>
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        <% }); %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <i class="fas fa-calendar-times"></i>
+
+                <h3>No Appointments</h3>
+
+                <p>
+                    This patient has no appointment history with you.
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+
+    <!-- MOBILE LIST -->
+    <div class="mobile-list">
+
+        <% if (appointments && appointments.length > 0) { %>
+
+            <% appointments.forEach(function(appointment) { %>
+
+                <%
+                    const mobileStatus =
+                        String(
+                            appointment.status || "Unknown"
+                        ).toLowerCase();
+                %>
+
+                <div class="appointment-card">
+
+                    <div class="mobile-top">
+
+                        <div class="mobile-date">
+
+                            <i class="fas fa-calendar"></i>
+
+                            <%= appointment.appointmentDate
+                                ? new Date(
+                                    appointment.appointmentDate
+                                ).toLocaleDateString("en-IN", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric"
+                                })
+                                : "Date unavailable"
+                            %>
+
+                        </div>
+
+                        <span class="status <%= mobileStatus %>">
+                            <%= appointment.status || "Unknown" %>
+                        </span>
+
+                    </div>
+
+
+                    <div class="mobile-info">
+
+                        <div class="info-item">
+
+                            Time
+
+                            <strong>
+                                <i class="fas fa-clock"></i>
+                                <%= appointment.appointmentTime || "N/A" %>
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            Department
+
+                            <strong>
+                                <i class="fas fa-stethoscope"></i>
+                                <%= appointment.department || "N/A" %>
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }); %>
+
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <i class="fas fa-calendar-times"></i>
+
+                <h3>No Appointments</h3>
+
+                <p>No appointment history available.</p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

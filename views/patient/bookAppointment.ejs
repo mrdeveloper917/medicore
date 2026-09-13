@@ -1,0 +1,1940 @@
+<%- include("../layouts/patientHeader") %>
+
+<div class="patient-page">
+
+    <!-- ============================================================
+         PAGE HEADER
+    ============================================================= -->
+
+    <div class="page-header">
+
+        <a href="/patient/dashboard" class="back-btn">
+            ← Back to Dashboard
+        </a>
+
+        <h1>Book an Appointment</h1>
+
+        <p>
+            Choose your preferred doctor, date and available appointment time.
+        </p>
+
+    </div>
+
+
+    <!-- ============================================================
+         APPOINTMENT CARD
+    ============================================================= -->
+
+    <div class="appointment-card">
+
+        <div class="card-title">
+
+            <div>
+                <h2>Appointment Details</h2>
+
+                <p>
+                    Please fill in all the required information.
+                </p>
+            </div>
+
+            <div class="appointment-icon">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================
+             DOCTORS AVAILABLE
+        ========================================================= -->
+
+        <% if (doctors && doctors.length > 0) { %>
+
+            <form
+                action="/patient/book"
+                method="POST"
+                id="appointmentForm"
+            >
+
+                <div class="form-grid">
+
+
+                    <!-- ==================================================
+                         DOCTOR
+                    ================================================== -->
+
+                    <div class="form-group full">
+
+                        <label for="doctor">
+                            Select Doctor <span>*</span>
+                        </label>
+
+                        <select
+                            name="doctor"
+                            id="doctor"
+                            required
+                        >
+
+                            <option value="">
+                                -- Select Doctor --
+                            </option>
+
+
+                            <% doctors.forEach(function(doctor) { %>
+
+                                <option
+                                    value="<%= doctor._id %>"
+                                    data-specialization="<%= doctor.specialization || 'General Physician' %>"
+                                >
+
+                                    Dr.
+                                    <%= doctor.firstName || "" %>
+                                    <%= doctor.lastName || "" %>
+
+                                    <% if (doctor.specialization) { %>
+
+                                        - <%= doctor.specialization %>
+
+                                    <% } %>
+
+                                </option>
+
+                            <% }); %>
+
+                        </select>
+
+
+                        <!-- Doctor Information -->
+
+                        <div
+                            class="doctor-info"
+                            id="doctorInfo"
+                        >
+
+                            <div class="doctor-info-icon">
+
+                                <i class="fa-solid fa-user-doctor"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong id="doctorName"></strong>
+
+                                <span id="doctorSpecialization"></span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         DEPARTMENT
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="department">
+                            Department <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="department"
+                            id="department"
+                            placeholder="Select a doctor first"
+                            required
+                            readonly
+                        >
+
+                        <small
+                            id="departmentMessage"
+                            class="field-message"
+                        >
+                            Department will be filled automatically
+                            from the selected doctor.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         APPOINTMENT DATE
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="appointmentDate">
+                            Appointment Date <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            name="appointmentDate"
+                            id="appointmentDate"
+                            required
+                        >
+
+                        <small class="field-message">
+                            Select a date to check doctor's availability.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- ==================================================
+                         APPOINTMENT TIME
+                    ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="appointmentTime">
+                            Appointment Time <span>*</span>
+                        </label>
+
+                        <select
+                            name="appointmentTime"
+                            id="appointmentTime"
+                            required
+                            disabled
+                        >
+
+                            <option value="">
+                                Select doctor and date first
+                            </option>
+
+                        </select>
+
+                        <small
+                            id="slotMessage"
+                            class="slot-message"
+                        ></small>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ====================================================
+                     IMPORTANT INFORMATION
+                ===================================================== -->
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Important</strong>
+
+                        <p>
+                            Your appointment will initially be marked as
+                            <strong>Pending</strong>.
+                            The doctor will review and approve your
+                            appointment request.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ====================================================
+                     ACTION BUTTONS
+                ===================================================== -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="/patient/appointments"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="submitButton"
+                    >
+
+                        <i class="fa-solid fa-calendar-plus"></i>
+
+                        Book Appointment
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        <!-- ========================================================
+             NO DOCTORS
+        ========================================================= -->
+
+        <% } else { %>
+
+            <div class="no-doctor">
+
+                <div class="no-doctor-icon">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                </div>
+
+                <h3>No Doctors Available</h3>
+
+                <p>
+                    Currently, there are no registered doctors
+                    available for appointments.
+                </p>
+
+                <a
+                    href="/patient/dashboard"
+                    class="btn btn-secondary"
+                >
+                    Back to Dashboard
+                </a>
+
+            </div>
+
+        <% } %>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================================
+     PAGE CSS
+================================================================ -->
+
+<style>
+
+    /* ============================================================
+       MAIN PAGE
+    ============================================================ */
+
+    .patient-page {
+
+        max-width: 1100px;
+
+        margin: 0 auto;
+
+        padding:
+            30px
+            20px
+            50px;
+
+    }
+
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+
+    .page-header {
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .back-btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        margin-bottom: 15px;
+
+        text-decoration: none;
+
+        color: #2563eb;
+
+        font-weight: 600;
+
+        font-size: 14px;
+
+        transition:
+            color 0.2s ease,
+            transform 0.2s ease;
+
+    }
+
+
+    .back-btn:hover {
+
+        color: #1d4ed8;
+
+        transform: translateX(-2px);
+
+    }
+
+
+    .page-header h1 {
+
+        margin: 0 0 8px;
+
+        font-size: 30px;
+
+        font-weight: 700;
+
+        color: #111827;
+
+    }
+
+
+    .page-header p {
+
+        margin: 0;
+
+        color: #6b7280;
+
+        font-size: 15px;
+
+    }
+
+
+
+    /* ============================================================
+       CARD
+    ============================================================ */
+
+    .appointment-card {
+
+        background: #ffffff;
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        border: 1px solid #e5e7eb;
+
+        box-shadow:
+            0 8px 30px
+            rgba(15, 23, 42, 0.08);
+
+    }
+
+
+    /* ============================================================
+       CARD TITLE
+    ============================================================ */
+
+    .card-title {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        margin-bottom: 28px;
+
+        padding-bottom: 20px;
+
+        border-bottom:
+            1px solid #f1f5f9;
+
+    }
+
+
+    .card-title h2 {
+
+        margin: 0 0 6px;
+
+        color: #111827;
+
+        font-size: 21px;
+
+    }
+
+
+    .card-title p {
+
+        margin: 0;
+
+        color: #6b7280;
+
+        font-size: 14px;
+
+    }
+
+
+    .appointment-icon {
+
+        width: 48px;
+
+        height: 48px;
+
+        border-radius: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        font-size: 20px;
+
+    }
+
+
+
+    /* ============================================================
+       FORM GRID
+    ============================================================ */
+
+    .form-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 22px;
+
+    }
+
+
+    .form-group {
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+
+    .form-group.full {
+
+        grid-column:
+            1 / -1;
+
+    }
+
+
+    /* ============================================================
+       LABEL
+    ============================================================ */
+
+    .form-group label {
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        color: #374151;
+
+    }
+
+
+    .form-group label span {
+
+        color: #ef4444;
+
+    }
+
+
+
+    /* ============================================================
+       INPUT / SELECT
+    ============================================================ */
+
+    .form-group input,
+    .form-group select {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding:
+            13px
+            14px;
+
+        border:
+            1px solid #d1d5db;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+
+        font-family: inherit;
+
+        outline: none;
+
+        background: #ffffff;
+
+        color: #111827;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+
+    }
+
+
+    .form-group input:focus,
+    .form-group select:focus {
+
+        border-color: #2563eb;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, 0.10);
+
+    }
+
+
+    .form-group select {
+
+        cursor: pointer;
+
+    }
+
+
+    .form-group select:disabled {
+
+        cursor: not-allowed;
+
+        background: #f9fafb;
+
+        color: #6b7280;
+
+    }
+
+
+    .form-group input[readonly] {
+
+        background: #f9fafb;
+
+        cursor: not-allowed;
+
+    }
+
+
+
+    /* ============================================================
+       SMALL MESSAGES
+    ============================================================ */
+
+    .field-message {
+
+        margin-top: 7px;
+
+        color: #6b7280;
+
+        font-size: 12px;
+
+        line-height: 1.4;
+
+    }
+
+
+    .slot-message {
+
+        display: block;
+
+        margin-top: 8px;
+
+        min-height: 18px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        line-height: 1.4;
+
+    }
+
+
+    .slot-message.loading {
+
+        color: #6b7280;
+
+    }
+
+
+    .slot-message.success {
+
+        color: #15803d;
+
+    }
+
+
+    .slot-message.selected {
+
+        color: #15803d;
+
+    }
+
+
+    .slot-message.unavailable {
+
+        color: #b45309;
+
+    }
+
+
+    .slot-message.error {
+
+        color: #dc2626;
+
+    }
+
+
+
+    /* ============================================================
+       DOCTOR INFORMATION
+    ============================================================ */
+
+    .doctor-info {
+
+        display: none;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: 10px;
+
+        padding:
+            13px
+            15px;
+
+        background: #f8fafc;
+
+        border:
+            1px solid #e5e7eb;
+
+        border-radius: 10px;
+
+    }
+
+
+    .doctor-info-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+    }
+
+
+    .doctor-info strong {
+
+        display: block;
+
+        color: #111827;
+
+        font-size: 14px;
+
+    }
+
+
+    .doctor-info span {
+
+        display: block;
+
+        margin-top: 4px;
+
+        color: #6b7280;
+
+        font-size: 13px;
+
+    }
+
+
+
+    /* ============================================================
+       INFO BOX
+    ============================================================ */
+
+    .info-box {
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 12px;
+
+        margin-top: 25px;
+
+        padding:
+            15px
+            18px;
+
+        border-radius: 12px;
+
+        background: #eff6ff;
+
+        border:
+            1px solid #bfdbfe;
+
+        color: #1e40af;
+
+        font-size: 13px;
+
+        line-height: 1.6;
+
+    }
+
+
+    .info-icon {
+
+        flex-shrink: 0;
+
+        font-size: 18px;
+
+        margin-top: 1px;
+
+    }
+
+
+    .info-box strong {
+
+        font-weight: 700;
+
+    }
+
+
+    .info-box p {
+
+        margin: 3px 0 0;
+
+    }
+
+
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+
+    .form-actions {
+
+        margin-top: 30px;
+
+        display: flex;
+
+        justify-content: flex-end;
+
+        gap: 12px;
+
+    }
+
+
+    .btn {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 8px;
+
+        padding:
+            13px
+            24px;
+
+        border-radius: 10px;
+
+        border: none;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        font-family: inherit;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            opacity 0.2s ease;
+
+    }
+
+
+    .btn:hover {
+
+        transform: translateY(-1px);
+
+    }
+
+
+    .btn-primary {
+
+        background: #2563eb;
+
+        color: #ffffff;
+
+    }
+
+
+    .btn-primary:hover {
+
+        background: #1d4ed8;
+
+    }
+
+
+    .btn-primary:disabled {
+
+        cursor: not-allowed;
+
+        opacity: 0.7;
+
+        transform: none;
+
+    }
+
+
+    .btn-secondary {
+
+        background: #f3f4f6;
+
+        color: #374151;
+
+    }
+
+
+    .btn-secondary:hover {
+
+        background: #e5e7eb;
+
+    }
+
+
+
+    /* ============================================================
+       NO DOCTOR
+    ============================================================ */
+
+    .no-doctor {
+
+        text-align: center;
+
+        padding:
+            50px
+            20px;
+
+        background: #fff7ed;
+
+        border:
+            1px solid #fed7aa;
+
+        border-radius: 12px;
+
+    }
+
+
+    .no-doctor-icon {
+
+        width: 60px;
+
+        height: 60px;
+
+        margin:
+            0 auto
+            18px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #ffedd5;
+
+        color: #ea580c;
+
+        font-size: 25px;
+
+    }
+
+
+    .no-doctor h3 {
+
+        margin:
+            0
+            0
+            8px;
+
+        color: #9a3412;
+
+    }
+
+
+    .no-doctor p {
+
+        margin:
+            0
+            0
+            20px;
+
+        color: #9a3412;
+
+    }
+
+
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+
+    @media (max-width: 768px) {
+
+        .patient-page {
+
+            padding:
+                20px
+                15px
+                40px;
+
+        }
+
+
+        .appointment-card {
+
+            padding:
+                22px
+                18px;
+
+        }
+
+
+        .form-grid {
+
+            grid-template-columns:
+                1fr;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column: auto;
+
+        }
+
+
+        .form-actions {
+
+            flex-direction: column;
+
+        }
+
+
+        .btn {
+
+            width: 100%;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 25px;
+
+        }
+
+
+        .card-title {
+
+            align-items: flex-start;
+
+        }
+
+    }
+
+</style>
+
+
+
+<!-- ================================================================
+     PAGE JAVASCRIPT
+================================================================ -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+
+        /* ========================================================
+           ELEMENTS
+        ======================================================== */
+
+        const form =
+            document.getElementById(
+                "appointmentForm"
+            );
+
+        const doctorSelect =
+            document.getElementById(
+                "doctor"
+            );
+
+        const departmentInput =
+            document.getElementById(
+                "department"
+            );
+
+        const departmentMessage =
+            document.getElementById(
+                "departmentMessage"
+            );
+
+        const dateInput =
+            document.getElementById(
+                "appointmentDate"
+            );
+
+        const timeSelect =
+            document.getElementById(
+                "appointmentTime"
+            );
+
+        const doctorInfo =
+            document.getElementById(
+                "doctorInfo"
+            );
+
+        const doctorName =
+            document.getElementById(
+                "doctorName"
+            );
+
+        const doctorSpecialization =
+            document.getElementById(
+                "doctorSpecialization"
+            );
+
+        const slotMessage =
+            document.getElementById(
+                "slotMessage"
+            );
+
+        const submitButton =
+            document.getElementById(
+                "submitButton"
+            );
+
+
+        let currentRequest = null;
+
+
+
+        /* ========================================================
+           MINIMUM DATE = TODAY
+        ======================================================== */
+
+        if (dateInput) {
+
+            const today =
+                new Date();
+
+            const year =
+                today.getFullYear();
+
+            const month =
+                String(
+                    today.getMonth() + 1
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+            const day =
+                String(
+                    today.getDate()
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+            dateInput.min =
+                `${year}-${month}-${day}`;
+
+        }
+
+
+
+        /* ========================================================
+           FORMAT TIME
+        ======================================================== */
+
+        function formatTime(time) {
+
+            if (
+                !time ||
+                !time.includes(":")
+            ) {
+                return time || "";
+            }
+
+
+            const [
+                hours,
+                minutes
+            ] =
+                time
+                    .split(":")
+                    .map(Number);
+
+
+            const suffix =
+                hours >= 12
+                    ? "PM"
+                    : "AM";
+
+
+            const displayHour =
+                hours % 12 || 12;
+
+
+            return (
+                `${displayHour}:` +
+                `${String(minutes).padStart(2, "0")} ` +
+                `${suffix}`
+            );
+
+        }
+
+
+
+        /* ========================================================
+           RESET TIME SELECT
+        ======================================================== */
+
+        function resetTimeSelect(
+            message =
+                "Select doctor and date first"
+        ) {
+
+            timeSelect.innerHTML = "";
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value = "";
+
+            option.textContent =
+                message;
+
+
+            timeSelect.appendChild(
+                option
+            );
+
+
+            timeSelect.disabled =
+                true;
+
+
+            slotMessage.textContent =
+                "";
+
+            slotMessage.className =
+                "slot-message";
+
+        }
+
+
+
+        /* ========================================================
+           UPDATE DOCTOR INFORMATION
+        ======================================================== */
+
+        function updateDoctorInformation() {
+
+            const selectedOption =
+                doctorSelect.options[
+                    doctorSelect.selectedIndex
+                ];
+
+
+            /* No doctor selected */
+
+            if (!doctorSelect.value) {
+
+                doctorInfo.style.display =
+                    "none";
+
+
+                departmentInput.value =
+                    "";
+
+                departmentInput.placeholder =
+                    "Select a doctor first";
+
+
+                departmentMessage.textContent =
+                    "Department will be filled automatically from the selected doctor.";
+
+
+                resetTimeSelect();
+
+                return;
+
+            }
+
+
+            /* Get specialization */
+
+            const specialization =
+                selectedOption.dataset
+                    .specialization ||
+                "General Physician";
+
+
+            /* Show doctor information */
+
+            doctorName.textContent =
+                selectedOption.textContent
+                    .trim();
+
+
+            doctorSpecialization.textContent =
+                "Specialization: " +
+                specialization;
+
+
+            doctorInfo.style.display =
+                "flex";
+
+
+            /* Auto fill department */
+
+            departmentInput.value =
+                specialization;
+
+
+            departmentInput.placeholder =
+                specialization;
+
+
+            departmentMessage.textContent =
+                "Department automatically selected from doctor specialization.";
+
+
+            /* Load available slots */
+
+            loadAvailableSlots();
+
+        }
+
+
+
+        /* ========================================================
+           LOAD AVAILABLE SLOTS
+        ======================================================== */
+
+        async function loadAvailableSlots() {
+
+            const doctor =
+                doctorSelect.value;
+
+            const date =
+                dateInput.value;
+
+
+            /* Reset */
+
+            resetTimeSelect();
+
+
+            /* Missing doctor/date */
+
+            if (
+                !doctor ||
+                !date
+            ) {
+
+                return;
+
+            }
+
+            // A date input can briefly contain an incomplete typed value.
+            // Do not make availability requests until it is a real ISO date.
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || (dateInput.min && date < dateInput.min)) {
+                return;
+            }
+
+
+            /* Cancel previous request */
+
+            if (currentRequest) {
+
+                currentRequest.abort();
+
+            }
+
+
+            currentRequest =
+                new AbortController();
+
+
+            /* Loading */
+
+            timeSelect.innerHTML = "";
+
+
+            const loadingOption =
+                document.createElement(
+                    "option"
+                );
+
+
+            loadingOption.value =
+                "";
+
+            loadingOption.textContent =
+                "Loading available slots...";
+
+
+            timeSelect.appendChild(
+                loadingOption
+            );
+
+
+            timeSelect.disabled =
+                true;
+
+
+            slotMessage.textContent =
+                "Checking doctor's availability...";
+
+
+            slotMessage.className =
+                "slot-message loading";
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        `/patient/appointments/available-slots?doctorId=${encodeURIComponent(doctor)}&date=${encodeURIComponent(date)}`,
+                        {
+                            method: "GET",
+
+                            headers: {
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            signal:
+                                currentRequest.signal
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                timeSelect.innerHTML =
+                    "";
+
+
+                /* API ERROR */
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        "";
+
+                    option.textContent =
+                        "Unable to load slots";
+
+
+                    timeSelect.appendChild(
+                        option
+                    );
+
+
+                    slotMessage.textContent =
+                        data.message ||
+                        "Unable to load available slots.";
+
+
+                    slotMessage.className =
+                        "slot-message error";
+
+
+                    return;
+
+                }
+
+
+
+                /* NO AVAILABILITY */
+
+                if (
+                    !data.available ||
+                    !data.slots ||
+                    data.slots.length === 0
+                ) {
+
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        "";
+
+                    option.textContent =
+                        "No available slots";
+
+
+                    timeSelect.appendChild(
+                        option
+                    );
+
+
+                    timeSelect.disabled =
+                        true;
+
+
+                    slotMessage.textContent =
+                        data.message ||
+                        "No appointment slots are available.";
+
+
+                    slotMessage.className =
+                        "slot-message unavailable";
+
+
+                    return;
+
+                }
+
+
+
+                /* DEFAULT OPTION */
+
+                const defaultOption =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                defaultOption.value =
+                    "";
+
+                defaultOption.textContent =
+                    "Select available time";
+
+
+                timeSelect.appendChild(
+                    defaultOption
+                );
+
+
+
+                /* ADD AVAILABLE SLOTS */
+
+                data.slots.forEach(
+                    slot => {
+
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            slot;
+
+
+                        option.textContent =
+                            formatTime(
+                                slot
+                            );
+
+
+                        timeSelect.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+
+                /* Enable */
+
+                timeSelect.disabled =
+                    false;
+
+
+
+                /* Availability message */
+
+                slotMessage.textContent =
+                    `${data.day}: ` +
+                    `${formatTime(data.startTime)} - ` +
+                    `${formatTime(data.endTime)} • ` +
+                    `${data.slots.length} ` +
+                    `slot${data.slots.length === 1 ? "" : "s"} available`;
+
+
+                slotMessage.className =
+                    "slot-message success";
+
+
+            } catch (error) {
+
+
+                /* Ignore cancelled requests */
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    return;
+
+                }
+
+
+                console.error(
+                    "Available Slots Error:",
+                    error
+                );
+
+
+                timeSelect.innerHTML =
+                    "";
+
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    "";
+
+                option.textContent =
+                    "Unable to load slots";
+
+
+                timeSelect.appendChild(
+                    option
+                );
+
+
+                timeSelect.disabled =
+                    true;
+
+
+                slotMessage.textContent =
+                    "Something went wrong while loading availability.";
+
+
+                slotMessage.className =
+                    "slot-message error";
+
+            }
+
+        }
+
+
+
+        /* ========================================================
+           DOCTOR CHANGE
+        ======================================================== */
+
+        doctorSelect.addEventListener(
+            "change",
+            updateDoctorInformation
+        );
+
+
+
+        /* ========================================================
+           DATE CHANGE
+        ======================================================== */
+
+        dateInput.addEventListener(
+            "change",
+            loadAvailableSlots
+        );
+
+
+
+        /* ========================================================
+           TIME CHANGE
+        ======================================================== */
+
+        timeSelect.addEventListener(
+            "change",
+            () => {
+
+
+                if (
+                    timeSelect.value
+                ) {
+
+
+                    slotMessage.textContent =
+                        `Selected appointment time: ${formatTime(timeSelect.value)}`;
+
+
+                    slotMessage.className =
+                        "slot-message selected";
+
+                }
+
+            }
+        );
+
+
+
+        /* ========================================================
+           FINAL FORM VALIDATION
+        ======================================================== */
+
+        form.addEventListener(
+            "submit",
+            (event) => {
+
+
+                const doctor =
+                    doctorSelect.value;
+
+                const department =
+                    departmentInput.value.trim();
+
+                const date =
+                    dateInput.value;
+
+                const time =
+                    timeSelect.value;
+
+
+
+                /* Doctor */
+
+                if (!doctor) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select a doctor."
+                    );
+
+                    doctorSelect.focus();
+
+                    return;
+
+                }
+
+
+
+                /* Department */
+
+                if (!department) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select a doctor to determine the department."
+                    );
+
+                    doctorSelect.focus();
+
+                    return;
+
+                }
+
+
+
+                /* Date */
+
+                if (!date) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select an appointment date."
+                    );
+
+                    dateInput.focus();
+
+                    return;
+
+                }
+
+
+
+                /* Time */
+
+                if (!time) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select an available appointment time."
+                    );
+
+                    timeSelect.focus();
+
+                    return;
+
+                }
+
+
+
+                /* Safe local date */
+
+                const [
+                    year,
+                    month,
+                    day
+                ] =
+                    date
+                        .split("-")
+                        .map(Number);
+
+
+                const selectedDate =
+                    new Date(
+                        year,
+                        month - 1,
+                        day
+                    );
+
+
+                const today =
+                    new Date();
+
+
+                today.setHours(
+                    0,
+                    0,
+                    0,
+                    0
+                );
+
+
+
+                /* Past date */
+
+                if (
+                    selectedDate <
+                    today
+                ) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select today or a future date."
+                    );
+
+                    dateInput.focus();
+
+                    return;
+
+                }
+
+
+
+                /* Prevent double submission */
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        true;
+
+                    submitButton.innerHTML =
+                        `<i class="fa-solid fa-spinner fa-spin"></i> Booking...`;
+
+                }
+
+            }
+        );
+
+
+
+        /* ========================================================
+           INITIAL STATE
+        ======================================================== */
+
+        resetTimeSelect();
+
+    }
+
+);
+
+</script>
+
+
+<%- include("../layouts/patientFooter") %>

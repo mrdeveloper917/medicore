@@ -1,0 +1,28 @@
+<%- include("../layouts/patientHeader", { title: title, user: user }) %>
+    <main style="max-width:760px;margin:36px auto;padding:0 20px">
+        <section style="background:#fff;border-radius:16px;padding:32px;box-shadow:0 8px 30px #0001">
+            <p style="color:#2563eb;font-weight:700">STEP 2 OF 2</p>
+            <h1>Live video verification</h1>
+            <p>Use a well-lit room. Keep one face inside the guide, look at the camera, and do not use a photo or
+                screen.</p>
+            <% if (demoMode) { %>
+                <p style="padding:10px;border-radius:8px;background:#fff7ed;color:#9a3412"><strong>Development
+                        demo:</strong> the recorded clip is checked only for this demo flow; no biometric matching or
+                    Aadhaar authentication occurs.</p>
+                <% } %>
+                    <div style="max-width:420px;margin:auto;position:relative"><video id="camera" autoplay playsinline
+                            muted style="width:100%;border-radius:12px;background:#111"></video>
+                        <div style="position:absolute;inset:12%;border:3px solid #60a5fa;border-radius:50%"></div>
+                    </div>
+                    <p id="status" role="status">Preparing camera...</p><button id="verify" class="primary-btn"
+                        disabled>Record live video and verify</button> <button id="retry" type="button"
+                        style="display:none">Try again</button>
+        </section>
+    </main>
+    <script>
+        const video = document.getElementById('camera'), statusEl = document.getElementById('status'), verify = document.getElementById('verify'), retry = document.getElementById('retry'); let stream;
+        async function start() { try { stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } }, audio: false }); video.srcObject = stream; statusEl.textContent = 'Camera ready. Position one face inside the guide.'; verify.disabled = false } catch (_) { statusEl.textContent = 'Camera access is required. Check browser permissions or try another device.' } }
+        verify.onclick = async () => { verify.disabled = true; try { statusEl.textContent = 'Recording a short live video...'; const chunks = [], recorder = new MediaRecorder(stream, { mimeType: 'video/webm', videoBitsPerSecond: 600000 }); recorder.ondataavailable = e => chunks.push(e.data); const clip = await new Promise(resolve => { recorder.onstop = () => resolve(new Blob(chunks, { type: 'video/webm' })); recorder.start(); setTimeout(() => recorder.stop(), 2500) }); if (clip.size > 5 * 1024 * 1024) throw new Error('recording-too-large'); const reader = new FileReader(), videoData = await new Promise(resolve => { reader.onload = () => resolve(reader.result); reader.readAsDataURL(clip) }); statusEl.textContent = 'Verifying identity...'; const r = await fetch('/patient/identity/face-verification', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ csrfToken: '<%= csrfToken %>', video: videoData }) }), data = await r.json(); if (data.ok) { stream.getTracks().forEach(t => t.stop()); statusEl.textContent = 'Identity verified successfully.'; location.assign(data.redirectUrl) } else { statusEl.textContent = data.message || 'Identity verification failed. Please try again.'; retry.style.display = 'inline-block' } } catch (error) { statusEl.textContent = error.message === 'recording-too-large' ? 'The recording is too large. Please retry.' : 'Video verification is unavailable. Check camera support and try again.'; retry.style.display = 'inline-block' } finally { verify.disabled = false } };
+        retry.onclick = () => { retry.style.display = 'none'; statusEl.textContent = 'Camera ready. Position one face inside the guide.' }; start();
+    </script>
+    <%- include("../layouts/patientFooter") %>

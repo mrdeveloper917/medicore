@@ -1,0 +1,123 @@
+<%- include("../../layouts/doctorHeader") %>
+
+    <div class="page-content">
+
+        <div class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    Education
+
+                </h2>
+
+                <a href="/doctor/education/add" class="add-btn">
+
+                    Add Education
+
+                </a>
+
+            </div>
+
+            <% if(education  && education.length > 0){ %>
+
+                <% education.forEach(item=>{ %>
+
+                    <div class="education-card">
+
+                        <h3>
+
+                            <%= item.degree %>
+
+                        </h3>
+
+                        <p>
+
+                            <strong>
+
+                                College:
+
+                            </strong>
+
+                            <%= item.college %>
+
+                        </p>
+
+                        <p>
+
+                            <strong>
+
+                                University:
+
+                            </strong>
+
+                            <%= item.university %>
+
+                        </p>
+
+                        <p>
+
+                            <%= item.startYear %>
+
+                                -
+
+                                <%= item.endYear %>
+
+                        </p>
+
+                        <div class="education-actions">
+
+                            <a href="/doctor/education/edit/<%= item._id %>" class="btn btn-primary">
+
+                                Edit
+
+                            </a>
+
+                            <form action="/doctor/education/delete/<%= item._id %>" method="POST" onsubmit="return confirm(
+
+'Are you sure you want to delete this education record?'
+
+)">
+
+                                <button class="btn btn-danger">
+
+                                    Delete
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                    <% }) %>
+
+                        <% }else{ %>
+
+                            <div class="empty-state">
+
+                                <i class="fa-solid fa-graduation-cap"></i>
+
+                                <h3>
+
+                                    No Education Added
+
+                                </h3>
+
+                                <p>
+
+                                    Add your first education record.
+
+                                </p>
+
+                            </div>
+
+                            <% } %>
+
+        </div>
+
+    </div>
+
+    <%- include("../../layouts/doctorFooter") %>

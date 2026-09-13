@@ -1,0 +1,907 @@
+<%- include("../layouts/header", { title: "Register" }) %>
+
+
+
+<section class="auth-section">
+
+
+<div class="auth-container">
+
+    <!-- ================= LEFT PANEL ================= -->
+
+    <div class="auth-left">
+
+        <div class="left-glow glow-one"></div>
+        <div class="left-glow glow-two"></div>
+
+        <div class="left-content">
+
+            <div class="brand-badge">
+                <span class="brand-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </span>
+                MediCore
+            </div>
+
+            <div class="hero-text">
+
+                <span class="mini-title">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Smarter healthcare starts here
+                </span>
+
+                <h1>
+                    Create your
+                    <span>account.</span>
+                </h1>
+
+                <p>
+                    Join MediCore and manage your complete healthcare
+                    journey from one secure and intelligent platform.
+                </p>
+
+            </div>
+
+
+            <!-- Illustration -->
+
+            <div class="register-image">
+
+                <div class="image-glow"></div>
+
+                <div class="floating-card card-top">
+
+                    <i class="fa-solid fa-user-shield"></i>
+
+                    <div>
+                        <strong>Secure Identity</strong>
+                        <span>Protected verification</span>
+                    </div>
+
+                </div>
+
+                <img
+                    src="/images/auth/register.png"
+                    alt="MediCore Registration">
+
+                <div class="floating-card card-bottom">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
+                    <div>
+                        <strong>Easy Healthcare</strong>
+                        <span>Appointments made simple</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Benefits -->
+
+            <div class="benefits">
+
+                <div class="benefit">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Book appointments</span>
+                </div>
+
+                <div class="benefit">
+                    <i class="fa-solid fa-file-medical"></i>
+                    <span>Manage medical records</span>
+                </div>
+
+                <div class="benefit">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <span>Secure health data</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RIGHT PANEL ================= -->
+
+    <div class="auth-right">
+
+        <div class="form-box">
+
+            <!-- Mobile Brand -->
+
+            <div class="mobile-brand">
+
+                <span>
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </span>
+
+                MediCore
+
+            </div>
+
+
+            <!-- Header -->
+
+            <div class="form-header">
+
+                <span class="welcome-label">
+                    <i class="fa-solid fa-sparkles"></i>
+                    Get started
+                </span>
+
+                <h2>
+                    Create your
+                    <span>account</span>
+                </h2>
+
+                <p>
+                    Fill in your details to create your MediCore account.
+                </p>
+
+            </div>
+
+
+            <!-- ================= ALERT ================= -->
+
+            <% if(message){ %>
+
+                <div class="alert alert-error">
+
+                    <div class="alert-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+
+                    <div class="alert-content">
+
+                        <strong>Registration Error</strong>
+
+                        <span>
+                            <%= message %>
+                        </span>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <% if(errors && errors.length){ %>
+
+                <div class="alert alert-error">
+
+                    <div class="alert-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <div class="alert-content">
+
+                        <strong>Please check the following</strong>
+
+                        <ul>
+
+                            <% errors.forEach(error=>{ %>
+
+                                <li>
+                                    <%= error.msg %>
+                                </li>
+
+                            <% }) %>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- ================= FORM ================= -->
+
+            <form
+                action="/register"
+                method="POST"
+                enctype="multipart/form-data"
+                id="registerForm">
+
+                <input
+                    type="hidden"
+                    name="csrfToken"
+                    value="<%= csrfToken || '' %>">
+
+
+                <!-- ================= PERSONAL INFO ================= -->
+
+                <div class="form-section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+                        <strong>Personal Information</strong>
+                        <span>Tell us a little about yourself</span>
+                    </div>
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div class="row">
+
+                    <div class="input-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-user input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                placeholder="First name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-user input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                placeholder="Last name"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-envelope input-icon"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@gmail.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="input-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-phone input-icon"></i>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="10-digit mobile number"
+                            maxlength="10"
+                            autocomplete="tel"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GENDER + DOB -->
+
+                <div class="row">
+
+                    <div class="input-group">
+
+                        <label for="gender">
+                            Gender
+                        </label>
+
+                        <div class="input-wrapper select-wrapper">
+
+                            <i class="fa-solid fa-venus-mars input-icon"></i>
+
+                            <select
+                                name="gender"
+                                id="gender"
+                                required>
+
+                                <option value="">
+                                    Select gender
+                                </option>
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="dob">
+                            Date of Birth
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-regular fa-calendar input-icon"></i>
+
+                            <input
+                                type="date"
+                                id="dob"
+                                name="dob">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ACCOUNT INFO ================= -->
+
+                <div class="form-section-title account-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+
+                    <div>
+                        <strong>Account Information</strong>
+                        <span>Choose your account type</span>
+                    </div>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="input-group">
+
+                    <label for="role">
+                        Account Role
+                    </label>
+
+                    <div class="input-wrapper select-wrapper">
+
+                        <i class="fa-solid fa-user-tag input-icon"></i>
+
+                        <select
+                            name="role"
+                            id="role"
+                            required>
+
+                            <option value="patient">
+                                Patient
+                            </option>
+
+                            <option value="doctor">
+                                Doctor
+                            </option>
+
+                            <option value="receptionist">
+                                Receptionist
+                            </option>
+
+                            <option value="nurse">
+                                Nurse
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ADDRESS ================= -->
+
+                <div class="form-section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <strong>Address Details</strong>
+                        <span>Your current contact information</span>
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="input-group">
+
+                    <label for="address">
+                        Address
+                    </label>
+
+                    <div class="input-wrapper textarea-wrapper">
+
+                        <i class="fa-solid fa-location-dot input-icon"></i>
+
+                        <textarea
+                            name="address"
+                            id="address"
+                            rows="3"
+                            placeholder="Enter your address"></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CITY STATE -->
+
+                <div class="row">
+
+                    <div class="input-group">
+
+                        <label for="city">
+                            City
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-city input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                placeholder="City">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="state">
+                            State
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-map input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="state"
+                                name="state"
+                                placeholder="State">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PINCODE -->
+
+                <div class="input-group">
+
+                    <label for="pincode">
+                        Pincode
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-location-crosshairs input-icon"></i>
+
+                        <input
+                            type="text"
+                            id="pincode"
+                            name="pincode"
+                            maxlength="6"
+                            placeholder="6-digit pincode">
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= PROFILE ================= -->
+
+                <div class="form-section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+
+                    <div>
+                        <strong>Profile Photo</strong>
+                        <span>Add a photo to personalize your profile</span>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-upload">
+
+                    <div class="image-preview">
+
+                        <img
+                            id="preview"
+                            src="/images/default-user.png"
+                            alt="Profile Preview">
+
+                    </div>
+
+                    <div class="upload-content">
+
+                        <label
+                            for="profileImage"
+                            class="upload-btn">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            Choose Photo
+
+                        </label>
+
+                        <input
+                            type="file"
+                            name="profileImage"
+                            id="profileImage"
+                            accept="image/*">
+
+                        <span>
+                            JPG, PNG or WEBP • Optional
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= IDENTITY ================= -->
+
+                <div class="form-section-title identity-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+
+                    <div>
+                        <strong>Identity Verification</strong>
+                        <span>Keep your healthcare account secure</span>
+                    </div>
+
+                </div>
+
+
+                <!-- AADHAAR -->
+
+                <div
+                    class="verification-card"
+                    id="aadhaarField">
+
+                    <div class="verification-header">
+
+                        <div class="verification-icon">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>Aadhaar Verification</strong>
+
+                            <span>
+                                Optional identity verification
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <label for="aadhaarNumber">
+                        Aadhaar Number
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-fingerprint input-icon"></i>
+
+                        <input
+                            type="text"
+                            name="aadhaarNumber"
+                            id="aadhaarNumber"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            maxlength="14"
+                            placeholder="12-digit Aadhaar number">
+
+                    </div>
+
+                    <small>
+                        You may verify now or complete this securely later.
+                        MediCore does not store Aadhaar in your profile.
+                    </small>
+
+                </div>
+
+
+                <!-- CONSENT -->
+
+                <label
+                    class="checkbox-card"
+                    id="identityConsent">
+
+                    <input
+                        type="checkbox"
+                        name="identityConsent"
+                        value="yes">
+
+                    <span class="custom-check">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="checkbox-text">
+                        I consent to Aadhaar authentication for identity
+                        verification and understand that it is voluntary
+                        for this service.
+                    </span>
+
+                </label>
+
+
+                <!-- VIDEO VERIFICATION -->
+
+                <label class="checkbox-card video-option">
+
+                    <input
+                        type="checkbox"
+                        name="startIdentityVerification"
+                        value="yes">
+
+                    <span class="custom-check">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="checkbox-text">
+
+                        <strong>
+                            Start video identity verification
+                        </strong>
+
+                        <small>
+                            Begin verification after creating your account.
+                        </small>
+
+                    </span>
+
+                    <span class="video-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </span>
+
+                </label>
+
+
+                <!-- ================= PASSWORD ================= -->
+
+                <div class="form-section-title">
+
+                    <div class="section-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+
+                    <div>
+                        <strong>Account Security</strong>
+                        <span>Create a strong password</span>
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            minlength="8"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                            aria-label="Show password">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <div class="strength">
+
+                        <div id="strengthBar"></div>
+
+                    </div>
+
+                    <div class="password-hint">
+                        Use uppercase, lowercase, numbers and symbols.
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM -->
+
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="checkbox-card terms-card">
+
+                    <input
+                        type="checkbox"
+                        required>
+
+                    <span class="custom-check">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="checkbox-text">
+                        I agree to the
+                        <a href="#">Terms & Privacy Policy</a>
+                    </span>
+
+                </label>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    class="register-btn"
+                    type="submit">
+
+                    <span>Create My Account</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="bottom-link">
+
+                <span>Already have an account?</span>
+
+                <a href="/login">
+                    Sign in
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <!-- TRUST -->
+
+            <div class="register-trust">
+
+                <div>
+                    <i class="fa-solid fa-lock"></i>
+                    Secure Registration
+                </div>
+
+                <span></span>
+
+                <div>
+                    <i class="fa-solid fa-shield-heart"></i>
+                    Privacy Protected
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+<script src="/js/auth.js"></script>
+
+<%- include("../layouts/footer") %>

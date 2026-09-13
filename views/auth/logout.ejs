@@ -1,0 +1,1829 @@
+ejs
+<%- include("../layouts/header", { title: "Sign Out | MediCore" }) %>
+
+<section class="mc-logout-page">
+
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <div class="mc-background">
+
+        <div class="mc-orb mc-orb-one"></div>
+        <div class="mc-orb mc-orb-two"></div>
+        <div class="mc-orb mc-orb-three"></div>
+
+        <div class="mc-medical-symbol symbol-one">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+
+        <div class="mc-medical-symbol symbol-two">
+            <i class="fa-solid fa-heart-pulse"></i>
+        </div>
+
+        <div class="mc-medical-symbol symbol-three">
+            <i class="fa-solid fa-cross"></i>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN WRAPPER
+         ===================================================== -->
+
+    <main class="mc-logout-wrapper">
+
+
+        <!-- =================================================
+             BRAND
+             ================================================= -->
+
+        <a href="/" class="mc-brand">
+
+            <span class="mc-brand-icon">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </span>
+
+            <span class="mc-brand-name">
+                <strong>Medi</strong>Core
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             LOGOUT CARD
+             ================================================= -->
+
+        <div class="mc-logout-card">
+
+            <!-- Top Gradient -->
+            <div class="mc-card-top-line"></div>
+
+
+            <!-- =================================================
+                 LOGOUT ICON
+                 ================================================= -->
+
+            <div class="mc-logout-illustration">
+
+                <div class="mc-pulse-ring ring-one"></div>
+
+                <div class="mc-pulse-ring ring-two"></div>
+
+                <div class="mc-main-icon">
+
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+                </div>
+
+                <div class="mc-secure-check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 HEADING
+                 ================================================= -->
+
+            <div class="mc-content">
+
+                <div class="mc-small-label">
+
+                    <span class="mc-live-dot"></span>
+
+                    Secure Session
+
+                </div>
+
+
+                <h1>
+                    Sign out of
+                    <span>MediCore?</span>
+                </h1>
+
+
+                <p class="mc-subtitle">
+                    You're about to end your current session.
+                    Would you like to securely sign out of your
+                    MediCore account?
+                </p>
+
+
+                <!-- =================================================
+                     CURRENT ACCOUNT
+                     ================================================= -->
+
+                <% if (
+                    typeof user !== "undefined" &&
+                    user
+                ) { %>
+
+                    <div class="mc-account">
+
+                        <!-- Avatar -->
+
+                        <div class="mc-avatar">
+
+                            <% if (user.profileImage) { %>
+
+                                <img
+                                    src="<%= user.profileImage %>"
+                                    alt="Profile"
+                                >
+
+                            <% } else if (user.role === "doctor") { %>
+
+                                <i class="fa-solid fa-user-doctor"></i>
+
+                            <% } else { %>
+
+                                <i class="fa-solid fa-hospital-user"></i>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- Details -->
+
+                        <div class="mc-account-details">
+
+                            <span>Currently signed in as</span>
+
+                            <strong>
+
+                                <% if (user.firstName || user.lastName) { %>
+
+                                    <%= user.firstName || "" %>
+                                    <%= user.lastName || "" %>
+
+                                <% } else if (user.role === "doctor") { %>
+
+                                    Doctor Account
+
+                                <% } else { %>
+
+                                    Patient Account
+
+                                <% } %>
+
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Status -->
+
+                        <div class="mc-account-status">
+
+                            <span></span>
+
+                            Active
+
+                        </div>
+
+                    </div>
+
+                <% } else if (
+                    typeof role !== "undefined" &&
+                    role
+                ) { %>
+
+                    <div class="mc-account">
+
+                        <div class="mc-avatar">
+
+                            <% if (role === "doctor") { %>
+
+                                <i class="fa-solid fa-user-doctor"></i>
+
+                            <% } else { %>
+
+                                <i class="fa-solid fa-hospital-user"></i>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <div class="mc-account-details">
+
+                            <span>Currently signed in as</span>
+
+                            <strong>
+
+                                <%= role === "doctor"
+                                    ? "Doctor Account"
+                                    : "Patient Account"
+                                %>
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="mc-account-status">
+
+                            <span></span>
+
+                            Active
+
+                        </div>
+
+                    </div>
+
+                <% } %>
+
+
+                <!-- =================================================
+                     SECURITY MESSAGE
+                     ================================================= -->
+
+                <div class="mc-security-box">
+
+                    <div class="mc-security-icon">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+
+                    <div class="mc-security-content">
+
+                        <strong>
+                            Your session is secure
+                        </strong>
+
+                        <span>
+                            Signing out will safely close your
+                            current session and protect your
+                            healthcare information.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACTION BUTTONS
+                     ================================================= -->
+
+                <div class="mc-actions">
+
+
+                    <!-- Cancel / Dashboard -->
+
+                    <a
+                        href="<%= typeof role !== 'undefined' && role === 'doctor'
+                            ? '/doctor/dashboard'
+                            : '/patient/dashboard' %>"
+                        class="mc-cancel"
+                    >
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        <span>
+                            Stay Logged In
+                        </span>
+
+                    </a>
+
+
+                    <!-- Logout -->
+
+                    <form
+                        action="/logout"
+                        method="POST"
+                        id="logoutForm"
+                    >
+
+                        <button
+                            type="submit"
+                            class="mc-logout-btn"
+                            id="logoutBtn"
+                        >
+
+                            <span>
+                                Sign Out
+                            </span>
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- =================================================
+                     SECURITY FEATURES
+                     ================================================= -->
+
+                <div class="mc-security-features">
+
+                    <div class="mc-feature">
+
+                        <div class="mc-feature-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+
+                        <div>
+                            <strong>Secure</strong>
+                            <span>Session</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mc-feature-divider"></div>
+
+
+                    <div class="mc-feature">
+
+                        <div class="mc-feature-icon">
+                            <i class="fa-solid fa-shield-heart"></i>
+                        </div>
+
+                        <div>
+                            <strong>Private</strong>
+                            <span>Healthcare Data</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="mc-feature-divider"></div>
+
+
+                    <div class="mc-feature">
+
+                        <div class="mc-feature-icon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+
+                        <div>
+                            <strong>Protected</strong>
+                            <span>Access</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer class="mc-footer">
+
+            <span>
+                <i class="fa-solid fa-heart-pulse"></i>
+                MediCore
+            </span>
+
+            <span class="mc-footer-dot"></span>
+
+            <span>
+                Your Health. Our Priority.
+            </span>
+
+        </footer>
+
+    </main>
+
+</section>
+
+
+<style>
+
+/* =========================================================
+   MEDICORE PROFESSIONAL LOGOUT PAGE
+   ========================================================= */
+
+:root {
+
+    --mc-primary: #0f766e;
+    --mc-primary-dark: #115e59;
+    --mc-primary-light: #14b8a6;
+
+    --mc-text: #0f172a;
+    --mc-text-secondary: #334155;
+    --mc-muted: #64748b;
+
+    --mc-border: #e2e8f0;
+
+    --mc-soft: #ecfdf5;
+    --mc-soft-two: #f0fdfa;
+
+    --mc-green: #16a34a;
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.mc-logout-page *,
+.mc-logout-page *::before,
+.mc-logout-page *::after {
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.mc-logout-page {
+
+    position: relative;
+
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 45px 20px;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(20, 184, 166, 0.12),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(15, 118, 110, 0.10),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f8fffe 0%,
+            #f8fafc 50%,
+            #ffffff 100%
+        );
+
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.mc-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+}
+
+
+/* Orbs */
+
+.mc-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(2px);
+
+}
+
+.mc-orb-one {
+
+    width: 420px;
+    height: 420px;
+
+    top: -260px;
+    left: -180px;
+
+    background:
+        rgba(20, 184, 166, 0.07);
+
+}
+
+.mc-orb-two {
+
+    width: 360px;
+    height: 360px;
+
+    right: -190px;
+    bottom: -220px;
+
+    background:
+        rgba(15, 118, 110, 0.07);
+
+}
+
+.mc-orb-three {
+
+    width: 120px;
+    height: 120px;
+
+    top: 25%;
+    right: 14%;
+
+    background:
+        rgba(45, 212, 191, 0.06);
+
+}
+
+
+/* Medical symbols */
+
+.mc-medical-symbol {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        rgba(15, 118, 110, 0.08);
+
+    font-size: 28px;
+
+}
+
+.symbol-one {
+
+    top: 18%;
+
+    left: 12%;
+
+    transform: rotate(12deg);
+
+}
+
+.symbol-two {
+
+    right: 12%;
+
+    top: 18%;
+
+    font-size: 25px;
+
+}
+
+.symbol-three {
+
+    left: 15%;
+
+    bottom: 18%;
+
+    font-size: 23px;
+
+}
+
+
+/* =========================================================
+   WRAPPER
+   ========================================================= */
+
+.mc-logout-wrapper {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: min(100%, 510px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.mc-brand {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 19px;
+
+    color: var(--mc-text);
+
+    text-decoration: none;
+
+    font-size: 24px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.7px;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+.mc-brand:hover {
+
+    transform: translateY(-1px);
+
+}
+
+.mc-brand-name strong {
+
+    color: var(--mc-primary);
+
+}
+
+.mc-brand-icon {
+
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mc-primary-dark),
+            var(--mc-primary-light)
+        );
+
+    box-shadow:
+        0 9px 22px rgba(15, 118, 110, 0.22);
+
+    font-size: 20px;
+
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.mc-logout-card {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(226, 232, 240, 0.95);
+
+    border-radius: 25px;
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+
+        0 30px 80px rgba(15, 23, 42, 0.11),
+
+        0 10px 30px rgba(15, 118, 110, 0.04);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+
+    animation:
+        mcCardIn 0.5s
+        cubic-bezier(.22,1,.36,1)
+        both;
+
+}
+
+@keyframes mcCardIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(0.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* Top line */
+
+.mc-card-top-line {
+
+    width: 100%;
+
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--mc-primary-dark),
+            var(--mc-primary),
+            var(--mc-primary-light),
+            #5eead4
+        );
+
+}
+
+
+/* =========================================================
+   LOGOUT ILLUSTRATION
+   ========================================================= */
+
+.mc-logout-illustration {
+
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+
+    margin: 31px auto 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* Pulse rings */
+
+.mc-pulse-ring {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    background:
+        rgba(20, 184, 166, 0.07);
+
+}
+
+.ring-one {
+
+    width: 100px;
+    height: 100px;
+
+    animation:
+        mcPulse 3s ease-in-out infinite;
+
+}
+
+.ring-two {
+
+    width: 82px;
+    height: 82px;
+
+    border:
+        1px solid rgba(20, 184, 166, 0.12);
+
+}
+
+
+/* Main icon */
+
+.mc-main-icon {
+
+    position: relative;
+
+    z-index: 3;
+
+    width: 66px;
+    height: 66px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    color: var(--mc-primary);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            var(--mc-soft)
+        );
+
+    border:
+        1px solid #ccfbf1;
+
+    box-shadow:
+        0 12px 28px rgba(15, 118, 110, 0.11);
+
+    font-size: 24px;
+
+}
+
+@keyframes mcPulse {
+
+    0%,
+    100% {
+
+        transform: scale(0.88);
+
+        opacity: 0.8;
+
+    }
+
+    50% {
+
+        transform: scale(1.08);
+
+        opacity: 0.3;
+
+    }
+
+}
+
+
+/* Check */
+
+.mc-secure-check {
+
+    position: absolute;
+
+    right: 5px;
+
+    bottom: 7px;
+
+    z-index: 5;
+
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        3px solid #ffffff;
+
+    border-radius: 50%;
+
+    color: #ffffff;
+
+    background: var(--mc-primary);
+
+    box-shadow:
+        0 5px 12px rgba(15, 118, 110, 0.20);
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.mc-content {
+
+    padding:
+        0 36px 28px;
+
+    text-align: center;
+
+}
+
+
+/* Label */
+
+.mc-small-label {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 8px;
+
+    color: var(--mc-primary);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+
+}
+
+.mc-live-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #14b8a6;
+
+    box-shadow:
+        0 0 0 4px rgba(20, 184, 166, 0.10);
+
+}
+
+
+/* Heading */
+
+.mc-content h1 {
+
+    margin: 0;
+
+    color: var(--mc-text);
+
+    font-size: 32px;
+
+    line-height: 1.15;
+
+    letter-spacing: -1.2px;
+
+}
+
+.mc-content h1 span {
+
+    color: var(--mc-primary);
+
+}
+
+
+/* Subtitle */
+
+.mc-subtitle {
+
+    max-width: 370px;
+
+    margin: 10px auto 19px;
+
+    color: var(--mc-muted);
+
+    font-size: 12.5px;
+
+    line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   ACCOUNT
+   ========================================================= */
+
+.mc-account {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    margin-bottom: 10px;
+
+    text-align: left;
+
+    border:
+        1px solid var(--mc-border);
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f9fffe
+        );
+
+}
+
+
+/* Avatar */
+
+.mc-avatar {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 11px;
+
+    color: var(--mc-primary);
+
+    background: var(--mc-soft);
+
+    font-size: 15px;
+
+}
+
+.mc-avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+/* Details */
+
+.mc-account-details {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+}
+
+.mc-account-details span {
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+}
+
+.mc-account-details strong {
+
+    overflow: hidden;
+
+    color: var(--mc-text);
+
+    font-size: 11.5px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* Status */
+
+.mc-account-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 8px;
+
+    border-radius: 50px;
+
+    color: #15803d;
+
+    background: #f0fdf4;
+
+    font-size: 8px;
+
+    font-weight: 750;
+
+}
+
+.mc-account-status span {
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+}
+
+
+/* =========================================================
+   SECURITY BOX
+   ========================================================= */
+
+.mc-security-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px;
+
+    margin-bottom: 16px;
+
+    text-align: left;
+
+    border:
+        1px solid #ccfbf1;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fffe,
+            #f0fdfa
+        );
+
+}
+
+.mc-security-icon {
+
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    color: var(--mc-primary);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 3px 9px rgba(15, 118, 110, 0.07);
+
+    font-size: 12px;
+
+}
+
+.mc-security-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+}
+
+.mc-security-content strong {
+
+    color: var(--mc-text);
+
+    font-size: 10px;
+
+}
+
+.mc-security-content span {
+
+    color: var(--mc-muted);
+
+    font-size: 9px;
+
+    line-height: 1.4;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.mc-actions {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1.15fr;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+}
+
+.mc-actions form {
+
+    width: 100%;
+
+}
+
+
+/* Cancel */
+
+.mc-cancel {
+
+    min-height: 47px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 10px 14px;
+
+    border:
+        1px solid var(--mc-border);
+
+    border-radius: 11px;
+
+    color: var(--mc-text-secondary);
+
+    background: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    transition:
+        all 0.22s ease;
+
+}
+
+.mc-cancel:hover {
+
+    color: var(--mc-primary);
+
+    border-color: #99f6e4;
+
+    background: var(--mc-soft);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* Logout */
+
+.mc-logout-btn {
+
+    width: 100%;
+
+    min-height: 47px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    border: 0;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mc-primary-dark),
+            var(--mc-primary)
+        );
+
+    box-shadow:
+        0 8px 18px rgba(15, 118, 110, 0.18);
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    transition:
+        all 0.22s ease;
+
+}
+
+.mc-logout-btn:hover {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--mc-primary),
+            var(--mc-primary-light)
+        );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 11px 23px rgba(15, 118, 110, 0.24);
+
+}
+
+.mc-logout-btn i {
+
+    font-size: 10px;
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+.mc-logout-btn:hover i {
+
+    transform: translateX(3px);
+
+}
+
+.mc-logout-btn:disabled {
+
+    opacity: 0.72;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+/* =========================================================
+   SECURITY FEATURES
+   ========================================================= */
+
+.mc-security-features {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid var(--mc-border);
+
+}
+
+.mc-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+.mc-feature-icon {
+
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: var(--mc-primary);
+
+    background: var(--mc-soft);
+
+    font-size: 9px;
+
+}
+
+.mc-feature div:last-child {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+
+}
+
+.mc-feature strong {
+
+    color: var(--mc-text-secondary);
+
+    font-size: 8px;
+
+}
+
+.mc-feature span {
+
+    color: #94a3b8;
+
+    font-size: 7.5px;
+
+}
+
+.mc-feature-divider {
+
+    width: 1px;
+
+    height: 23px;
+
+    background: var(--mc-border);
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.mc-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 16px;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+}
+
+.mc-footer span:first-child {
+
+    color: var(--mc-primary);
+
+    font-weight: 750;
+
+}
+
+.mc-footer i {
+
+    margin-right: 3px;
+
+}
+
+.mc-footer-dot {
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #cbd5e1;
+
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+.mc-brand:focus-visible,
+.mc-cancel:focus-visible,
+.mc-logout-btn:focus-visible {
+
+    outline:
+        3px solid rgba(20, 184, 166, 0.22);
+
+    outline-offset: 3px;
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .mc-logout-page {
+
+        min-height: calc(100vh - 65px);
+
+        padding: 30px 15px;
+
+    }
+
+    .mc-content {
+
+        padding:
+            0 24px 25px;
+
+    }
+
+    .mc-security-features {
+
+        gap: 8px;
+
+    }
+
+    .mc-feature {
+
+        gap: 4px;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 470px) {
+
+    .mc-logout-page {
+
+        padding: 24px 12px;
+
+    }
+
+    .mc-brand {
+
+        font-size: 21px;
+
+        margin-bottom: 15px;
+
+    }
+
+    .mc-brand-icon {
+
+        width: 39px;
+        height: 39px;
+
+        border-radius: 11px;
+
+        font-size: 18px;
+
+    }
+
+    .mc-logout-card {
+
+        border-radius: 21px;
+
+    }
+
+    .mc-content {
+
+        padding:
+            0 17px 22px;
+
+    }
+
+    .mc-logout-illustration {
+
+        margin-top: 28px;
+
+    }
+
+    .mc-content h1 {
+
+        font-size: 28px;
+
+    }
+
+    .mc-subtitle {
+
+        font-size: 12px;
+
+    }
+
+    .mc-actions {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .mc-security-features {
+
+        gap: 5px;
+
+    }
+
+    .mc-feature-icon {
+
+        width: 25px;
+        height: 25px;
+
+    }
+
+    .mc-feature strong {
+
+        font-size: 7px;
+
+    }
+
+    .mc-feature span {
+
+        font-size: 6.5px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .mc-content {
+
+        padding-left: 13px;
+        padding-right: 13px;
+
+    }
+
+    .mc-account-status {
+
+        display: none;
+
+    }
+
+    .mc-security-features {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 4px;
+
+    }
+
+    .mc-feature {
+
+        justify-content: center;
+
+    }
+
+    .mc-feature-divider {
+
+        display: none;
+
+    }
+
+    .mc-feature div:last-child {
+
+        display: none;
+
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   MEDICORE LOGOUT PAGE SCRIPT
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const logoutForm =
+        document.getElementById("logoutForm");
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+
+    if (!logoutForm || !logoutBtn) {
+        return;
+    }
+
+
+    /* =====================================================
+       LOGOUT SUBMIT
+       ===================================================== */
+
+    logoutForm.addEventListener("submit", function () {
+
+        /*
+         * Prevent multiple submissions
+         */
+        logoutBtn.disabled = true;
+
+
+        /*
+         * Loading state
+         */
+        logoutBtn.innerHTML = `
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+            <span>Signing out...</span>
+        `;
+
+    });
+
+
+    /* =====================================================
+       ESCAPE / BACK SAFETY
+       ===================================================== */
+
+    window.addEventListener("pageshow", function () {
+
+        if (logoutBtn.disabled) {
+
+            logoutBtn.disabled = false;
+
+            logoutBtn.innerHTML = `
+                <span>Sign Out</span>
+                <i class="fa-solid fa-right-from-bracket"></i>
+            `;
+
+        }
+
+    });
+
+});
+
+</script>
+
+
+<%- include("../layouts/footer") %>
+

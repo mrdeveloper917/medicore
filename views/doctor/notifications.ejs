@@ -1,0 +1,1043 @@
+<%- include("../layouts/doctorHeader", { title, user }) %>
+
+<main class="notifications-page">
+
+    <!-- Page Header -->
+    <section class="notifications-header">
+
+        <div class="header-content">
+
+            <div class="header-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div>
+                <span class="page-label">DOCTOR PORTAL</span>
+                <h1>Notifications</h1>
+                <p>Stay updated with your appointments and important activities.</p>
+            </div>
+
+        </div>
+
+        <button id="readAll" class="mark-all-btn">
+            <i class="fa-solid fa-check-double"></i>
+            <span>Mark all as read</span>
+        </button>
+
+    </section>
+
+
+    <!-- Notification Stats -->
+    <section class="notification-stats">
+
+        <div class="stat-card">
+            <div class="stat-icon total">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div>
+                <span>Total Notifications</span>
+                <strong><%= notifications.length %></strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon unread">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+
+            <div>
+                <span>Unread Notifications</span>
+                <strong>
+                    <%= notifications.filter(n => !n.isRead).length %>
+                </strong>
+            </div>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon today">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div>
+                <span>Latest Activity</span>
+                <strong>
+                    <%= notifications.length ? "Recent" : "None" %>
+                </strong>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Notifications -->
+    <section class="notifications-container">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Recent Notifications</h2>
+                <p>Your latest updates and alerts</p>
+            </div>
+
+            <% if (notifications.length) { %>
+
+                <span class="notification-count">
+                    <%= notifications.length %>
+                    <%= notifications.length === 1 ? "Notification" : "Notifications" %>
+                </span>
+
+            <% } %>
+
+        </div>
+
+
+        <% if (!notifications.length) { %>
+
+            <!-- Empty State -->
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    <i class="fa-regular fa-bell-slash"></i>
+                </div>
+
+                <h3>No notifications yet</h3>
+
+                <p>
+                    You're all caught up! New notifications will appear here.
+                </p>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="notification-list">
+
+                <% notifications.forEach(n => { %>
+
+                    <a
+                        data-notification-link
+                        data-notification-id="<%= n._id %>"
+                        href="<%= n.link || '#' %>"
+                        class="notification-card <%= n.isRead ? 'read' : 'unread' %>"
+                    >
+
+                        <!-- Unread Indicator -->
+                        <% if (!n.isRead) { %>
+                            <span class="unread-dot"></span>
+                        <% } %>
+
+
+                        <!-- Notification Icon -->
+                        <div class="notification-icon <%= n.isRead ? 'read-icon' : 'unread-icon' %>">
+
+                            <% if (!n.isRead) { %>
+                                <i class="fa-solid fa-bell"></i>
+                            <% } else { %>
+                                <i class="fa-regular fa-bell"></i>
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- Notification Content -->
+                        <div class="notification-content">
+
+                            <div class="notification-top">
+
+                                <h3>
+                                    <%= n.title %>
+                                </h3>
+
+                                <% if (!n.isRead) { %>
+                                    <span class="new-badge">NEW</span>
+                                <% } %>
+
+                            </div>
+
+
+                            <p>
+                                <%= n.message %>
+                            </p>
+
+
+                            <div class="notification-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    <%= new Date(n.createdAt).toLocaleString("en-IN", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                        hour: "2-digit",
+                                        minute: "2-digit"
+                                    }) %>
+
+                                </span>
+
+                                <% if (n.link) { %>
+
+                                    <span class="view-link">
+                                        View details
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+
+                                <% } %>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Arrow -->
+                        <% if (n.link) { %>
+
+                            <div class="notification-arrow">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+
+                        <% } %>
+
+                    </a>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </section>
+
+</main>
+<style>
+
+    /* =========================================================
+       MEDICORE - NOTIFICATIONS PAGE
+       ========================================================= */
+
+    .notifications-page {
+        min-height: calc(100vh - 80px);
+        padding: 32px;
+        background: #f6f9fc;
+        color: #172033;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .notifications-header {
+        max-width: 1250px;
+        margin: 0 auto 28px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+
+        padding: 28px 30px;
+
+        background: linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fbff 100%
+        );
+
+        border: 1px solid #e7edf4;
+        border-radius: 20px;
+
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+    }
+
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+
+    .header-icon {
+        width: 58px;
+        height: 58px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 16px;
+
+        background: linear-gradient(
+            135deg,
+            #0f766e,
+            #14b8a6
+        );
+
+        color: #ffffff;
+
+        font-size: 23px;
+
+        box-shadow:
+            0 10px 22px rgba(20, 184, 166, 0.22);
+    }
+
+
+    .page-label {
+        display: block;
+
+        margin-bottom: 4px;
+
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+
+        color: #0f9b8e;
+    }
+
+
+    .notifications-header h1 {
+        margin: 0;
+
+        font-size: 30px;
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        color: #111827;
+    }
+
+
+    .notifications-header p {
+        margin: 6px 0 0;
+
+        font-size: 14px;
+
+        color: #667085;
+    }
+
+
+    /* =========================================================
+       MARK ALL BUTTON
+       ========================================================= */
+
+    .mark-all-btn {
+        border: none;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        padding: 12px 18px;
+
+        border-radius: 11px;
+
+        background: #0f766e;
+        color: #ffffff;
+
+        font-size: 13px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    .mark-all-btn:hover {
+        background: #0b625c;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 8px 18px rgba(15, 118, 110, 0.22);
+    }
+
+
+    .mark-all-btn:active {
+        transform: translateY(0);
+    }
+
+
+    .mark-all-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+
+    /* =========================================================
+       STATS
+       ========================================================= */
+
+    .notification-stats {
+        max-width: 1250px;
+        margin: 0 auto 28px;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 18px;
+    }
+
+
+    .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        padding: 20px;
+
+        background: #ffffff;
+
+        border: 1px solid #e7edf4;
+        border-radius: 16px;
+
+        box-shadow:
+            0 5px 20px rgba(15, 23, 42, 0.045);
+
+        transition: transform 0.2s ease;
+    }
+
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+    }
+
+
+    .stat-icon {
+        width: 46px;
+        height: 46px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        font-size: 17px;
+    }
+
+
+    .stat-icon.total {
+        background: #e8f1ff;
+        color: #2563eb;
+    }
+
+
+    .stat-icon.unread {
+        background: #e6fffb;
+        color: #0f766e;
+    }
+
+
+    .stat-icon.today {
+        background: #fff7e6;
+        color: #d97706;
+    }
+
+
+    .stat-card span {
+        display: block;
+
+        margin-bottom: 4px;
+
+        font-size: 12px;
+        font-weight: 600;
+
+        color: #667085;
+    }
+
+
+    .stat-card strong {
+        display: block;
+
+        font-size: 20px;
+
+        font-weight: 800;
+
+        color: #111827;
+    }
+
+
+    /* =========================================================
+       NOTIFICATION CONTAINER
+       ========================================================= */
+
+    .notifications-container {
+        max-width: 1250px;
+        margin: 0 auto;
+
+        background: #ffffff;
+
+        border: 1px solid #e7edf4;
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 8px 30px rgba(15, 23, 42, 0.05);
+    }
+
+
+    .section-heading {
+        padding: 24px 26px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 1px solid #edf1f5;
+    }
+
+
+    .section-heading h2 {
+        margin: 0;
+
+        font-size: 18px;
+        font-weight: 800;
+
+        color: #172033;
+    }
+
+
+    .section-heading p {
+        margin: 5px 0 0;
+
+        font-size: 13px;
+
+        color: #667085;
+    }
+
+
+    .notification-count {
+        padding: 7px 12px;
+
+        border-radius: 20px;
+
+        background: #f0fdfa;
+        color: #0f766e;
+
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       NOTIFICATION LIST
+       ========================================================= */
+
+    .notification-list {
+        padding: 8px 0;
+    }
+
+
+    .notification-card {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        gap: 16px;
+
+        margin: 0;
+        padding: 20px 26px;
+
+        text-decoration: none;
+
+        border-bottom: 1px solid #edf1f5;
+
+        transition:
+            background 0.2s ease,
+            padding-left 0.2s ease;
+    }
+
+
+    .notification-card:last-child {
+        border-bottom: none;
+    }
+
+
+    .notification-card:hover {
+        background: #f8fbfd;
+
+        padding-left: 30px;
+    }
+
+
+    /* =========================================================
+       UNREAD
+       ========================================================= */
+
+    .notification-card.unread {
+        background: linear-gradient(
+            90deg,
+            #f0fdfa 0%,
+            #ffffff 70%
+        );
+    }
+
+
+    .notification-card.unread:hover {
+        background: #ecfdf9;
+    }
+
+
+    .unread-dot {
+        position: absolute;
+
+        left: 10px;
+        top: 50%;
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: #14b8a6;
+
+        transform: translateY(-50%);
+
+        box-shadow:
+            0 0 0 4px rgba(20, 184, 166, 0.10);
+    }
+
+
+    /* =========================================================
+       ICON
+       ========================================================= */
+
+    .notification-icon {
+        width: 46px;
+        height: 46px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 13px;
+
+        font-size: 17px;
+    }
+
+
+    .unread-icon {
+        background: #dffaf5;
+        color: #0f766e;
+    }
+
+
+    .read-icon {
+        background: #f2f4f7;
+        color: #667085;
+    }
+
+
+    /* =========================================================
+       CONTENT
+       ========================================================= */
+
+    .notification-content {
+        min-width: 0;
+        flex: 1;
+    }
+
+
+    .notification-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .notification-top h3 {
+        margin: 0;
+
+        font-size: 14px;
+        font-weight: 750;
+
+        color: #172033;
+    }
+
+
+    .notification-card.read .notification-top h3 {
+        font-weight: 650;
+        color: #344054;
+    }
+
+
+    .new-badge {
+        padding: 3px 7px;
+
+        border-radius: 5px;
+
+        background: #0f766e;
+        color: #ffffff;
+
+        font-size: 9px;
+        font-weight: 800;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    .notification-content > p {
+        margin: 0 0 10px;
+
+        font-size: 13px;
+        line-height: 1.55;
+
+        color: #667085;
+    }
+
+
+    .notification-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+    }
+
+
+    .notification-meta > span:first-child {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        font-size: 11px;
+
+        color: #98a2b3;
+    }
+
+
+    .notification-meta i {
+        font-size: 11px;
+    }
+
+
+    .view-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        font-size: 11px;
+        font-weight: 700;
+
+        color: #0f766e;
+
+        opacity: 0;
+
+        transform: translateX(-4px);
+
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .notification-card:hover .view-link {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+
+    /* =========================================================
+       ARROW
+       ========================================================= */
+
+    .notification-arrow {
+        width: 32px;
+        height: 32px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background: #f8fafc;
+
+        color: #98a2b3;
+
+        font-size: 11px;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .notification-card:hover .notification-arrow {
+        background: #e6fffb;
+        color: #0f766e;
+
+        transform: translateX(3px);
+    }
+
+
+    /* =========================================================
+       EMPTY STATE
+       ========================================================= */
+
+    .empty-state {
+        padding: 75px 20px;
+
+        text-align: center;
+    }
+
+
+    .empty-icon {
+        width: 76px;
+        height: 76px;
+
+        margin: 0 auto 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: #f0fdfa;
+
+        color: #0f766e;
+
+        font-size: 29px;
+    }
+
+
+    .empty-state h3 {
+        margin: 0 0 7px;
+
+        font-size: 18px;
+        font-weight: 800;
+
+        color: #172033;
+    }
+
+
+    .empty-state p {
+        max-width: 420px;
+
+        margin: 0 auto;
+
+        font-size: 13px;
+        line-height: 1.6;
+
+        color: #667085;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 900px) {
+
+        .notifications-page {
+            padding: 22px;
+        }
+
+        .notification-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .notifications-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .mark-all-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .notifications-page {
+            padding: 14px;
+        }
+
+        .notifications-header {
+            padding: 21px;
+            border-radius: 16px;
+        }
+
+        .header-content {
+            align-items: flex-start;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 18px;
+        }
+
+        .notifications-header h1 {
+            font-size: 24px;
+        }
+
+        .notifications-header p {
+            font-size: 12px;
+        }
+
+        .notifications-container {
+            border-radius: 16px;
+        }
+
+        .section-heading {
+            padding: 20px;
+        }
+
+        .notification-card {
+            padding: 17px 18px;
+            gap: 12px;
+        }
+
+        .notification-card:hover {
+            padding-left: 18px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+        }
+
+        .notification-top h3 {
+            font-size: 13px;
+        }
+
+        .notification-content > p {
+            font-size: 12px;
+        }
+
+        .notification-meta {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .view-link {
+            opacity: 1;
+            transform: none;
+        }
+
+        .notification-arrow {
+            display: none;
+        }
+
+        .notification-count {
+            display: none;
+        }
+
+    }
+
+</style>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const readAllButton = document.getElementById("readAll");
+
+        if (!readAllButton) {
+            return;
+        }
+
+
+        readAllButton.addEventListener("click", async function () {
+
+            const originalContent = readAllButton.innerHTML;
+
+            try {
+
+                readAllButton.disabled = true;
+
+                readAllButton.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Marking as read...
+                `;
+
+
+                const response = await fetch(
+                    "/doctor/notifications/read-all",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+
+
+                if (!response.ok) {
+                    throw new Error("Failed to mark notifications as read");
+                }
+
+
+                readAllButton.innerHTML = `
+                    <i class="fa-solid fa-check"></i>
+                    All notifications read
+                `;
+
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                readAllButton.disabled = false;
+
+                readAllButton.innerHTML = originalContent;
+
+                alert("Unable to mark notifications as read. Please try again.");
+
+            }
+
+        });
+
+
+        /* -----------------------------------------------------
+           Notification click animation
+           ----------------------------------------------------- */
+
+        document
+            .querySelectorAll("[data-notification-link]")
+            .forEach(function (notification) {
+
+                notification.addEventListener("click", function () {
+
+                    notification.style.opacity = "0.7";
+
+                });
+
+            });
+
+    });
+
+</script>
+
+
+<%- include("../layouts/doctorFooter") %>

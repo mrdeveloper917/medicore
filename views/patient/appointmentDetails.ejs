@@ -1,0 +1,882 @@
+<%- include("../layouts/patientHeader") %>
+
+<div class="appointment-details-page">
+
+    <!-- Back -->
+    <a href="/patient/appointments" class="back-link">
+        ← Back to My Appointments
+    </a>
+
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+        <div>
+            <h1>Appointment Details</h1>
+
+            <p>
+                View complete information about your appointment.
+            </p>
+        </div>
+
+        <%
+            const status = appointment.status || "Pending";
+            const statusClass = status.toLowerCase();
+        %>
+
+        <span class="status-badge <%= statusClass %>">
+            <%= status %>
+        </span>
+
+    </div>
+
+
+    <!-- Main Grid -->
+    <div class="details-grid">
+
+
+        <!-- Doctor Card -->
+        <div class="details-card doctor-card">
+
+            <div class="card-heading">
+                <span class="heading-icon">👨‍⚕️</span>
+
+                <div>
+                    <h2>Doctor Information</h2>
+                    <p>Your appointed doctor</p>
+                </div>
+            </div>
+
+
+            <div class="doctor-profile">
+
+                <div class="doctor-avatar">
+
+                    <% if (
+                        appointment.doctor &&
+                        appointment.doctor.profileImage
+                    ) { %>
+
+                        <img
+                            src="<%= appointment.doctor.profileImage %>"
+                            alt="Doctor"
+                        >
+
+                    <% } else { %>
+
+                        <span>
+                            <%= appointment.doctor &&
+                                appointment.doctor.firstName
+                                ? appointment.doctor.firstName
+                                    .charAt(0)
+                                    .toUpperCase()
+                                : "D"
+                            %>
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+
+                <div class="doctor-info">
+
+                    <h3>
+
+                        Dr.
+                        <%= appointment.doctor
+                            ? appointment.doctor.firstName || ""
+                            : ""
+                        %>
+
+                        <%= appointment.doctor
+                            ? appointment.doctor.lastName || ""
+                            : ""
+                        %>
+
+                    </h3>
+
+
+                    <p>
+                        <%= appointment.doctor &&
+                            appointment.doctor.specialization
+                            ? appointment.doctor.specialization
+                            : "General Physician"
+                        %>
+                    </p>
+
+
+                    <% if (
+                        appointment.doctor &&
+                        appointment.doctor.email
+                    ) { %>
+
+                        <span>
+                            ✉ <%= appointment.doctor.email %>
+                        </span>
+
+                    <% } %>
+
+
+                    <% if (
+                        appointment.doctor &&
+                        appointment.doctor.phone
+                    ) { %>
+
+                        <span>
+                            ☎ <%= appointment.doctor.phone %>
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Appointment Card -->
+        <div class="details-card">
+
+            <div class="card-heading">
+                <span class="heading-icon">📅</span>
+
+                <div>
+                    <h2>Appointment Information</h2>
+                    <p>Scheduled appointment details</p>
+                </div>
+            </div>
+
+
+            <div class="info-grid">
+
+                <!-- Department -->
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Department
+                    </span>
+
+                    <strong>
+                        <%= appointment.department || "N/A" %>
+                    </strong>
+
+                </div>
+
+
+                <!-- Date -->
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Appointment Date
+                    </span>
+
+                    <strong>
+
+                        <%= appointment.appointmentDate
+                            ? new Date(
+                                appointment.appointmentDate
+                              ).toLocaleDateString(
+                                "en-IN",
+                                {
+                                    weekday: "long",
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric"
+                                }
+                              )
+                            : "N/A"
+                        %>
+
+                    </strong>
+
+                </div>
+
+
+                <!-- Time -->
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Appointment Time
+                    </span>
+
+                    <strong>
+                        <%= appointment.appointmentTime || "N/A" %>
+                    </strong>
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Current Status
+                    </span>
+
+                    <span class="status-small <%= statusClass %>">
+                        <%= status %>
+                    </span>
+
+                </div>
+
+
+                <!-- Booking Date -->
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Booked On
+                    </span>
+
+                    <strong>
+
+                        <%= appointment.createdAt
+                            ? new Date(
+                                appointment.createdAt
+                              ).toLocaleDateString(
+                                "en-IN",
+                                {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric"
+                                }
+                              )
+                            : "N/A"
+                        %>
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Status Information -->
+        <div class="details-card status-card">
+
+            <div class="card-heading">
+                <span class="heading-icon">ℹ️</span>
+
+                <div>
+                    <h2>Appointment Status</h2>
+                    <p>Current appointment progress</p>
+                </div>
+            </div>
+
+
+            <% if (status === "Pending") { %>
+
+                <div class="status-message pending-message">
+
+                    <div class="message-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+                        <h3>Waiting for Doctor Approval</h3>
+
+                        <p>
+                            Your appointment request has been sent
+                            to the doctor. Please wait for the doctor
+                            to approve your appointment.
+                        </p>
+                    </div>
+
+                </div>
+
+
+            <% } else if (status === "Approved") { %>
+
+                <div class="status-message approved-message">
+
+                    <div class="message-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <h3>Appointment Approved</h3>
+
+                        <p>
+                            Your appointment has been approved by
+                            the doctor. Please arrive on time.
+                        </p>
+                    </div>
+
+                </div>
+
+
+            <% } else if (status === "Completed") { %>
+
+                <div class="status-message completed-message">
+
+                    <div class="message-icon">
+                        ✓
+                    </div>
+
+                    <div>
+                        <h3>Appointment Completed</h3>
+
+                        <p>
+                            This appointment has been completed.
+                            Thank you for using MediCore.
+                        </p>
+                    </div>
+
+                </div>
+
+
+            <% } else if (status === "Cancelled") { %>
+
+                <div class="status-message cancelled-message">
+
+                    <div class="message-icon">
+                        ✕
+                    </div>
+
+                    <div>
+                        <h3>Appointment Cancelled</h3>
+
+                        <p>
+                            This appointment has been cancelled
+                            and is no longer active.
+                        </p>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="details-card actions-card">
+
+            <a
+                href="/patient/appointments"
+                class="btn secondary-btn"
+            >
+                ← My Appointments
+            </a>
+
+
+            <% if (
+                status === "Pending" ||
+                status === "Approved"
+            ) { %>
+
+                <form
+                    action="/patient/appointment/<%= appointment._id %>/cancel"
+                    method="POST"
+                    id="cancelForm"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn cancel-btn"
+                    >
+                        Cancel Appointment
+                    </button>
+
+                </form>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* ============================
+   Main
+============================ */
+
+.appointment-details-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
+
+
+/* ============================
+   Back Link
+============================ */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ============================
+   Header
+============================ */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    margin: 0 0 7px;
+    font-size: 30px;
+    color: #111827;
+}
+
+.page-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* ============================
+   Status Badge
+============================ */
+
+.status-badge {
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.approved {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.status-badge.completed {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-badge.cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
+/* ============================
+   Grid
+============================ */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+
+/* ============================
+   Card
+============================ */
+
+.details-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 17px;
+    padding: 25px;
+    box-shadow:
+        0 6px 22px rgba(15, 23, 42, 0.05);
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.heading-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.card-heading h2 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    color: #111827;
+}
+
+.card-heading p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+
+/* ============================
+   Doctor Profile
+============================ */
+
+.doctor-profile {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.doctor-avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #eff6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    font-size: 28px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.doctor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.doctor-info h3 {
+    margin: 0 0 6px;
+    color: #111827;
+    font-size: 18px;
+}
+
+.doctor-info p {
+    margin: 0 0 8px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.doctor-info span {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+
+/* ============================
+   Information Grid
+============================ */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-label {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+.info-item strong {
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* ============================
+   Small Status
+============================ */
+
+.status-small {
+    display: inline-block;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-small.pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status-small.approved {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.status-small.completed {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-small.cancelled {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
+/* ============================
+   Status Card
+============================ */
+
+.status-card {
+    grid-column: 1 / -1;
+}
+
+.status-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.message-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.status-message h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+}
+
+.status-message p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* Pending */
+
+.pending-message {
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.pending-message .message-icon {
+    background: #ffedd5;
+}
+
+
+/* Approved */
+
+.approved-message {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.approved-message .message-icon {
+    background: #d1fae5;
+}
+
+
+/* Completed */
+
+.completed-message {
+    background: #eff6ff;
+    color: #1e40af;
+}
+
+.completed-message .message-icon {
+    background: #dbeafe;
+}
+
+
+/* Cancelled */
+
+.cancelled-message {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.cancelled-message .message-icon {
+    background: #fee2e2;
+}
+
+
+/* ============================
+   Actions
+============================ */
+
+.actions-card {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    padding: 11px 17px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+}
+
+.secondary-btn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.secondary-btn:hover {
+    background: #e5e7eb;
+}
+
+.cancel-btn {
+    background: #ffffff;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.cancel-btn:hover {
+    background: #fef2f2;
+}
+
+
+/* ============================
+   Responsive
+============================ */
+
+@media (max-width: 800px) {
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status-card,
+    .actions-card {
+        grid-column: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .appointment-details-page {
+        padding: 20px 15px 45px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .details-card {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .doctor-profile {
+        align-items: flex-start;
+    }
+
+    .doctor-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 23px;
+    }
+
+    .actions-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* ============================
+   Cancel Confirmation
+============================ */
+
+const cancelForm =
+    document.getElementById("cancelForm");
+
+if (cancelForm) {
+
+    cancelForm.addEventListener(
+        "submit",
+        function (event) {
+
+            const confirmed = confirm(
+                "Are you sure you want to cancel this appointment?"
+            );
+
+            if (!confirmed) {
+                event.preventDefault();
+            }
+
+        }
+    );
+
+}
+
+</script>
+<%- include("../layouts/patientFooter") %>

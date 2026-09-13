@@ -1,0 +1,527 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    .history-page {
+        padding: 25px;
+        background: #f5f7fb;
+        min-height: calc(100vh - 100px);
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-size: 28px;
+        color: #1f2937;
+    }
+
+    .page-header p {
+        margin: 6px 0 0;
+        color: #6b7280;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 18px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        color: #374151;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+    .back-btn:hover {
+        background: #f3f4f6;
+    }
+
+    .patient-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+    }
+
+    .patient-image,
+    .patient-placeholder {
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+    }
+
+    .patient-image {
+        object-fit: cover;
+    }
+
+    .patient-placeholder {
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .patient-info h2 {
+        margin: 0 0 7px;
+        color: #111827;
+        font-size: 21px;
+    }
+
+    .patient-info p {
+        margin: 4px 0;
+        color: #6b7280;
+    }
+
+    .history-container {
+        background: #fff;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+    }
+
+    .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .history-header h3 {
+        margin: 0;
+        color: #1f2937;
+        font-size: 20px;
+    }
+
+    .record-count {
+        font-size: 14px;
+        color: #6b7280;
+    }
+
+    .medical-record {
+        position: relative;
+        border: 1px solid #e5e7eb;
+        border-radius: 15px;
+        padding: 22px;
+        margin-bottom: 18px;
+        background: #fff;
+        transition: .2s;
+    }
+
+    .medical-record:last-child {
+        margin-bottom: 0;
+    }
+
+    .medical-record:hover {
+        box-shadow: 0 5px 18px rgba(0, 0, 0, .06);
+    }
+
+    .record-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 18px;
+    }
+
+    .diagnosis {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .diagnosis-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: #eef2ff;
+        color: #6366f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .diagnosis h4 {
+        margin: 0;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    .diagnosis small {
+        display: block;
+        margin-top: 4px;
+        color: #9ca3af;
+    }
+
+    .visit-date {
+        padding: 7px 12px;
+        background: #f3f4f6;
+        color: #4b5563;
+        border-radius: 8px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .record-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .record-section {
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    .record-section.full {
+        grid-column: 1 / -1;
+    }
+
+    .record-section h5 {
+        margin: 0 0 8px;
+        color: #374151;
+        font-size: 14px;
+    }
+
+    .record-section h5 i {
+        color: #6366f1;
+        margin-right: 6px;
+    }
+
+    .record-section p {
+        margin: 0;
+        color: #6b7280;
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .medicines-list {
+        margin: 0;
+        padding-left: 20px;
+        color: #6b7280;
+        line-height: 1.7;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 70px 20px;
+        color: #9ca3af;
+    }
+
+    .empty-state i {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .empty-state h3 {
+        margin: 5px 0;
+        color: #374151;
+    }
+
+    .empty-state p {
+        margin: 5px 0;
+    }
+
+    @media (max-width: 700px) {
+        .history-page {
+            padding: 15px;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .patient-card {
+            align-items: flex-start;
+        }
+
+        .record-top {
+            flex-direction: column;
+        }
+
+        .record-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .record-section.full {
+            grid-column: auto;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .patient-card {
+            flex-direction: column;
+        }
+
+        .patient-info {
+            width: 100%;
+        }
+
+        .history-container {
+            padding: 15px;
+        }
+
+        .medical-record {
+            padding: 15px;
+        }
+    }
+</style>
+
+
+<div class="history-page">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h1>Medical History</h1>
+            <p>Complete medical history of the patient</p>
+        </div>
+
+        <a
+            href="/doctor/patients/<%= patient._id %>"
+            class="back-btn"
+        >
+            <i class="fas fa-arrow-left"></i>
+            Patient Details
+        </a>
+
+    </div>
+
+
+    <!-- PATIENT INFO -->
+    <%
+        const patientName =
+            ((patient?.firstName || "") + " " + (patient?.lastName || "")).trim()
+            || "Patient";
+    %>
+
+    <div class="patient-card">
+
+        <% if (patient?.profileImage) { %>
+
+            <img
+                src="<%= patient.profileImage %>"
+                alt="Patient"
+                class="patient-image"
+            >
+
+        <% } else { %>
+
+            <div class="patient-placeholder">
+                <%= patientName.charAt(0).toUpperCase() %>
+            </div>
+
+        <% } %>
+
+
+        <div class="patient-info">
+
+            <h2>
+                <%= patientName %>
+            </h2>
+
+            <p>
+                <i class="fas fa-envelope"></i>
+                <%= patient?.email || "Email not available" %>
+            </p>
+
+            <p>
+                <i class="fas fa-phone"></i>
+                <%= patient?.phone || "Phone not available" %>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- MEDICAL HISTORY -->
+    <div class="history-container">
+
+        <div class="history-header">
+
+            <h3>
+                <i class="fas fa-notes-medical"></i>
+                Medical Records
+            </h3>
+
+            <span class="record-count">
+                <%= medicalHistory?.length || 0 %> Records
+            </span>
+
+        </div>
+
+
+        <% if (medicalHistory && medicalHistory.length > 0) { %>
+
+            <% medicalHistory.forEach(function(record) { %>
+
+                <div class="medical-record">
+
+                    <!-- RECORD TOP -->
+                    <div class="record-top">
+
+                        <div class="diagnosis">
+
+                            <div class="diagnosis-icon">
+                                <i class="fas fa-diagnoses"></i>
+                            </div>
+
+                            <div>
+
+                                <h4>
+                                    <%= record.diagnosis || "Diagnosis not available" %>
+                                </h4>
+
+                                <small>
+                                    Medical Record
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="visit-date">
+
+                            <i class="fas fa-calendar"></i>
+
+                            <%= record.visitDate
+                                ? new Date(
+                                    record.visitDate
+                                ).toLocaleDateString("en-IN", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric"
+                                })
+                                : "Date unavailable"
+                            %>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECORD DETAILS -->
+                    <div class="record-grid">
+
+
+                        <!-- SYMPTOMS -->
+                        <div class="record-section">
+
+                            <h5>
+                                <i class="fas fa-head-side-cough"></i>
+                                Symptoms
+                            </h5>
+
+                            <p>
+                                <%= record.symptoms || "No symptoms recorded" %>
+                            </p>
+
+                        </div>
+
+
+                        <!-- TREATMENT -->
+                        <div class="record-section">
+
+                            <h5>
+                                <i class="fas fa-hand-holding-medical"></i>
+                                Treatment
+                            </h5>
+
+                            <p>
+                                <%= record.treatment || "No treatment recorded" %>
+                            </p>
+
+                        </div>
+
+
+                        <!-- MEDICINES -->
+                        <div class="record-section">
+
+                            <h5>
+                                <i class="fas fa-pills"></i>
+                                Medicines
+                            </h5>
+
+                            <% if (record.medicines) { %>
+
+                                <p>
+                                    <%= record.medicines %>
+                                </p>
+
+                            <% } else { %>
+
+                                <p>
+                                    No medicines recorded
+                                </p>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <!-- NOTES -->
+                        <div class="record-section">
+
+                            <h5>
+                                <i class="fas fa-sticky-note"></i>
+                                Notes
+                            </h5>
+
+                            <p>
+                                <%= record.notes || "No notes available" %>
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            <% }); %>
+
+
+        <% } else { %>
+
+            <div class="empty-state">
+
+                <i class="fas fa-file-medical"></i>
+
+                <h3>No Medical History</h3>
+
+                <p>
+                    No medical records are available for this patient.
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

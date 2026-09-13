@@ -1,0 +1,446 @@
+<%- include("../layouts/doctorHeader", { title: "Doctor Earnings" }) %>
+
+<link
+    rel="stylesheet"
+    href="/css/doctor-earnings.css"
+/>
+<link rel="stylesheet" href="/css/medicore-workspace.css" />
+
+<section class="earnings-page">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="earnings-header">
+
+        <div>
+            <span class="page-label">
+                FINANCIAL OVERVIEW
+            </span>
+
+            <h1>
+                My Earnings
+            </h1>
+
+            <p>
+                Track your consultation revenue and payment history.
+            </p>
+        </div>
+
+        <div class="earnings-header-icon">
+            <i class="fa-solid fa-wallet"></i>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         STAT CARDS
+    ========================================== -->
+
+    <div class="earning-stats">
+
+        <!-- TODAY -->
+
+        <div class="earning-card">
+
+            <div class="earning-card-top">
+
+                <div class="earning-icon today">
+                    <i class="fa-solid fa-calendar-day"></i>
+                </div>
+
+                <span class="earning-badge">
+                    Today
+                </span>
+
+            </div>
+
+            <h2>
+                ₹<%= Number(earnings.today || 0).toLocaleString("en-IN") %>
+            </h2>
+
+            <p>
+                <%= counts.today %>
+                payment<%= counts.today !== 1 ? "s" : "" %>
+            </p>
+
+        </div>
+
+
+        <!-- WEEK -->
+
+        <div class="earning-card">
+
+            <div class="earning-card-top">
+
+                <div class="earning-icon week">
+                    <i class="fa-solid fa-calendar-week"></i>
+                </div>
+
+                <span class="earning-badge">
+                    This Week
+                </span>
+
+            </div>
+
+            <h2>
+                ₹<%= Number(earnings.week || 0).toLocaleString("en-IN") %>
+            </h2>
+
+            <p>
+                <%= counts.week %>
+                payment<%= counts.week !== 1 ? "s" : "" %>
+            </p>
+
+        </div>
+
+
+        <!-- MONTH -->
+
+        <div class="earning-card">
+
+            <div class="earning-card-top">
+
+                <div class="earning-icon month">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <span class="earning-badge">
+                    This Month
+                </span>
+
+            </div>
+
+            <h2>
+                ₹<%= Number(earnings.month || 0).toLocaleString("en-IN") %>
+            </h2>
+
+            <p>
+                <%= counts.month %>
+                payment<%= counts.month !== 1 ? "s" : "" %>
+            </p>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="earning-card total-card">
+
+            <div class="earning-card-top">
+
+                <div class="earning-icon total">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                </div>
+
+                <span class="earning-badge">
+                    Lifetime
+                </span>
+
+            </div>
+
+            <h2>
+                ₹<%= Number(earnings.total || 0).toLocaleString("en-IN") %>
+            </h2>
+
+            <p>
+                <%= counts.total %>
+                successful payment<%= counts.total !== 1 ? "s" : "" %>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         CHART
+    ========================================== -->
+
+    <div class="earning-section">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>
+                    Revenue Overview
+                </h2>
+
+                <p>
+                    Your earnings for the last 6 months
+                </p>
+            </div>
+
+            <div class="section-heading-icon">
+                <i class="fa-solid fa-chart-column"></i>
+            </div>
+
+        </div>
+
+
+        <div class="revenue-chart">
+
+            <% 
+                const maxRevenue = Math.max(
+                    ...monthlyRevenue.map(item => Number(item.amount || 0)),
+                    1
+                );
+            %>
+
+            <% monthlyRevenue.forEach(item => { %>
+
+                <div class="chart-column">
+
+                    <div class="chart-value">
+                        ₹<%= Number(item.amount || 0).toLocaleString("en-IN") %>
+                    </div>
+
+                    <div class="chart-bar-wrapper">
+
+                        <div
+                            class="chart-bar"
+                            style=`height:<%= Math.max((item.amount / maxRevenue) * 100, item.amount > 0 ? 8 : 3) %>%`
+                        ></div>
+
+                    </div>
+
+                    <span class="chart-label">
+                        <%= item.month %>
+                    </span>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         RECENT PAYMENTS
+    ========================================== -->
+
+    <div class="earning-section">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>
+                    Recent Earnings
+                </h2>
+
+                <p>
+                    Latest successful consultation payments
+                </p>
+            </div>
+
+            <div class="section-heading-icon">
+                <i class="fa-solid fa-receipt"></i>
+            </div>
+
+        </div>
+
+
+        <% if (!recentPayments || recentPayments.length === 0) { %>
+
+            <div class="empty-earnings">
+
+                <div class="empty-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <h3>
+                    No earnings yet
+                </h3>
+
+                <p>
+                    Your successful consultation payments will appear here.
+                </p>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="payment-table-wrapper">
+
+                <table class="payment-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Patient
+                            </th>
+
+                            <th>
+                                Appointment
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <% recentPayments.forEach(payment => { %>
+
+                            <tr>
+
+                                <!-- PATIENT -->
+
+                                <td>
+
+                                    <div class="patient-info">
+
+                                        <% if (
+                                            payment.patient &&
+                                            payment.patient.profileImage
+                                        ) { %>
+
+                                            <img
+                                                src="<%= payment.patient.profileImage %>"
+                                                alt="Patient"
+                                            >
+
+                                        <% } else { %>
+
+                                            <div class="patient-avatar">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+
+                                        <% } %>
+
+                                        <div>
+
+                                            <strong>
+                                                <%= payment.patient
+                                                    ? `${payment.patient.firstName || ""} ${payment.patient.lastName || ""}`.trim()
+                                                    : "Unknown Patient"
+                                                %>
+                                            </strong>
+
+                                            <small>
+                                                <%= payment.patient?.email || "" %>
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- APPOINTMENT -->
+
+                                <td>
+
+                                    <% if (payment.appointment) { %>
+
+                                        <div class="appointment-info">
+
+                                            <strong>
+                                                <%= payment.appointment.department || "Consultation" %>
+                                            </strong>
+
+                                            <small>
+                                                <%= payment.appointment.appointmentTime || "—" %>
+                                            </small>
+
+                                        </div>
+
+                                    <% } else { %>
+
+                                        <span class="muted">
+                                            Consultation
+                                        </span>
+
+                                    <% } %>
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <span class="payment-date">
+
+                                        <%= new Date(
+                                            payment.createdAt
+                                        ).toLocaleDateString(
+                                            "en-IN",
+                                            {
+                                                day: "2-digit",
+                                                month: "short",
+                                                year: "numeric"
+                                            }
+                                        ) %>
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- AMOUNT -->
+
+                                <td>
+
+                                    <strong class="payment-amount">
+
+                                        ₹<%= Number(
+                                            payment.amount || 0
+                                        ).toLocaleString("en-IN") %>
+
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    <span class="paid-status">
+
+                                        <i class="fa-solid fa-circle-check"></i>
+
+                                        Paid
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</section>
+
+
+<%- include("../layouts/doctorFooter") %>

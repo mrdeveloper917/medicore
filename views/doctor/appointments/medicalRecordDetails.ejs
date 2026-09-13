@@ -1,0 +1,144 @@
+<%- include("../../layouts/header", { title: "Medical Record | MediCore" }) %>
+
+<div class="container" style="max-width: 1000px; margin: 40px auto;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+        <div>
+            <h1>Medical Record</h1>
+            <p>Patient medical information and consultation record</p>
+        </div>
+
+        <a
+            href="/doctor/appointments/<%= appointment._id %>"
+            class="btn btn-secondary"
+        >
+            ← Back to Appointment
+        </a>
+    </div>
+
+
+    <!-- Patient Information -->
+    <div class="card" style="margin-bottom:25px;">
+        <div class="card-header">
+            <h2>Patient Information</h2>
+        </div>
+
+        <div class="card-body">
+
+            <h3>
+                <%= appointment.patient?.firstName || "" %>
+                <%= appointment.patient?.lastName || "" %>
+            </h3>
+
+            <% if (appointment.patient?.email) { %>
+                <p>
+                    <strong>Email:</strong>
+                    <%= appointment.patient.email %>
+                </p>
+            <% } %>
+
+            <% if (appointment.patient?.phone) { %>
+                <p>
+                    <strong>Phone:</strong>
+                    <%= appointment.patient.phone %>
+                </p>
+            <% } %>
+
+        </div>
+    </div>
+
+
+    <!-- Medical Record -->
+    <div class="card">
+
+        <div class="card-header">
+            <h2>Medical Details</h2>
+        </div>
+
+        <div class="card-body">
+
+            <% if (medicalRecord) { %>
+
+                <% if (medicalRecord.diagnosis) { %>
+                    <div class="record-section">
+                        <h3>Diagnosis</h3>
+                        <p>
+                            <%= medicalRecord.diagnosis %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+                <% if (medicalRecord.symptoms) { %>
+                    <div class="record-section">
+                        <h3>Symptoms</h3>
+                        <p>
+                            <%= medicalRecord.symptoms %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+                <% if (medicalRecord.treatment) { %>
+                    <div class="record-section">
+                        <h3>Treatment</h3>
+                        <p>
+                            <%= medicalRecord.treatment %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+                <% if (medicalRecord.medicines) { %>
+                    <div class="record-section">
+                        <h3>Medicines</h3>
+                        <p>
+                            <%= medicalRecord.medicines %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+                <% if (medicalRecord.notes) { %>
+                    <div class="record-section">
+                        <h3>Doctor's Notes</h3>
+                        <p>
+                            <%= medicalRecord.notes %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+                <% if (medicalRecord.visitDate) { %>
+                    <div class="record-section">
+                        <h3>Visit Date</h3>
+                        <p>
+                            <%= new Date(medicalRecord.visitDate).toLocaleDateString() %>
+                        </p>
+                    </div>
+                <% } %>
+
+
+            <% } else { %>
+
+                <div class="empty-state">
+                    <h3>No Medical Record Found</h3>
+                    <p>This appointment does not have a medical record yet.</p>
+
+                    <a
+                        href="/doctor/appointments/<%= appointment._id %>/medical-record"
+                        class="btn btn-primary"
+                    >
+                        Add Medical Record
+                    </a>
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+</div>
+
+<%- include("../../layouts/footer") %>

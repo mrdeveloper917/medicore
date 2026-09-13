@@ -1,0 +1,703 @@
+
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    /* ================================
+       EXPERIENCE PAGE
+    ================================= */
+
+    .experience-page {
+        padding: 28px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* ---------- Header ---------- */
+
+    .experience-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 28px;
+    }
+
+    .experience-title {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .experience-title-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e8f3ff, #dceeff);
+        color: #1976d2;
+        font-size: 22px;
+    }
+
+    .experience-title h2 {
+        margin: 0 0 5px;
+        font-size: 26px;
+        font-weight: 700;
+        color: #172033;
+    }
+
+    .experience-title p {
+        margin: 0;
+        color: #7b8497;
+        font-size: 14px;
+    }
+
+    /* ---------- Add Button ---------- */
+
+    .add-experience-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 12px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #fff;
+        background: #1976d2;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 6px 16px rgba(25, 118, 210, 0.20);
+        transition: all 0.25s ease;
+    }
+
+    .add-experience-btn:hover {
+        color: #fff;
+        background: #1565c0;
+        transform: translateY(-2px);
+        box-shadow: 0 9px 22px rgba(25, 118, 210, 0.28);
+    }
+
+    .add-experience-btn i {
+        font-size: 13px;
+    }
+
+    /* ---------- Stats ---------- */
+
+    .experience-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .stat-card {
+        background: #fff;
+        border: 1px solid #edf0f5;
+        border-radius: 14px;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 4px 18px rgba(20, 34, 56, 0.04);
+    }
+
+    .stat-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f7ff;
+        color: #1976d2;
+        font-size: 18px;
+    }
+
+    .stat-content span {
+        display: block;
+        color: #8a93a5;
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+
+    .stat-content strong {
+        color: #20293a;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    /* ---------- Experience List ---------- */
+
+    .experience-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* ---------- Experience Card ---------- */
+
+    .experience-card {
+        position: relative;
+        display: grid;
+        grid-template-columns: 58px 1fr auto;
+        align-items: center;
+        gap: 20px;
+        padding: 22px;
+        background: #fff;
+        border: 1px solid #e9edf3;
+        border-radius: 16px;
+        box-shadow: 0 5px 20px rgba(20, 34, 56, 0.045);
+        transition: all 0.25s ease;
+        overflow: hidden;
+    }
+
+    .experience-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: #1976d2;
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .experience-card:hover {
+        transform: translateY(-3px);
+        border-color: #dce8f7;
+        box-shadow: 0 10px 28px rgba(20, 34, 56, 0.09);
+    }
+
+    .experience-card:hover::before {
+        opacity: 1;
+    }
+
+    /* ---------- Hospital Icon ---------- */
+
+    .hospital-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #edf6ff, #e2f0ff);
+        color: #1976d2;
+        font-size: 23px;
+    }
+
+    /* ---------- Experience Body ---------- */
+
+    .experience-body {
+        min-width: 0;
+    }
+
+    .experience-body-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
+
+    .experience-body h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .current-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 20px;
+        background: #eaf8f0;
+        color: #1c9b55;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .current-badge i {
+        font-size: 7px;
+    }
+
+    .experience-position {
+        margin: 0 0 9px;
+        color: #1976d2;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .experience-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin: 0;
+        color: #7c8699;
+        font-size: 13px;
+    }
+
+    .experience-date i {
+        color: #9aa5b6;
+        font-size: 13px;
+    }
+
+    /* ---------- Actions ---------- */
+
+    .experience-action {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .experience-action a,
+    .experience-action button {
+        height: 38px;
+        padding: 0 14px;
+        border-radius: 9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .edit-btn {
+        color: #1976d2;
+        background: #eef6ff;
+        border: 1px solid #dcecff;
+        text-decoration: none;
+    }
+
+    .edit-btn:hover {
+        color: #fff;
+        background: #1976d2;
+        border-color: #1976d2;
+    }
+
+    .delete-btn {
+        color: #e53935;
+        background: #fff1f1;
+        border: 1px solid #ffe0e0;
+    }
+
+    .delete-btn:hover {
+        color: #fff;
+        background: #e53935;
+        border-color: #e53935;
+    }
+
+    .delete-form {
+        margin: 0;
+    }
+
+    /* ---------- Empty State ---------- */
+
+    .empty-experience {
+        background: #fff;
+        border: 1px solid #e9edf3;
+        border-radius: 18px;
+        padding: 60px 25px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(20, 34, 56, 0.04);
+    }
+
+    .empty-icon {
+        width: 78px;
+        height: 78px;
+        margin: 0 auto 18px;
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f7ff;
+        color: #1976d2;
+        font-size: 31px;
+    }
+
+    .empty-experience h3 {
+        margin: 0 0 8px;
+        color: #20293a;
+        font-size: 20px;
+    }
+
+    .empty-experience p {
+        margin: 0 auto 22px;
+        max-width: 430px;
+        color: #7e8798;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .empty-add-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border-radius: 9px;
+        background: #1976d2;
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .empty-add-btn:hover {
+        color: #fff;
+        background: #1565c0;
+        transform: translateY(-1px);
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width: 900px) {
+
+        .experience-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .experience-card {
+            grid-template-columns: 52px 1fr;
+        }
+
+        .hospital-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .experience-action {
+            grid-column: 2;
+            margin-top: 4px;
+        }
+    }
+
+    @media (max-width: 650px) {
+
+        .experience-page {
+            padding: 18px 14px;
+        }
+
+        .experience-header {
+            align-items: flex-start;
+        }
+
+        .experience-title {
+            gap: 11px;
+        }
+
+        .experience-title-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            font-size: 18px;
+        }
+
+        .experience-title h2 {
+            font-size: 21px;
+        }
+
+        .experience-title p {
+            font-size: 12px;
+        }
+
+        .add-experience-btn {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 11px;
+        }
+
+        .add-experience-btn span {
+            display: none;
+        }
+
+        .experience-card {
+            grid-template-columns: 1fr;
+            gap: 14px;
+            padding: 18px;
+        }
+
+        .hospital-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .experience-action {
+            grid-column: 1;
+            width: 100%;
+        }
+
+        .experience-action a,
+        .experience-action button {
+            flex: 1;
+        }
+
+        .experience-body h3 {
+            font-size: 16px;
+        }
+
+        .experience-position {
+            font-size: 13px;
+        }
+
+        .empty-experience {
+            padding: 45px 18px;
+        }
+    }
+</style>
+
+
+<div class="page-content experience-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="experience-header">
+
+        <div class="experience-title">
+
+            <div class="experience-title-icon">
+                <i class="fa-solid fa-briefcase-medical"></i>
+            </div>
+
+            <div>
+                <h2>Professional Experience</h2>
+                <p>Manage your professional work history</p>
+            </div>
+
+        </div>
+
+        <a href="/doctor/experience/add" class="add-experience-btn">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Experience</span>
+        </a>
+
+    </div>
+
+
+    <!-- ================= STATS ================= -->
+
+    <% if (experience && experience.length > 0) { %>
+
+        <div class="experience-stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-hospital"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Total Experience</span>
+                    <strong><%= experience.length %></strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Current Position</span>
+
+                    <strong>
+                        <%= experience.filter(item => item.current).length %>
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Organizations</span>
+                    <strong><%= experience.length %></strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    <% } %>
+
+
+    <!-- ================= EXPERIENCE LIST ================= -->
+
+    <% if (!experience || experience.length === 0) { %>
+
+        <!-- Empty State -->
+
+        <div class="empty-experience">
+
+            <div class="empty-icon">
+                <i class="fa-solid fa-briefcase-medical"></i>
+            </div>
+
+            <h3>No Experience Added Yet</h3>
+
+            <p>
+                Your professional experience will appear here.
+                Add your hospital, clinic, or healthcare work history
+                to build a complete professional profile.
+            </p>
+
+            <a href="/doctor/experience/add" class="empty-add-btn">
+                <i class="fa-solid fa-plus"></i>
+                Add Your First Experience
+            </a>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="experience-list">
+
+            <% experience.forEach(item => { %>
+
+                <div class="experience-card">
+
+                    <!-- Hospital Icon -->
+
+                    <div class="experience-left">
+
+                        <div class="hospital-icon">
+                            <i class="fa-solid fa-hospital"></i>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Experience Information -->
+
+                    <div class="experience-body">
+
+                        <div class="experience-body-top">
+
+                            <h3>
+                                <%= item.hospital %>
+                            </h3>
+
+                            <% if (item.current) { %>
+
+                                <span class="current-badge">
+                                    <i class="fa-solid fa-circle"></i>
+                                    Current
+                                </span>
+
+                            <% } %>
+
+                        </div>
+
+
+                        <p class="experience-position">
+                            <%= item.position %>
+                        </p>
+
+
+                        <p class="experience-date">
+
+                            <i class="fa-regular fa-calendar"></i>
+
+                            <span>
+                                <%= new Date(item.startDate).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                ) %>
+
+                                &nbsp;–&nbsp;
+
+                                <% if (item.current) { %>
+
+                                    Present
+
+                                <% } else if (item.endDate) { %>
+
+                                    <%= new Date(item.endDate).toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric"
+                                        }
+                                    ) %>
+
+                                <% } else { %>
+
+                                    Not specified
+
+                                <% } %>
+                            </span>
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- Actions -->
+
+                    <div class="experience-action">
+
+                        <a
+                            href="/doctor/experience/edit/<%= item._id %>"
+                            class="edit-btn"
+                            title="Edit Experience"
+                        >
+                            <i class="fa-solid fa-pen"></i>
+                            <span>Edit</span>
+                        </a>
+
+
+                        <form
+                            action="/doctor/experience/delete/<%= item._id %>"
+                            method="POST"
+                            class="delete-form"
+                            onsubmit="return confirm('Are you sure you want to delete this experience?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="delete-btn"
+                                title="Delete Experience"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                                <span>Delete</span>
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

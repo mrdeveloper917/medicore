@@ -1,0 +1,277 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<style>
+    .create-page {
+        padding: 25px;
+        background: #f5f7fb;
+        min-height: calc(100vh - 100px);
+    }
+
+    .page-header {
+        max-width: 850px;
+        margin: 0 auto 25px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        color: #1f2937;
+    }
+
+    .page-header p {
+        color: #6b7280;
+        margin-top: 6px;
+    }
+
+    .form-card {
+        max-width: 850px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 18px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .required {
+        color: #ef4444;
+    }
+
+    .form-control {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        outline: none;
+        font-size: 14px;
+        background: #fff;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99,102,241,.1);
+    }
+
+    .file-input {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .cancel-btn {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    .submit-btn {
+        background: #6366f1;
+        color: white;
+    }
+
+    .submit-btn:hover {
+        background: #4f46e5;
+    }
+
+    .help-text {
+        margin-top: 7px;
+        color: #9ca3af;
+        font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+
+        .create-page {
+            padding: 15px;
+        }
+
+        .form-card {
+            padding: 20px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+
+<div class="create-page">
+
+    <div class="page-header">
+
+        <h1>Add Medical Report</h1>
+
+        <p>
+            Add a medical report for one of your patients.
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <form
+            action="/doctor/reports/create"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <!-- PATIENT -->
+            <div class="form-group">
+
+                <label for="patient">
+                    Patient
+                    <span class="required">*</span>
+                </label>
+
+                <select
+                    name="patient"
+                    id="patient"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">
+                        Select Patient
+                    </option>
+
+                    <% if (patients) { %>
+
+                        <% patients.forEach(function(patient) { %>
+
+                            <option value="<%= patient._id %>">
+
+                                <%= (patient.firstName || "") + " " + (patient.lastName || "") %>
+
+                                <% if (patient.email) { %>
+                                    — <%= patient.email %>
+                                <% } %>
+
+                            </option>
+
+                        <% }); %>
+
+                    <% } %>
+
+                </select>
+
+            </div>
+
+
+            <!-- TITLE -->
+            <div class="form-group">
+
+                <label for="title">
+                    Report Title
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control"
+                    placeholder="Example: Blood Test Report"
+                    maxlength="200"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DATE -->
+            <div class="form-group">
+
+                <label for="reportDate">
+                    Report Date
+                </label>
+
+                <input
+                    type="date"
+                    id="reportDate"
+                    name="reportDate"
+                    class="form-control"
+                >
+
+            </div>
+
+
+            <!-- FILE -->
+            <div class="form-group">
+
+                <label for="file">
+                    Report File
+                </label>
+
+                <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    class="form-control file-input"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                >
+
+                <div class="help-text">
+                    Accepted formats: PDF, JPG, JPEG, PNG
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <a
+                    href="/doctor/reports"
+                    class="btn cancel-btn"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn submit-btn"
+                >
+                    <i class="fas fa-file-circle-plus"></i>
+                    Add Report
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<%- include("../../layouts/doctorFooter") %>

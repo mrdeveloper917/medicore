@@ -1,0 +1,277 @@
+/* Last-loaded responsive safeguards for every MediCore screen. */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  min-width: 0;
+}
+
+/* Prevent grid children, long medical terms and URLs from forcing horizontal scroll. */
+.dashboard,
+.main,
+.main-content,
+.page-content,
+.content,
+.container,
+.availability-container,
+.earnings-page,
+.auth-container,
+.profile-card,
+.dashboard-card,
+.earning-section,
+.schedule-card,
+.details-card,
+.form-card {
+  min-width: 0;
+}
+
+.dashboard *,
+.auth-section * {
+  min-width: 0;
+}
+
+.patient-name,
+.doctor-name,
+.detail-value,
+.detail-item span,
+.appointment-info,
+.report-info,
+.prescription-info,
+.timeline-content,
+td,
+th {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1024px) {
+  .topbar-right .search-box {
+    max-width: 220px;
+  }
+
+  .dashboard-grid,
+  .profile-grid,
+  .revenue-summary,
+  .performance-grid,
+  .details-grid,
+  .content-grid,
+  .main-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid,
+  .doctor-profile-stats,
+  .earning-stats,
+  .summary-grid,
+  .analytics-grid,
+  .quick-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    gap: 12px;
+  }
+
+  .topbar h2 {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+
+  .topbar-right .search-box {
+    display: none;
+  }
+
+  .page-content,
+  .content,
+  .availability-container,
+  .earnings-page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .card-header,
+  .section-heading,
+  .page-header,
+  .earnings-header,
+  .availability-header,
+  .form-actions,
+  .table-actions,
+  .header-actions,
+  .profile-actions {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .card-header,
+  .section-heading,
+  .page-header,
+  .earnings-header,
+  .availability-header {
+    align-items: flex-start;
+  }
+
+  .form-row,
+  .form-grid,
+  .input-grid,
+  .filter-grid,
+  .details-grid,
+  .summary-grid,
+  .analytics-grid,
+  .profile-details,
+  .certificate-grid,
+  .action-grid,
+  .report-grid,
+  .prescription-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .form-actions>*,
+  .table-actions>*,
+  .header-actions>*,
+  .profile-actions>* {
+    flex: 1 1 auto;
+  }
+
+  .table-wrapper,
+  .table-container,
+  .appointment-table,
+  .prescription-table,
+  .report-table,
+  .payment-table,
+  .history-table {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 620px;
+  }
+}
+
+@media (max-width: 560px) {
+
+  .navbar-container,
+  .patient-navbar-container {
+    padding: 11px 14px;
+  }
+
+  .logo-link,
+  .patient-logo-link {
+    font-size: 19px;
+  }
+
+  .topbar {
+    padding: 17px 12px;
+  }
+
+  .topbar-right,
+  .top-icons {
+    gap: 10px;
+  }
+
+  .notification,
+  .top-icons>i {
+    font-size: 18px;
+  }
+
+  .profile img,
+  .top-icons img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .stats-grid,
+  .doctor-profile-stats,
+  .earning-stats,
+  .quick-actions,
+  .summary-grid,
+  .analytics-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dashboard-card,
+  .profile-card,
+  .earning-section,
+  .schedule-card,
+  .form-card,
+  .content-card {
+    border-radius: 14px !important;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .form-actions>*,
+  .table-actions>*,
+  .header-actions>*,
+  .profile-actions>* {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .btn,
+  .primary-btn,
+  .add-btn,
+  .edit-profile-btn,
+  .save-btn,
+  .submit-btn {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .logo-link span,
+  .patient-logo-link span {
+    font-size: 17px;
+  }
+
+  .topbar h2 {
+    font-size: 17px;
+  }
+
+  .page-content,
+  .content,
+  .availability-container,
+  .earnings-page {
+    width: calc(100% - 18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

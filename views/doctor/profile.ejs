@@ -1,0 +1,1664 @@
+<%- include("../layouts/doctorHeader", { 
+    title: "Doctor Profile",
+    user: user 
+}) %>
+
+
+<section class="page-content">
+
+
+    <!-- =====================================================
+         PROFILE HEADER
+    ====================================================== -->
+
+    <section class="doctor-profile-header">
+
+        <div class="cover-image">
+
+            <img
+                src="/images/dashboard/doctor-cover.jpg"
+                alt="Cover Image"
+            >
+
+        </div>
+
+
+        <div class="doctor-profile-info">
+
+            <div class="profile-left">
+
+                <img
+                    src="<%= user.profileImage || '/images/default-user.png' %>"
+                    alt="Doctor"
+                    class="doctor-avatar"
+                >
+
+
+                <div class="doctor-details">
+
+                    <h1>
+
+                        Dr.
+                        <%= user.firstName || "" %>
+                        <%= user.lastName || "" %>
+
+
+                        <% if (user.isVerified) { %>
+
+                            <span class="verified">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                Verified
+
+                            </span>
+
+                        <% } %>
+
+                    </h1>
+
+
+                    <h3>
+
+                        <%= user.specialization || "General Physician" %>
+
+                    </h3>
+
+
+                    <p>
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <%= user.hospital || user.hostipal || "City Hospital" %>
+
+                    </p>
+
+
+                    <div class="doctor-rating">
+
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+
+
+                        <span>
+
+                            4.8 (540 Reviews)
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-right">
+
+                <a
+                    href="/doctor/profile/edit"
+                    class="edit-profile-btn"
+                >
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Edit Profile
+
+                </a>
+
+            </div>
+
+
+            <input
+                type="file"
+                id="profileImageInput"
+                accept="image/*"
+                hidden
+            >
+
+            <input
+                type="file"
+                id="coverImageInput"
+                accept="image/*"
+                hidden
+            >
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         QUICK STATS
+    ====================================================== -->
+
+    <section class="doctor-profile-stats">
+
+
+        <!-- Appointments -->
+
+        <div class="profile-stat-card">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            <h2>
+                1,245
+            </h2>
+
+            <p>
+                Appointments
+            </p>
+
+        </div>
+
+
+        <!-- Patients -->
+
+        <div class="profile-stat-card">
+
+            <i class="fa-solid fa-user-group"></i>
+
+            <h2>
+                890
+            </h2>
+
+            <p>
+                Patients
+            </p>
+
+        </div>
+
+
+        <!-- Experience -->
+
+        <div class="profile-stat-card">
+
+            <i class="fa-solid fa-award"></i>
+
+            <h2>
+
+                <%= user.experience || 0 %>+
+
+            </h2>
+
+            <p>
+                Years Experience
+            </p>
+
+        </div>
+
+
+        <!-- Consultation Fee -->
+
+        <div class="profile-stat-card">
+
+            <i class="fa-solid fa-wallet"></i>
+
+            <h2>
+
+                ₹
+                <%= Number(
+                    user.consultationFee || 0
+                ).toLocaleString("en-IN") %>
+
+            </h2>
+
+            <p>
+                Consultation Fee
+            </p>
+
+
+            <% if (
+                !user.consultationFee ||
+                Number(user.consultationFee) <= 0
+            ) { %>
+
+                <small
+                    style="
+                        color:#dc2626;
+                        display:block;
+                        margin-top:5px;
+                    "
+                >
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    Not configured
+
+                </small>
+
+            <% } else { %>
+
+                <small
+                    style="
+                        color:#059669;
+                        display:block;
+                        margin-top:5px;
+                    "
+                >
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Active
+
+                </small>
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROFILE INFORMATION GRID
+    ====================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- =================================================
+             PERSONAL INFORMATION
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-user"></i>
+
+                    Personal Information
+
+                </h2>
+
+            </div>
+
+
+            <div class="profile-details">
+
+
+                <!-- Full Name -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <span>
+
+                        Dr.
+                        <%= user.firstName || "" %>
+                        <%= user.lastName || "" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <span>
+
+                        <%= user.email || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <span>
+
+                        <%= user.phone || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Gender -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <span>
+
+                        <%= user.gender || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- DOB -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Date of Birth
+                    </label>
+
+                    <span>
+
+                        <%= user.dob
+                            ? new Date(
+                                user.dob
+                            ).toLocaleDateString("en-IN")
+                            : "Not Added"
+                        %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Blood Group -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Blood Group
+                    </label>
+
+                    <span>
+
+                        <%= user.bloodGroup || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Registration -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Registration No.
+                    </label>
+
+                    <span>
+
+                        <%= user.registrationNumber || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Address -->
+
+                <div class="detail-item full-width">
+
+                    <label>
+                        Residential Address
+                    </label>
+
+                    <span>
+
+                        <%= user.address || "Address not available" %>
+
+                    </span>
+
+                </div>
+
+
+                <!-- Emergency -->
+
+                <div class="detail-item">
+
+                    <label>
+                        Emergency Contact
+                    </label>
+
+                    <span>
+
+                        <%= user.emergencyPhone || "Not Added" %>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROFILE COMPLETION
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-chart-pie"></i>
+
+                    Profile Completion
+
+                </h2>
+
+            </div>
+
+
+            <div class="completion-box">
+
+
+                <div class="completion-circle">
+
+                    <span>
+
+                        <%= user.profileCompletion || 75 %>%
+
+                    </span>
+
+                </div>
+
+
+                <div class="completion-list">
+
+
+                    <div class="completion-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Personal Information
+
+                    </div>
+
+
+                    <div class="completion-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Professional Details
+
+                    </div>
+
+
+                    <div class="completion-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Contact Details
+
+                    </div>
+
+
+                    <div class="completion-item pending">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                        Certificates
+
+                    </div>
+
+
+                    <div class="completion-item pending">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                        Experience
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         EDUCATION & EXPERIENCE
+    ====================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- =================================================
+             EDUCATION
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    Education
+
+                </h2>
+
+
+                <a
+                    href="/doctor/education/add"
+                    class="add-btn"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add
+
+                </a>
+
+            </div>
+
+
+            <% if (
+                user.education &&
+                user.education.length
+            ) { %>
+
+
+                <div class="timeline">
+
+
+                    <% user.education.forEach(
+                        item => {
+                    %>
+
+
+                        <div class="timeline-item">
+
+                            <div class="timeline-dot"></div>
+
+
+                            <div class="timeline-content">
+
+                                <h3>
+
+                                    <%= item.degree %>
+
+                                </h3>
+
+
+                                <p>
+
+                                    <strong>
+
+                                        <%= item.college %>
+
+                                    </strong>
+
+                                </p>
+
+
+                                <p>
+
+                                    <%= item.university %>
+
+                                </p>
+
+
+                                <small>
+
+                                    <%= item.startYear %>
+                                    -
+                                    <%= item.endYear %>
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    <h3>
+                        No Education Added
+                    </h3>
+
+                </div>
+
+
+            <% } %>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EXPERIENCE
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-briefcase-medical"></i>
+
+                    Experience
+
+                </h2>
+
+
+                <a
+                    href="/doctor/experience/add"
+                    class="add-btn"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add
+
+                </a>
+
+            </div>
+
+
+            <% if (
+                user.experienceDetails &&
+                user.experienceDetails.length
+            ) { %>
+
+
+                <div class="timeline">
+
+
+                    <% user.experienceDetails.forEach(
+                        item => {
+                    %>
+
+
+                        <div class="timeline-item">
+
+                            <div class="timeline-dot"></div>
+
+
+                            <div class="timeline-content">
+
+                                <h3>
+
+                                    <%= item.position %>
+
+                                </h3>
+
+
+                                <p>
+
+                                    <strong>
+
+                                        <%= item.hospital %>
+
+                                    </strong>
+
+                                </p>
+
+
+                                <small>
+
+                                    <%= item.startDate %>
+
+                                    -
+
+                                    <%= item.current
+                                        ? "Present"
+                                        : item.endDate
+                                    %>
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                    <h3>
+                        No Experience Added
+                    </h3>
+
+                </div>
+
+
+            <% } %>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         AWARDS & RESEARCH
+    ====================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- Awards -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-trophy"></i>
+
+                    Awards & Achievements
+
+                </h2>
+
+            </div>
+
+
+            <ul class="achievement-list">
+
+
+                <% if (
+                    user.awards &&
+                    user.awards.length
+                ) { %>
+
+
+                    <% user.awards.forEach(
+                        item => {
+                    %>
+
+                        <li>
+
+                            <i class="fa-solid fa-award"></i>
+
+                            <%= item %>
+
+                        </li>
+
+                    <% }) %>
+
+
+                <% } else { %>
+
+
+                    <li>
+
+                        <i class="fa-solid fa-award"></i>
+
+                        No Awards Added
+
+                    </li>
+
+
+                <% } %>
+
+            </ul>
+
+        </section>
+
+
+
+        <!-- Research -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-book-medical"></i>
+
+                    Research & Publications
+
+                </h2>
+
+            </div>
+
+
+            <ul class="achievement-list">
+
+
+                <% if (
+                    user.publications &&
+                    user.publications.length
+                ) { %>
+
+
+                    <% user.publications.forEach(
+                        item => {
+                    %>
+
+                        <li>
+
+                            <i class="fa-solid fa-book"></i>
+
+                            <%= item %>
+
+                        </li>
+
+                    <% }) %>
+
+
+                <% } else { %>
+
+
+                    <li>
+
+                        <i class="fa-solid fa-book"></i>
+
+                        No Publications Added
+
+                    </li>
+
+
+                <% } %>
+
+            </ul>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROFESSIONAL MEMBERSHIPS
+    ====================================================== -->
+
+    <section class="profile-card">
+
+        <div class="card-header">
+
+            <h2>
+
+                <i class="fa-solid fa-users"></i>
+
+                Professional Memberships
+
+            </h2>
+
+        </div>
+
+
+        <div class="membership-list">
+
+
+            <% if (
+                user.memberships &&
+                user.memberships.length
+            ) { %>
+
+
+                <% user.memberships.forEach(
+                    item => {
+                %>
+
+                    <span class="membership-badge">
+
+                        <%= item %>
+
+                    </span>
+
+                <% }) %>
+
+
+            <% } else { %>
+
+
+                <span class="membership-badge">
+
+                    Indian Medical Association
+
+                </span>
+
+
+            <% } %>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CERTIFICATES & SOCIAL LINKS
+    ====================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- =================================================
+             CERTIFICATES
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-certificate"></i>
+
+                    Certificates
+
+                </h2>
+
+
+                <a
+                    href="/doctor/certificates"
+                    class="add-btn"
+                >
+
+                    <i class="fa-solid fa-upload"></i>
+
+                    Upload
+
+                </a>
+
+            </div>
+
+
+            <% if (
+                user.certificates &&
+                user.certificates.length
+            ) { %>
+
+
+                <div class="certificate-grid">
+
+
+                    <% user.certificates.forEach(
+                        certificate => {
+                    %>
+
+
+                        <div class="certificate-card">
+
+
+                            <img
+                                src="<%= certificate.image %>"
+                                alt="Certificate"
+                            >
+
+
+                            <h4>
+
+                                <%= certificate.title %>
+
+                            </h4>
+
+
+                            <a
+                                href="<%= certificate.image %>"
+                                target="_blank"
+                                class="view-btn"
+                            >
+
+                                View
+
+                            </a>
+
+
+                        </div>
+
+
+                    <% }) %>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div class="empty-state">
+
+                    <i class="fa-solid fa-file-circle-plus"></i>
+
+                    <h3>
+
+                        No Certificates Uploaded
+
+                    </h3>
+
+                </div>
+
+
+            <% } %>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SOCIAL LINKS
+        ================================================== -->
+
+        <section class="profile-card">
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-share-nodes"></i>
+
+                    Social Media
+
+                </h2>
+
+            </div>
+
+
+            <div class="social-links">
+
+
+                <% if (user.socialLinks) { %>
+
+
+                    <% if (
+                        user.socialLinks.linkedin
+                    ) { %>
+
+                        <a
+                            href="<%= user.socialLinks.linkedin %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i class="fab fa-linkedin"></i>
+
+                            LinkedIn
+
+                        </a>
+
+                    <% } %>
+
+
+                    <% if (
+                        user.socialLinks.website
+                    ) { %>
+
+                        <a
+                            href="<%= user.socialLinks.website %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i class="fa-solid fa-globe"></i>
+
+                            Website
+
+                        </a>
+
+                    <% } %>
+
+
+                    <% if (
+                        user.socialLinks.facebook
+                    ) { %>
+
+                        <a
+                            href="<%= user.socialLinks.facebook %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i class="fab fa-facebook"></i>
+
+                            Facebook
+
+                        </a>
+
+                    <% } %>
+
+
+                    <% if (
+                        user.socialLinks.instagram
+                    ) { %>
+
+                        <a
+                            href="<%= user.socialLinks.instagram %>"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i class="fab fa-instagram"></i>
+
+                            Instagram
+
+                        </a>
+
+                    <% } %>
+
+
+                    <% if (
+                        !user.socialLinks.linkedin &&
+                        !user.socialLinks.website &&
+                        !user.socialLinks.facebook &&
+                        !user.socialLinks.instagram
+                    ) { %>
+
+                        <div class="empty-state">
+
+                            <i class="fa-solid fa-link"></i>
+
+                            <h3>
+                                No Social Links Added
+                            </h3>
+
+                        </div>
+
+                    <% } %>
+
+
+                <% } else { %>
+
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-link"></i>
+
+                        <h3>
+                            No Social Links Added
+                        </h3>
+
+                    </div>
+
+
+                <% } %>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONSULTATION & ANALYTICS
+    ====================================================== -->
+
+    <div class="profile-grid">
+
+
+        <!-- =================================================
+             CONSULTATION SUMMARY
+        ================================================== -->
+
+        <section class="profile-card">
+
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-stethoscope"></i>
+
+                    Consultation Summary
+
+                </h2>
+
+
+                <a
+                    href="/doctor/profile/edit"
+                    class="add-btn"
+                >
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Edit Fees
+
+                </a>
+
+            </div>
+
+
+
+            <div class="summary-grid">
+
+
+                <!-- =================================================
+                     OFFLINE FEE
+                ================================================== -->
+
+                <div class="summary-card">
+
+
+                    <h3>
+
+                        ₹
+                        <%= Number(
+                            user.consultationFee || 0
+                        ).toLocaleString("en-IN") %>
+
+                    </h3>
+
+
+                    <p>
+                        Offline Fee
+                    </p>
+
+
+                    <% if (
+                        !user.consultationFee ||
+                        Number(user.consultationFee) <= 0
+                    ) { %>
+
+
+                        <small
+                            style="
+                                color:#dc2626;
+                                display:block;
+                                margin-top:6px;
+                            "
+                        >
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            Fee not configured
+
+                        </small>
+
+
+                    <% } else { %>
+
+
+                        <small
+                            style="
+                                color:#059669;
+                                display:block;
+                                margin-top:6px;
+                            "
+                        >
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Active
+
+                        </small>
+
+
+                    <% } %>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ONLINE FEE
+                ================================================== -->
+
+                <div class="summary-card">
+
+
+                    <h3>
+
+                        ₹
+                        <%= Number(
+                            user.onlineConsultationFee || 0
+                        ).toLocaleString("en-IN") %>
+
+                    </h3>
+
+
+                    <p>
+                        Online Fee
+                    </p>
+
+
+                    <% if (
+                        !user.onlineConsultationFee ||
+                        Number(user.onlineConsultationFee) <= 0
+                    ) { %>
+
+
+                        <small
+                            style="
+                                color:#dc2626;
+                                display:block;
+                                margin-top:6px;
+                            "
+                        >
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            Fee not configured
+
+                        </small>
+
+
+                    <% } else { %>
+
+
+                        <small
+                            style="
+                                color:#059669;
+                                display:block;
+                                margin-top:6px;
+                            "
+                        >
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Active
+
+                        </small>
+
+
+                    <% } %>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FOLLOW UP
+                ================================================== -->
+
+                <div class="summary-card">
+
+
+                    <h3>
+
+                        <%= Number(
+                            user.followUpDays || 0
+                        ) %>
+
+                    </h3>
+
+
+                    <p>
+                        Follow-up Days
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CONSULTATION TIME
+                ================================================== -->
+
+                <div class="summary-card">
+
+
+                    <h3>
+                        30 Min
+                    </h3>
+
+
+                    <p>
+                        Consultation Time
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PAYMENT WARNING
+            ================================================== -->
+
+            <% if (
+                !user.consultationFee ||
+                Number(user.consultationFee) <= 0
+            ) { %>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        padding:18px;
+                        border-radius:12px;
+                        background:#fff7ed;
+                        border:1px solid #fed7aa;
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        gap:20px;
+                    "
+                >
+
+
+                    <div>
+
+
+                        <strong
+                            style="
+                                color:#c2410c;
+                                display:block;
+                                margin-bottom:6px;
+                                font-size:16px;
+                            "
+                        >
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                            Consultation fee is not configured
+
+                        </strong>
+
+
+                        <span
+                            style="
+                                color:#7c2d12;
+                                font-size:14px;
+                            "
+                        >
+
+                            Patients cannot make online payments
+                            until you set a valid consultation fee.
+
+                        </span>
+
+
+                    </div>
+
+
+                    <a
+                        href="/doctor/profile/edit"
+                        class="edit-profile-btn"
+                        style="
+                            white-space:nowrap;
+                        "
+                    >
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Set Fee
+
+                    </a>
+
+                </div>
+
+
+            <% } else { %>
+
+
+                <div
+                    style="
+                        margin-top:20px;
+                        padding:16px 18px;
+                        border-radius:12px;
+                        background:#ecfdf5;
+                        border:1px solid #a7f3d0;
+                    "
+                >
+
+                    <strong
+                        style="
+                            color:#047857;
+                            display:block;
+                            margin-bottom:4px;
+                        "
+                    >
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Online payment is enabled
+
+                    </strong>
+
+
+                    <span
+                        style="
+                            color:#065f46;
+                            font-size:14px;
+                        "
+                    >
+
+                        Patients can pay ₹
+                        <%= Number(
+                            user.consultationFee
+                        ).toLocaleString("en-IN") %>
+                        for an offline consultation.
+
+                    </span>
+
+                </div>
+
+
+            <% } %>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROFILE ANALYTICS
+        ================================================== -->
+
+        <section class="profile-card">
+
+
+            <div class="card-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Profile Analytics
+
+                </h2>
+
+            </div>
+
+
+            <div class="analytics-grid">
+
+
+                <div class="analytics-item">
+
+                    <h2>
+                        12.5K
+                    </h2>
+
+                    <p>
+                        Profile Views
+                    </p>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <h2>
+                        94%
+                    </h2>
+
+                    <p>
+                        Booking Rate
+                    </p>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <h2>
+                        98%
+                    </h2>
+
+                    <p>
+                        Patient Satisfaction
+                    </p>
+
+                </div>
+
+
+                <div class="analytics-item">
+
+                    <h2>
+                        4.9★
+                    </h2>
+
+                    <p>
+                        Average Rating
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+</section>
+
+
+<%- include("../layouts/doctorFooter") %>

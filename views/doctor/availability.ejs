@@ -1,0 +1,221 @@
+<%- include("../layouts/doctorHeader", { title: "My Availability | MediCore" }) %>
+<link rel="stylesheet" href="/css/doctor-availability.css">
+<link rel="stylesheet" href="/css/medicore-workspace.css">
+
+<div class="availability-page">
+
+    <div class="availability-container">
+
+        <!-- Header -->
+        <div class="availability-header">
+
+            <div>
+                <span class="page-eyebrow">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    DOCTOR SCHEDULE
+                </span>
+
+                <h1>My Availability</h1>
+
+                <p>
+                    Set your consultation hours so patients can book
+                    appointments during your available time.
+                </p>
+            </div>
+
+            <div class="availability-status">
+                <i class="fa-solid fa-circle-check"></i>
+                Schedule Management
+            </div>
+
+        </div>
+
+
+        <% if (typeof error !== "undefined" && error) { %>
+            <div class="alert alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span><%= error %></span>
+            </div>
+        <% } %>
+
+
+        <% if (typeof success !== "undefined" && success) { %>
+            <div class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span><%= success %></span>
+            </div>
+        <% } %>
+
+
+        <!-- Schedule Card -->
+        <form
+            action="/doctor/availability"
+            method="POST"
+            class="availability-form"
+        >
+
+            <div class="schedule-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>
+                            <i class="fa-solid fa-calendar-week"></i>
+                            Weekly Schedule
+                        </h2>
+
+                        <p>
+                            Configure your regular consultation hours.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="schedule-list">
+
+                    <% days.forEach(function(day) { %>
+
+                        <% 
+                            const current = availability.find(
+                                item => item.day === day
+                            );
+
+                            const enabled =
+                                current ? current.isAvailable : false;
+
+                            const startTime =
+                                current?.startTime || "";
+
+                            const endTime =
+                                current?.endTime || "";
+                        %>
+
+
+                        <div class="schedule-row">
+
+                            <div class="day-info">
+
+                                <div class="day-icon">
+                                    <i class="fa-regular fa-calendar"></i>
+                                </div>
+
+                                <div>
+                                    <strong><%= day %></strong>
+
+                                    <span class="day-label">
+                                        Weekly schedule
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <label class="availability-toggle">
+
+                                <input
+                                    type="checkbox"
+                                    name="<%= day.toLowerCase() %>_enabled"
+                                    <%= enabled ? "checked" : "" %>
+                                >
+
+                                <span class="toggle-slider"></span>
+
+                                <span class="toggle-label">
+                                    <%= enabled ? "Available" : "Unavailable" %>
+                                </span>
+
+                            </label>
+
+
+                            <div class="time-fields">
+
+                                <div class="time-field">
+
+                                    <label>
+                                        Start Time
+                                    </label>
+
+                                    <input
+                                        type="time"
+                                        name="<%= day.toLowerCase() %>_startTime"
+                                        value="<%= startTime %>"
+                                    >
+
+                                </div>
+
+
+                                <span class="time-separator">
+                                    to
+                                </span>
+
+
+                                <div class="time-field">
+
+                                    <label>
+                                        End Time
+                                    </label>
+
+                                    <input
+                                        type="time"
+                                        name="<%= day.toLowerCase() %>_endTime"
+                                        value="<%= endTime %>"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% }); %>
+
+                </div>
+
+            </div>
+
+
+            <!-- Information -->
+            <div class="availability-info">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <div>
+                    <strong>How availability works</strong>
+
+                    <p>
+                        Patients will only be able to request appointments
+                        during the consultation hours you specify.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="form-actions">
+
+                <a
+                    href="/doctor/dashboard"
+                    class="btn btn-secondary"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Availability
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<%- include("../layouts/doctorFooter") %>

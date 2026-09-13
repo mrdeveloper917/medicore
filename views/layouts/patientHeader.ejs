@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        <%= title || "Patient Dashboard" %>
+    </title>
+
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
+
+    <!-- Patient CSS -->
+    <link
+        rel="stylesheet"
+        href="/css/patient.css"
+    >
+
+    <!-- Patient Profile CSS -->
+    <link
+        rel="stylesheet"
+        href="/css/patientProfile.css"
+    >
+
+    <!-- MediCore Workspace CSS -->
+    <link
+        rel="stylesheet"
+        href="/css/medicore-workspace.css"
+    >
+
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    >
+
+
+    <!-- Poppins Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+
+    <!-- ==========================================
+         PATIENT SIDEBAR
+         ========================================== -->
+
+    <%- include("patientSidebar") %>
+
+
+    <!-- ==========================================
+         MAIN CONTENT
+         ========================================== -->
+
+    <div class="main">
+
+
+        <!-- ======================================
+             TOPBAR
+             ====================================== -->
+
+        <header class="topbar">
+
+
+            <!-- Welcome Section -->
+
+            <div class="welcome-section">
+
+                <div class="welcome-text">
+
+                    <span class="welcome-label">
+                        MEDICORE PATIENT PORTAL
+                    </span>
+
+                    <h2>
+                        Welcome,
+
+                        <%= typeof user !== "undefined" && user
+                            ? user.firstName
+                            : "Patient"
+                        %>
+                    </h2>
+
+                    <p>
+                        Have a healthy day.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================
+                 TOPBAR ACTIONS
+                 ================================== -->
+
+            <div class="top-icons">
+
+
+                <!-- Notification -->
+
+                <a
+                    class="notification"
+                    href="/patient/notifications"
+                    aria-label="Notifications"
+                    title="Notifications"
+                >
+
+                    <i class="fa-solid fa-bell"></i>
+
+                    <span
+                        class="badge"
+                        data-notification-badge
+                        hidden
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- Patient Profile -->
+
+                <div
+                    class="topbar-profile"
+                    title="Profile"
+                >
+
+                    <img
+                        src="/images/default-user.png"
+                        alt="Patient Profile"
+                    >
+
+                    <span class="profile-status"></span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==========================================
+             HEADER CSS
+             ========================================== -->
+
+        <style>
+
+            /* =========================================
+               MEDICORE PATIENT HEADER
+               ========================================= */
+
+
+            * {
+                box-sizing: border-box;
+            }
+
+
+            /* =========================================
+               TOPBAR
+               ========================================= */
+
+            .topbar {
+
+                min-height: 78px;
+
+                padding: 14px 28px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: space-between;
+
+                gap: 20px;
+
+                background: rgba(255, 255, 255, 0.97);
+
+                border-bottom: 1px solid #e8edf3;
+
+                box-shadow:
+                    0 4px 18px rgba(15, 23, 42, 0.04);
+
+                position: sticky;
+
+                top: 0;
+
+                z-index: 100;
+
+            }
+
+
+            /* =========================================
+               WELCOME SECTION
+               ========================================= */
+
+            .welcome-section {
+
+                min-width: 0;
+
+            }
+
+
+            .welcome-label {
+
+                display: block;
+
+                margin-bottom: 3px;
+
+                font-size: 9px;
+
+                font-weight: 800;
+
+                letter-spacing: 1.4px;
+
+                color: #0f9b8e;
+
+            }
+
+
+            .welcome-text h2 {
+
+                margin: 0;
+
+                font-size: 21px;
+
+                line-height: 1.25;
+
+                font-weight: 700;
+
+                color: #172033;
+
+            }
+
+
+            .welcome-text p {
+
+                margin: 4px 0 0;
+
+                font-size: 12px;
+
+                color: #667085;
+
+            }
+
+
+            /* =========================================
+               TOP ICONS
+               ========================================= */
+
+            .top-icons {
+
+                display: flex;
+
+                align-items: center;
+
+                gap: 13px;
+
+            }
+
+
+            /* =========================================
+               NOTIFICATION
+               ========================================= */
+
+            .notification {
+
+                position: relative;
+
+                width: 42px;
+
+                height: 42px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                border-radius: 12px;
+
+                background: #f5f8fa;
+
+                color: #475467;
+
+                text-decoration: none;
+
+                font-size: 16px;
+
+                transition:
+                    background 0.2s ease,
+                    color 0.2s ease,
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+
+            }
+
+
+            .notification:hover {
+
+                background: #e6fffb;
+
+                color: #0f766e;
+
+                transform: translateY(-2px);
+
+                box-shadow:
+                    0 6px 15px rgba(15, 118, 110, 0.12);
+
+            }
+
+
+            /* =========================================
+               NOTIFICATION BADGE
+               ========================================= */
+
+            .notification .badge {
+
+                position: absolute;
+
+                top: -3px;
+
+                right: -3px;
+
+                min-width: 18px;
+
+                height: 18px;
+
+                padding: 0 4px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                border-radius: 50%;
+
+                background: #ef4444;
+
+                color: #ffffff;
+
+                border: 2px solid #ffffff;
+
+                font-size: 8px;
+
+                font-weight: 800;
+
+                line-height: 1;
+
+            }
+
+
+            /* =========================================
+               PROFILE
+               ========================================= */
+
+            .topbar-profile {
+
+                position: relative;
+
+                width: 42px;
+
+                height: 42px;
+
+                cursor: pointer;
+
+            }
+
+
+            .topbar-profile img {
+
+                width: 42px;
+
+                height: 42px;
+
+                display: block;
+
+                object-fit: cover;
+
+                border-radius: 50%;
+
+                border: 2px solid #e6fffb;
+
+                background: #f2f4f7;
+
+                transition:
+                    transform 0.2s ease,
+                    border-color 0.2s ease,
+                    box-shadow 0.2s ease;
+
+            }
+
+
+            .topbar-profile:hover img {
+
+                transform: scale(1.05);
+
+                border-color: #14b8a6;
+
+                box-shadow:
+                    0 5px 14px rgba(20, 184, 166, 0.18);
+
+            }
+
+
+            /* =========================================
+               ONLINE STATUS
+               ========================================= */
+
+            .profile-status {
+
+                position: absolute;
+
+                right: 0;
+
+                bottom: 0;
+
+                width: 10px;
+
+                height: 10px;
+
+                border-radius: 50%;
+
+                background: #22c55e;
+
+                border: 2px solid #ffffff;
+
+            }
+
+
+            /* =========================================
+               TABLET
+               ========================================= */
+
+            @media (max-width: 768px) {
+
+                .topbar {
+
+                    padding: 12px 18px;
+
+                }
+
+
+                .welcome-label {
+
+                    font-size: 8px;
+
+                }
+
+
+                .welcome-text h2 {
+
+                    font-size: 18px;
+
+                }
+
+
+                .welcome-text p {
+
+                    font-size: 11px;
+
+                }
+
+
+                .notification {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+
+                .topbar-profile {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+
+                .topbar-profile img {
+
+                    width: 38px;
+
+                    height: 38px;
+
+                }
+
+            }
+
+
+            /* =========================================
+               MOBILE
+               ========================================= */
+
+            @media (max-width: 480px) {
+
+                .topbar {
+
+                    padding: 11px 14px;
+
+                }
+
+
+                .welcome-label {
+
+                    display: none;
+
+                }
+
+
+                .welcome-text h2 {
+
+                    font-size: 16px;
+
+                }
+
+
+                .welcome-text p {
+
+                    font-size: 10px;
+
+                }
+
+
+                .top-icons {
+
+                    gap: 8px;
+
+                }
+
+
+                .notification {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                    font-size: 14px;
+
+                }
+
+
+                .topbar-profile {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                }
+
+
+                .topbar-profile img {
+
+                    width: 36px;
+
+                    height: 36px;
+
+                }
+
+
+                .profile-status {
+
+                    width: 9px;
+
+                    height: 9px;
+
+                }
+
+            }
+
+        </style>
+
+
+        <!-- ==========================================
+             NOTIFICATION BADGE JAVASCRIPT
+             ========================================== -->
+
+        <script>
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+
+                    const badge =
+                        document.querySelector(
+                            "[data-notification-badge]"
+                        );
+
+
+                    if (!badge) {
+                        return;
+                    }
+
+
+                    /*
+                     * Global function available to
+                     * patient pages.
+                     *
+                     * Example:
+                     *
+                     * window.updatePatientNotificationBadge(5);
+                     */
+
+                    window.updatePatientNotificationBadge =
+                        function (count) {
+
+                            count = Number(count) || 0;
+
+
+                            if (count > 0) {
+
+                                badge.textContent =
+                                    count > 99
+                                        ? "99+"
+                                        : count;
+
+                                badge.hidden = false;
+
+                            } else {
+
+                                badge.textContent = "0";
+
+                                badge.hidden = true;
+
+                            }
+
+                        };
+
+                }
+
+            );
+
+
+            /* =========================================
+               PROFILE CLICK
+               ========================================= */
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+
+                    const profile =
+                        document.querySelector(
+                            ".topbar-profile"
+                        );
+
+
+                    if (!profile) {
+                        return;
+                    }
+
+
+                    profile.addEventListener(
+                        "click",
+                        function () {
+
+                            window.location.href =
+                                "/patient/profile";
+
+                        }
+                    );
+
+                }
+
+            );
+
+        </script>

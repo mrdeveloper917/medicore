@@ -1,0 +1,120 @@
+<%- include("../../layouts/doctorHeader") %>
+
+<div class="awards-container">
+
+    <div class="awards-header">
+
+        <h2 class="awards-title">🏆 My Awards</h2>
+
+        <a href="/doctor/awards/add" class="add-award-btn">
+            + Add Award
+        </a>
+
+    </div>
+
+    <% if (!awards || awards.length === 0) { %>
+
+        <div class="empty-award">
+            <h4>No awards added yet.</h4>
+        </div>
+
+    <% } else { %>
+
+        <% awards.forEach(function(item){ %>
+
+        <div class="award-card">
+
+            <div class="award-body">
+
+                <div class="award-top">
+
+                    <div class="award-info">
+
+                        <h3 class="award-name">
+                            🏆 <%= item.title %>
+                        </h3>
+
+                        <p class="award-meta">
+                            <strong>Organization :</strong>
+                            <%= item.organization %>
+                        </p>
+
+                        <p class="award-meta">
+                            <strong>Date :</strong>
+                            <%= new Date(item.awardDate).toLocaleDateString() %>
+                        </p>
+
+                        <% if(item.description){ %>
+
+                        <p class="award-description">
+                            <%= item.description %>
+                        </p>
+
+                        <% } %>
+
+                    </div>
+
+                    <div class="certificate-box">
+
+                        <% if(item.certificate){ %>
+
+                            <% if(item.certificate.endsWith(".pdf")){ %>
+
+                                <a href="/uploads/doctors/awards/<%= item.certificate %>"
+                                   target="_blank"
+                                   class="pdf-btn">
+                                    View PDF
+                                </a>
+
+                            <% } else { %>
+
+                                <img
+                                    src="/uploads/doctors/awards/<%= item.certificate %>"
+                                    class="certificate-img"
+                                    alt="Award Certificate">
+
+                            <% } %>
+
+                        <% } else { %>
+
+                            <p>No Certificate</p>
+
+                        <% } %>
+
+                    </div>
+
+                </div>
+
+                <hr class="award-divider">
+
+                <div class="action-buttons">
+
+                    <a href="/doctor/awards/edit/<%= item._id %>"
+                       class="edit-btn">
+                        Edit
+                    </a>
+
+                    <form action="/doctor/awards/delete/<%= item._id %>"
+                          method="POST">
+
+                        <button
+                            type="submit"
+                            class="delete-btn">
+                            Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    <% } %>
+
+</div>
+
+<%- include("../../layouts/doctorFooter") %>

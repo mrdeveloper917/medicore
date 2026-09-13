@@ -1,0 +1,149 @@
+Module 1 – User Model & Database
+models/User.js
+MongoDB Schema
+Role-based fields
+
+Module 2 – Authentication Backend
+controllers/authController.js
+routes/authRoutes.js
+middleware/auth.js
+JWT
+bcrypt
+
+Module 3 – Register
+views/auth/register.ejs
+CSS
+Validation
+Backend
+
+Module 4 – Login
+views/auth/login.ejs
+JWT Login
+Cookies
+Sessions
+
+Module 5 – Forgot Password
+Email
+OTP
+Reset Password
+
+Module 6 – Logout & Profile
+Logout
+Protected Routes
+Role Middleware
+
+Module 7 – Admin Login
+Module 8 – Doctor Login
+Module 9 – Patient Login
+Module 10 – Testing
+
+
+
+
+
+
+📅 Phase 5 Roadmap
+Module 5.1
+Doctor Dashboard
+
+Features
+
+Dashboard Cards
+Today's Appointments
+Upcoming Appointments
+Patient Statistics                  
+Earnings Summary
+Calendar
+Notifications
+Quick Actions
+
+
+Module 5.2
+Doctor Profile
+Update Profile
+Qualification
+Experience
+Specialization
+Consultation Fee
+Hospital
+Languages
+Biography
+Upload Certificates
+
+
+Module 5.3
+Doctor Availability
+Working Days
+Morning Shift
+Evening Shift
+Slot Duration
+Holidays
+Break Time
+Online Consultation
+Offline Consultation
+
+
+Module 5.4
+Appointment Management
+
+Doctor can
+
+View Appointments
+Approve Appointment
+Reject Appointment
+Reschedule
+Complete Appointment
+
+
+Module 5.5
+Patient Management
+
+Doctor can
+
+View Patient
+Medical History
+Previous Visits
+Reports
+Prescription History
+
+
+Module 5.6
+Prescription Module
+
+Doctor can
+
+Create Prescription
+Add Medicines
+Dosage
+Duration
+Advice
+Download PDF
+
+
+Module 5.7
+Reports
+Upload Report
+View Reports
+Download Reports
+
+
+Module 5.8
+Earnings
+Consultation Fee
+Payment History
+Monthly Income
+Revenue Chart
+
+
+Module 5.9
+Notifications
+Appointment Request
+Appointment Cancelled
+Payment Received
+
+
+Module 5.10
+Settings
+Change Password
+Dark Mode
+Delete Account
