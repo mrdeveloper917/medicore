@@ -9,6 +9,9 @@ const cors = require("cors");
 const User = require("./models/User");
 const mongoose = require("mongoose");
 
+const aiAssistantRoutes =
+    require("./routes/aiAssistantRoutes");
+
 
 const uploadError = require("./middleware/uploadError");
 
@@ -120,6 +123,11 @@ app.use((req, res, next) => {
     next();
 });
 
+
+app.use(
+    "/api/ai-assistant",
+    aiAssistantRoutes
+);
 
 // ==========================================
 // VIEW ENGINE
@@ -441,6 +449,18 @@ app.get(
     }
 );
 
+
+// ============================================================
+// MEDICORE HELP & SUPPORT
+// ============================================================
+
+app.get("/help", (req, res) => {
+
+    res.render("home/help", {
+        title: "Help & Support | MediCore"
+    });
+
+});
 
 // ============================================================
 // PUBLIC DOCTORS PAGE

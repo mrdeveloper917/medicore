@@ -1,0 +1,501 @@
+<%- include("../layouts/header", {
+    title: "AI Help & Support | MediCore"
+}) %>
+
+<link
+    rel="stylesheet"
+    href="/css/help.css"
+>
+
+<main class="mc-help-page">
+
+    <div class="mc-help-container">
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="mc-help-hero">
+
+            <div class="mc-help-hero-content">
+
+                <div class="mc-help-badge">
+                    <span class="mc-help-badge-icon">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </span>
+
+                    <span>AI-POWERED SUPPORT</span>
+                </div>
+
+
+                <h1>
+                    How can
+                    <span>MediCore AI</span>
+                    help you?
+                </h1>
+
+
+                <p>
+                    Get quick guidance for appointments, doctors,
+                    payments, prescriptions, reports and everything
+                    you need to navigate MediCore.
+                </p>
+
+
+                <!-- Hero mini features -->
+
+                <div class="mc-help-hero-features">
+
+                    <div class="mc-help-feature">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Instant answers</span>
+                    </div>
+
+                    <div class="mc-help-feature">
+                        <i class="fa-solid fa-language"></i>
+                        <span>Hindi & English</span>
+                    </div>
+
+                    <div class="mc-help-feature">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Privacy focused</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Decorative AI visual -->
+
+            <div class="mc-help-hero-visual">
+
+                <div class="mc-ai-orbit orbit-one"></div>
+                <div class="mc-ai-orbit orbit-two"></div>
+
+                <div class="mc-ai-hero-robot">
+
+                    <div class="mc-ai-robot-glow"></div>
+
+                    <div class="mc-ai-robot-icon">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             AI ASSISTANT
+        ====================================================== -->
+
+        <section class="mc-ai-card">
+
+            <!-- HEADER -->
+
+            <div class="mc-ai-header">
+
+                <div class="mc-ai-header-left">
+
+                    <div class="mc-ai-header-icon">
+
+                        <i class="fa-solid fa-robot"></i>
+
+                    </div>
+
+
+                    <div class="mc-ai-header-text">
+
+                        <strong>
+                            MediCore AI Assistant
+                        </strong>
+
+                        <small>
+                            Your smart MediCore support companion
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mc-ai-status">
+
+                    <span class="mc-ai-online-dot"></span>
+
+                    <span>Online</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHAT -->
+
+            <div
+                class="mc-ai-chat"
+                id="mcAiChat"
+                aria-live="polite"
+            >
+
+                <!-- INITIAL AI MESSAGE -->
+
+                <div class="mc-ai-message mc-ai-message-assistant">
+
+                    <div class="mc-ai-avatar">
+
+                        <i class="fa-solid fa-robot"></i>
+
+                    </div>
+
+
+                    <div class="mc-ai-message-content">
+
+                        <div class="mc-ai-sender">
+                            MediCore AI
+                        </div>
+
+                        <div class="mc-ai-bubble">
+
+                            <div class="mc-ai-greeting">
+                                Hi there! 👋
+                            </div>
+
+                            <p>
+                                I'm your MediCore AI Assistant.
+                                I can help you understand how to
+                                use MediCore.
+                            </p>
+
+                            <p>
+                                Ask me about doctors, appointments,
+                                payments, prescriptions, reports,
+                                notifications or account settings.
+                            </p>
+
+                            <div class="mc-ai-hint">
+                                <i class="fa-solid fa-lightbulb"></i>
+                                Try one of the quick questions below.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK QUESTIONS -->
+
+            <div class="mc-ai-suggestions-section">
+
+                <div class="mc-ai-suggestions-title">
+
+                    <span>
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        Quick questions
+                    </span>
+
+                    <small>
+                        Tap to ask
+                    </small>
+
+                </div>
+
+
+                <div class="mc-ai-suggestions">
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="How do I book a doctor appointment?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </span>
+
+                        <span>
+                            <strong>Book appointment</strong>
+                            <small>Schedule a doctor visit</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="How can I make a payment for my appointment?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </span>
+
+                        <span>
+                            <strong>Payment help</strong>
+                            <small>Razorpay & payments</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="Where can I find my prescriptions?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        </span>
+
+                        <span>
+                            <strong>Prescriptions</strong>
+                            <small>Find your prescriptions</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="Where can I view my medical reports?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-file-medical"></i>
+                        </span>
+
+                        <span>
+                            <strong>Medical reports</strong>
+                            <small>Access uploaded reports</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="How can I cancel my appointment?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                        </span>
+
+                        <span>
+                            <strong>Cancel appointment</strong>
+                            <small>Manage your booking</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="mc-ai-suggestion"
+                        data-ai-question="How do I find a doctor by specialization?"
+                    >
+                        <span class="suggestion-icon">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </span>
+
+                        <span>
+                            <strong>Find a doctor</strong>
+                            <small>Search by specialization</small>
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <form
+                class="mc-ai-form"
+                id="mcAiForm"
+                autocomplete="off"
+            >
+
+                <div class="mc-ai-input-wrap">
+
+                    <i class="fa-regular fa-message mc-ai-input-icon"></i>
+
+                    <input
+                        type="text"
+                        id="mcAiInput"
+                        class="mc-ai-input"
+                        maxlength="2000"
+                        placeholder="Ask MediCore AI anything..."
+                        aria-label="Ask MediCore AI"
+                        required
+                    >
+
+                    <span class="mc-ai-input-limit">
+                        2000
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="mcAiSend"
+                    class="mc-ai-send"
+                    aria-label="Send question"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- PRIVACY -->
+
+            <div class="mc-ai-privacy">
+
+                <div class="mc-ai-privacy-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your privacy matters
+                    </strong>
+
+                    <span>
+                        Never share passwords, OTPs, API keys
+                        or other secrets. Medical decisions
+                        should be made with a qualified doctor.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HELP CATEGORIES
+        ====================================================== -->
+
+        <section class="mc-help-categories">
+
+            <div class="mc-help-section-heading">
+
+                <span>
+                    NEED MORE HELP?
+                </span>
+
+                <h2>
+                    What can MediCore AI help with?
+                </h2>
+
+                <p>
+                    Explore common areas where you may need
+                    assistance while using MediCore.
+                </p>
+
+            </div>
+
+
+            <div class="mc-help-category-grid">
+
+                <div class="mc-help-category-card">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                    <h3>Appointments</h3>
+
+                    <p>
+                        Get guidance about booking, cancelling
+                        and managing appointments.
+                    </p>
+
+                </div>
+
+
+                <div class="mc-help-category-card">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+
+                    <h3>Doctors</h3>
+
+                    <p>
+                        Learn how to find doctors and view
+                        their available information.
+                    </p>
+
+                </div>
+
+
+                <div class="mc-help-category-card">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+
+                    <h3>Payments</h3>
+
+                    <p>
+                        Understand appointment payments and
+                        Razorpay payment flow.
+                    </p>
+
+                </div>
+
+
+                <div class="mc-help-category-card">
+
+                    <div class="category-icon">
+                        <i class="fa-solid fa-file-medical"></i>
+                    </div>
+
+                    <h3>Medical Records</h3>
+
+                    <p>
+                        Learn where prescriptions, reports and
+                        medical history are available.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<script
+    src="/js/ai-assistant.js"
+    defer
+></script>
+
+
+<%- include("../layouts/footer") %>

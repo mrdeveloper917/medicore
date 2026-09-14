@@ -1,4 +1,3 @@
-
 <!-- =========================================================
      MEDICORE PUBLIC NAVBAR
      File: views/layouts/navbar.ejs
@@ -10,17 +9,23 @@
 
         <div class="mc-navbar-container">
 
+
             <!-- =================================================
                  LOGO
             ================================================== -->
 
-            <a href="/" class="mc-logo" aria-label="MediCore Home">
+            <a
+                href="/"
+                class="mc-logo"
+                aria-label="MediCore Home"
+            >
 
                 <span class="mc-logo-icon">
                     <i class="fa-solid fa-heart-pulse"></i>
                 </span>
 
                 <span class="mc-logo-content">
+
                     <span class="mc-logo-name">
                         Medi<span>Core</span>
                     </span>
@@ -28,9 +33,11 @@
                     <span class="mc-logo-tagline">
                         SMART HEALTHCARE
                     </span>
+
                 </span>
 
             </a>
+
 
 
             <!-- =================================================
@@ -41,49 +48,158 @@
 
                 <ul class="mc-nav-links">
 
+
+                    <!-- HOME -->
+
                     <li>
-                        <a href="/" data-page="home">
+
+                        <a
+                            href="/"
+                            data-page="home"
+                        >
+
                             <i class="fa-solid fa-house"></i>
-                            <span>Home</span>
+
+                            <span>
+                                Home
+                            </span>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- ABOUT -->
+
                     <li>
-                        <a href="/about" data-page="about">
+
+                        <a
+                            href="/about"
+                            data-page="about"
+                        >
+
                             <i class="fa-solid fa-circle-info"></i>
-                            <span>About</span>
+
+                            <span>
+                                About
+                            </span>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- SERVICES -->
+
                     <li>
-                        <a href="/services" data-page="services">
+
+                        <a
+                            href="/services"
+                            data-page="services"
+                        >
+
                             <i class="fa-solid fa-stethoscope"></i>
-                            <span>Services</span>
+
+                            <span>
+                                Services
+                            </span>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- DOCTORS -->
+
                     <li>
-                        <a href="/doctors" data-page="doctors">
+
+                        <a
+                            href="/doctors"
+                            data-page="doctors"
+                        >
+
                             <i class="fa-solid fa-user-doctor"></i>
-                            <span>Doctors</span>
+
+                            <span>
+                                Doctors
+                            </span>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- DEPARTMENTS -->
+
                     <li>
-                        <a href="/departments" data-page="departments">
+
+                        <a
+                            href="/departments"
+                            data-page="departments"
+                        >
+
                             <i class="fa-solid fa-hospital"></i>
-                            <span>Departments</span>
+
+                            <span>
+                                Departments
+                            </span>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- CONTACT -->
+
                     <li>
-                        <a href="/contact" data-page="contact">
+
+                        <a
+                            href="/contact"
+                            data-page="contact"
+                        >
+
                             <i class="fa-solid fa-envelope"></i>
-                            <span>Contact</span>
+
+                            <span>
+                                Contact
+                            </span>
+
                         </a>
+
                     </li>
+
+
+
+                    <!-- =================================================
+                         HELP & SUPPORT
+                    ================================================== -->
+
+                    <li>
+
+                        <a
+                            href="/help"
+                            data-page="help"
+                            aria-label="Help and Support"
+                        >
+
+                            <i class="fa-solid fa-circle-question"></i>
+
+                            <span>
+                                Help
+                            </span>
+
+                        </a>
+
+                    </li>
+
 
                 </ul>
+
 
 
                 <!-- =================================================
@@ -92,19 +208,44 @@
 
                 <div class="mc-auth-buttons">
 
-                    <a href="/login" class="mc-login-button">
+
+                    <!-- LOGIN -->
+
+                    <a
+                        href="/login"
+                        class="mc-login-button"
+                    >
+
                         <i class="fa-solid fa-right-to-bracket"></i>
-                        <span>Login</span>
+
+                        <span>
+                            Login
+                        </span>
+
                     </a>
 
-                    <a href="/register" class="mc-register-button">
-                        <span>Get Started</span>
+
+
+                    <!-- REGISTER -->
+
+                    <a
+                        href="/register"
+                        class="mc-register-button"
+                    >
+
+                        <span>
+                            Get Started
+                        </span>
+
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </a>
+
 
                 </div>
 
             </div>
+
 
 
             <!-- =================================================
@@ -121,14 +262,18 @@
             >
 
                 <span class="mc-hamburger">
+
                     <span></span>
                     <span></span>
                     <span></span>
+
                 </span>
 
             </button>
 
+
         </div>
+
 
 
         <!-- =====================================================
@@ -143,20 +288,37 @@
 
             <div class="mc-mobile-menu-inner">
 
-                <!-- Mobile menu header -->
+
+                <!-- =================================================
+                     MOBILE MENU HEADER
+                ================================================== -->
 
                 <div class="mc-mobile-menu-header">
 
+
                     <div class="mc-mobile-menu-title">
+
                         <span class="mc-mobile-menu-icon">
+
                             <i class="fa-solid fa-heart-pulse"></i>
+
                         </span>
 
+
                         <div>
-                            <strong>MediCore</strong>
-                            <small>Smart Healthcare</small>
+
+                            <strong>
+                                MediCore
+                            </strong>
+
+                            <small>
+                                Smart Healthcare
+                            </small>
+
                         </div>
+
                     </div>
+
 
                     <span class="mc-mobile-menu-label">
                         MENU
@@ -165,106 +327,290 @@
                 </div>
 
 
-                <!-- Mobile links -->
+
+                <!-- =================================================
+                     MOBILE LINKS
+                ================================================== -->
 
                 <ul class="mc-mobile-links">
 
+
+                    <!-- HOME -->
+
                     <li>
-                        <a href="/" data-page="home">
+
+                        <a
+                            href="/"
+                            data-page="home"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-house"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>Home</strong>
-                                <small>Welcome to MediCore</small>
+
+                                <strong>
+                                    Home
+                                </strong>
+
+                                <small>
+                                    Welcome to MediCore
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
 
 
+
+                    <!-- ABOUT -->
+
                     <li>
-                        <a href="/about" data-page="about">
+
+                        <a
+                            href="/about"
+                            data-page="about"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-circle-info"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>About</strong>
-                                <small>Learn about MediCore</small>
+
+                                <strong>
+                                    About
+                                </strong>
+
+                                <small>
+                                    Learn about MediCore
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
 
 
+
+                    <!-- SERVICES -->
+
                     <li>
-                        <a href="/services" data-page="services">
+
+                        <a
+                            href="/services"
+                            data-page="services"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-stethoscope"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>Services</strong>
-                                <small>Healthcare services</small>
+
+                                <strong>
+                                    Services
+                                </strong>
+
+                                <small>
+                                    Healthcare services
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
 
 
+
+                    <!-- DOCTORS -->
+
                     <li>
-                        <a href="/doctors" data-page="doctors">
+
+                        <a
+                            href="/doctors"
+                            data-page="doctors"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-user-doctor"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>Doctors</strong>
-                                <small>Find your doctor</small>
+
+                                <strong>
+                                    Doctors
+                                </strong>
+
+                                <small>
+                                    Find your doctor
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
 
 
+
+                    <!-- DEPARTMENTS -->
+
                     <li>
-                        <a href="/departments" data-page="departments">
+
+                        <a
+                            href="/departments"
+                            data-page="departments"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-hospital"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>Departments</strong>
-                                <small>Explore departments</small>
+
+                                <strong>
+                                    Departments
+                                </strong>
+
+                                <small>
+                                    Explore departments
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
 
+
+
+                    <!-- CONTACT -->
 
                     <li>
-                        <a href="/contact" data-page="contact">
+
+                        <a
+                            href="/contact"
+                            data-page="contact"
+                        >
+
                             <span class="mc-mobile-link-icon">
+
                                 <i class="fa-solid fa-envelope"></i>
+
                             </span>
+
 
                             <span class="mc-mobile-link-text">
-                                <strong>Contact</strong>
-                                <small>Get in touch with us</small>
+
+                                <strong>
+                                    Contact
+                                </strong>
+
+                                <small>
+                                    Get in touch with us
+                                </small>
+
                             </span>
 
-                            <i class="fa-solid fa-chevron-right mc-arrow"></i>
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
                         </a>
+
                     </li>
+
+
+
+                    <!-- =================================================
+                         HELP & SUPPORT
+                    ================================================== -->
+
+                    <li>
+
+                        <a
+                            href="/help"
+                            data-page="help"
+                        >
+
+                            <span class="mc-mobile-link-icon">
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                            </span>
+
+
+                            <span class="mc-mobile-link-text">
+
+                                <strong>
+                                    Help & Support
+                                </strong>
+
+                                <small>
+                                    Get help with MediCore
+                                </small>
+
+                            </span>
+
+
+                            <i
+                                class="fa-solid fa-chevron-right mc-arrow"
+                            ></i>
+
+                        </a>
+
+                    </li>
+
 
                 </ul>
+
 
 
                 <!-- =================================================
@@ -273,48 +619,81 @@
 
                 <div class="mc-mobile-auth">
 
+
+                    <!-- LOGIN -->
+
                     <a
                         href="/login"
                         class="mc-mobile-login"
                     >
+
                         <i class="fa-solid fa-right-to-bracket"></i>
-                        <span>Login</span>
+
+                        <span>
+                            Login
+                        </span>
+
                     </a>
 
+
+
+                    <!-- REGISTER -->
 
                     <a
                         href="/register"
                         class="mc-mobile-register"
                     >
-                        <span>Get Started</span>
+
+                        <span>
+                            Get Started
+                        </span>
+
                         <i class="fa-solid fa-arrow-right"></i>
+
                     </a>
+
 
                 </div>
 
 
-                <!-- Mobile security message -->
+
+                <!-- =================================================
+                     MOBILE SECURITY MESSAGE
+                ================================================== -->
 
                 <div class="mc-mobile-security">
 
                     <span>
+
                         <i class="fa-solid fa-shield-heart"></i>
+
                     </span>
 
+
                     <div>
-                        <strong>Secure Healthcare</strong>
-                        <small>Your privacy is our priority</small>
+
+                        <strong>
+                            Secure Healthcare
+                        </strong>
+
+                        <small>
+                            Your privacy is our priority
+                        </small>
+
                     </div>
 
                 </div>
+
 
             </div>
 
         </div>
 
+
     </nav>
 
 </header>
+
 
 
 <!-- =========================================================
@@ -326,13 +705,17 @@
 :root {
 
     --mc-primary: #0f766e;
+
     --mc-primary-dark: #115e59;
+
     --mc-primary-light: #14b8a6;
 
     --mc-primary-soft: #ecfdf5;
 
     --mc-text: #0f172a;
+
     --mc-text-secondary: #475569;
+
     --mc-muted: #94a3b8;
 
     --mc-border: #e2e8f0;
@@ -629,7 +1012,9 @@
 }
 
 
-/* Active */
+/* =========================================================
+   ACTIVE
+========================================================= */
 
 .mc-nav-links li a.active {
 
@@ -886,7 +1271,9 @@
 }
 
 
-/* Hamburger → X */
+/* =========================================================
+   HAMBURGER → X
+========================================================= */
 
 .mc-mobile-toggle.is-open
 .mc-hamburger span:nth-child(1) {
@@ -952,8 +1339,6 @@
 
 }
 
-
-/* OPEN STATE */
 
 .mc-mobile-menu.is-open {
 
@@ -1303,7 +1688,9 @@
 }
 
 
-/* Active left indicator */
+/* =========================================================
+   ACTIVE LEFT INDICATOR
+========================================================= */
 
 .mc-mobile-links a.active::before {
 
@@ -1331,7 +1718,7 @@
 
 
 /* =========================================================
-   MOBILE AUTH BUTTONS
+   MOBILE AUTH
 ========================================================= */
 
 .mc-mobile-auth {
@@ -1565,16 +1952,12 @@
     }
 
 
-    /* Hide desktop navigation */
-
     .mc-desktop-navigation {
 
         display: none;
 
     }
 
-
-    /* Show mobile button */
 
     .mc-mobile-toggle {
 
@@ -1758,6 +2141,7 @@
 </style>
 
 
+
 <!-- =========================================================
      MEDICORE NAVBAR JAVASCRIPT
 ========================================================= -->
@@ -1771,16 +2155,22 @@
 
     function initMediCoreNavbar() {
 
+
         const toggle =
-            document.getElementById("mcMobileToggle");
+            document.getElementById(
+                "mcMobileToggle"
+            );
+
 
         const menu =
-            document.getElementById("mcMobileMenu");
+            document.getElementById(
+                "mcMobileMenu"
+            );
 
 
-        /* ---------------------------------------------
+        /* =================================================
            SAFETY CHECK
-        --------------------------------------------- */
+        ================================================= */
 
         if (!toggle || !menu) {
 
@@ -1793,9 +2183,9 @@
         }
 
 
-        /* ---------------------------------------------
+        /* =================================================
            ACTIVE PAGE
-        --------------------------------------------- */
+        ================================================= */
 
         const currentPath =
             window.location.pathname
@@ -1810,11 +2200,16 @@
 
         allLinks.forEach(function (link) {
 
+
             const href =
                 link.getAttribute("href");
 
 
-            if (!href) return;
+            if (!href) {
+
+                return;
+
+            }
 
 
             const normalizedHref =
@@ -1824,7 +2219,9 @@
             let active = false;
 
 
-            /* Home */
+            /* ---------------------------------------------
+               HOME
+            --------------------------------------------- */
 
             if (
                 normalizedHref === "/" &&
@@ -1836,7 +2233,9 @@
             }
 
 
-            /* Other pages + nested routes */
+            /* ---------------------------------------------
+               OTHER PAGES
+            --------------------------------------------- */
 
             if (
                 normalizedHref !== "/" &&
@@ -1853,21 +2252,31 @@
             }
 
 
+            /* ---------------------------------------------
+               APPLY ACTIVE
+            --------------------------------------------- */
+
             if (active) {
 
-                link.classList.add("active");
+                link.classList.add(
+                    "active"
+                );
 
             }
 
         });
 
 
-        /* ---------------------------------------------
+        /* =================================================
            MENU STATE
-        --------------------------------------------- */
+        ================================================= */
 
         let isOpen = false;
 
+
+        /* =================================================
+           OPEN MENU
+        ================================================= */
 
         function openMenu() {
 
@@ -1909,6 +2318,10 @@
         }
 
 
+        /* =================================================
+           CLOSE MENU
+        ================================================= */
+
         function closeMenu() {
 
             isOpen = false;
@@ -1949,6 +2362,10 @@
         }
 
 
+        /* =================================================
+           TOGGLE MENU
+        ================================================= */
+
         function toggleMenu() {
 
             if (isOpen) {
@@ -1964,9 +2381,9 @@
         }
 
 
-        /* ---------------------------------------------
+        /* =================================================
            HAMBURGER CLICK
-        --------------------------------------------- */
+        ================================================= */
 
         toggle.addEventListener(
             "click",
@@ -1982,9 +2399,9 @@
         );
 
 
-        /* ---------------------------------------------
+        /* =================================================
            MOBILE LINK CLICK
-        --------------------------------------------- */
+        ================================================= */
 
         menu
             .querySelectorAll("a")
@@ -2002,15 +2419,19 @@
             });
 
 
-        /* ---------------------------------------------
+        /* =================================================
            OUTSIDE CLICK
-        --------------------------------------------- */
+        ================================================= */
 
         document.addEventListener(
             "click",
             function (event) {
 
-                if (!isOpen) return;
+                if (!isOpen) {
+
+                    return;
+
+                }
 
 
                 if (
@@ -2026,9 +2447,9 @@
         );
 
 
-        /* ---------------------------------------------
+        /* =================================================
            ESCAPE KEY
-        --------------------------------------------- */
+        ================================================= */
 
         document.addEventListener(
             "keydown",
@@ -2049,9 +2470,9 @@
         );
 
 
-        /* ---------------------------------------------
+        /* =================================================
            RESIZE
-        --------------------------------------------- */
+        ================================================= */
 
         let resizeTimer;
 
@@ -2060,39 +2481,44 @@
             "resize",
             function () {
 
-                clearTimeout(resizeTimer);
+                clearTimeout(
+                    resizeTimer
+                );
 
 
                 resizeTimer =
-                    setTimeout(function () {
+                    setTimeout(
+                        function () {
 
-                        if (
-                            window.innerWidth > 900 &&
-                            isOpen
-                        ) {
+                            if (
+                                window.innerWidth > 900 &&
+                                isOpen
+                            ) {
 
-                            closeMenu();
+                                closeMenu();
 
-                        }
+                            }
 
-                    }, 100);
+                        },
+                        100
+                    );
 
             }
         );
 
 
-        /* ---------------------------------------------
+        /* =================================================
            INITIAL STATE
-        --------------------------------------------- */
+        ================================================= */
 
         closeMenu();
 
     }
 
 
-    /* ---------------------------------------------
+    /* =====================================================
        DOM READY
-    --------------------------------------------- */
+    ===================================================== */
 
     if (
         document.readyState === "loading"
